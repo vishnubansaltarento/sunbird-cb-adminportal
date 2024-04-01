@@ -1,0 +1,18 @@
+<div class="flex flex-4 flex-column cbp-reports">
+  <mat-card class="flex-custom">
+    <div class="flex">
+      <div class="flex flex-1">
+        <mat-card-title class="flex-4 mobile-margin margin-remove-bottom">
+          <span class="mat-title">Sectors</span>
+        </mat-card-title>
+      </div>
+    </div>
+    <ng-container>
+      <ws-sector-list-view [tableData]='tabledata' [data]='data' isCreate=true></ws-sector-list-view>
+    </ng-container>
+  </mat-card>
+</div>
+
+<div *ngIf="displayLoader" class="mt-5 pr-4 flex items-center justify-center">
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>

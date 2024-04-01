@@ -74,6 +74,9 @@ import { EditEventComponent } from './routes/events/edit-event/edit-event.compon
 import { PipePublicURLModule } from './pipes/pipe-public-URL/pipe-public-URL.module'
 import { AcbpReportsComponent } from './routes/acbp-reports/acbp-reports.component'
 import { GeneralReportsComponent } from './routes/general-reports/general-reports.component'
+import { SectorsComponent } from './routes/sectors/sectors.component'
+import { SectorListViewComponent } from './routes/sectors/sector-list-view/sector-list-view.component'
+import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -96,10 +99,13 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     CommsComponent,
     AcbpReportsComponent,
     GeneralReportsComponent,
+    SectorsComponent,
+    AddSectorComponent,
     EventsListComponent,
     EventListViewComponent,
     EventThumbnailComponent,
     CreateEventComponent,
+    SectorListViewComponent,
     EditEventComponent,
     ParticipantsComponent,
     SuccessComponent,

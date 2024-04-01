@@ -1,0 +1,76 @@
+<div class="example-container">
+    <div class="example-table-container">
+        <div>
+            <div class="flex flex-1 custom">
+                <div class="flex-2">
+                    <div class="search">
+                        <div class=rsearch>
+                            <mat-icon class="color-60 search-icon">search</mat-icon>
+                            <input class="sinput color-60" type="Standard" label=""
+                                (input)="applyFilter($event.target.value)" placeholder="Search" maxlength="200">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-2 right-align">
+                    <button type="button" mat-button class="create-btn" *ngIf="isCreate" (click)="onCreateClick()">
+                        Create new
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-table #table matSort [ngStyle]="{'height': bodyHeight}" [matSortActive]="tableData!.sortColumn"
+            [matSortDirection]="tableData!.sortState" [dataSource]="dataSource"
+            class="example-table table1 responsiveTable">
+
+            <ng-container matColumnDef="{{col.key}}" *ngFor="let col of tableData!.columns">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{col.displayName}} </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="selection.toggle(element); onRowClick(element)">
+                    {{element[col.key]}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions" *ngIf="tableData!.actions && tableData!.actions.length > 0">
+                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header"> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="action-cell">
+                    <div *ngIf="row.subSector" class="text-right margin-right-xxl margin-bottom-m ng-star-inserted">
+                        <button class="mat-raised-button mat-button-base mat-primary" (click)="loadMore()">
+                            Edit
+                        </button>
+                    </div>
+                    <div *ngIf="!row.subSector" class="text-right margin-right-xxl margin-bottom-m ng-star-inserted">
+                        <button class="mat-raised-button mat-button-base mat-primary" (click)="loadMore()">
+                            Add Sub-Sector
+                        </button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Menu">
+                <mat-header-cell *matHeaderCellDef class="clr-darkish-blue action-header">
+                    <mat-icon>view_comfy</mat-icon>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" class="action-cell">
+                    <button type="button" mat-icon-button i18n-aria-label aria-label="action items"
+                        [matMenuTriggerFor]="cardMenu" class="action-btn">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="getFinalColumns()"></mat-header-row>
+            <!-- <mat-row *matRowDef="let row; columns: getFinalColumns();" (click)="selection.toggle(row); onRowClick(row)">
+                    </mat-row> -->
+            <mat-row *matRowDef="let row; columns: getFinalColumns();">
+            </mat-row>
+
+        </mat-table>
+        <div class="no-information-found" *ngIf="dataSource.filteredData.length===0">
+            <div class="text-center margin-m ng-star-inserted"><img _ngcontent-fua-c31="" alt="No Content found"
+                    class="block mx-auto mb-3" src="/assets/instances/eagle/app_logos/allocation_empty.svg"><span
+                    _ngcontent-fua-c31="" class="block mat-subheading-2 mt-3">No Content Found</span>
+            </div>
+        </div>
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            *ngIf="dataSource.filteredData.length">
+        </mat-paginator>
+    </div>
+
+</div>

@@ -27,6 +27,8 @@ import { CreateEventComponent } from './routes/events/create-event/create-event.
 import { EditEventComponent } from './routes/events/edit-event/edit-event.component'
 import { CommsComponent } from './routes/comms/comms.component'
 import { AcbpReportsComponent } from './routes/acbp-reports/acbp-reports.component'
+import { SectorsComponent } from './routes/sectors/sectors.component'
+import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
 
 const routes: Routes = [
   {
@@ -282,6 +284,32 @@ const routes: Routes = [
           module: 'Events',
           pageType: 'feature',
           pageKey: 'Events',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+        },
+      },
+      {
+        path: 'sectors',
+        component: SectorsComponent,
+        data: {
+          pageId: 'home/sectors',
+          module: 'Sectors',
+          pageType: 'feature',
+          pageKey: 'Sectors',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+        },
+      },
+      {
+        path: 'sectors/new',
+        component: AddSectorComponent,
+        data: {
+          pageId: 'home/sectors/new',
+          module: 'Sectors',
+          pageType: 'feature',
+          pageKey: 'Sectors',
         },
         resolve: {
           configService: ConfigResolveService,
