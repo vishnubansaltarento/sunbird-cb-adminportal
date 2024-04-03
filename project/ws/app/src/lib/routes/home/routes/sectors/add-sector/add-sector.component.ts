@@ -6,7 +6,7 @@ import { ConfigurationsService } from '@sunbird-cb/utils'
 import _ from 'lodash'
 
 @Component({
-  selector: 'ws-app-sectors',
+  selector: 'ws-app-add-sector',
   templateUrl: './add-sector.component.html',
   styleUrls: ['./add-sector.component.scss'],
 })
@@ -29,6 +29,7 @@ export class AddSectorComponent implements OnInit {
   }
 
   ngOnInit() {
+
 
   }
 

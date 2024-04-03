@@ -37,15 +37,23 @@ export class SectorsComponent implements OnInit {
       actions: [{ icon: '', label: 'Action', name: 'DownloadFile', type: 'Standard', disabled: false }],
     }
 
-    // this.data = [
-    //   {
-    //     sector: "Sector 1",
-    //     subSector: "Subsector 1, Subsector 2, Subsector 3, Subsector 4",
-    //   },
-    //   {
-    //     sector: "Sector 909",
-    //     subSector: "",
-    //   },
-    // ]
+    this.data = [
+      {
+        id: 1,
+        sector: "Education",
+        subSector: "Montesory, Primary, Secondary, College, Master",
+      },
+      {
+        id: 2,
+        sector: "Finance",
+        subSector: "Audit, Budget",
+      },
+      {
+        id: 3,
+        sector: "Sports",
+        subSector: "Hockey, Cricket",
+      }
+    ]
+
   }
 }

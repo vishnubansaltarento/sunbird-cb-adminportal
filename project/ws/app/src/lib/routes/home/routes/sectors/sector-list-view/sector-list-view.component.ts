@@ -13,11 +13,10 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 })
 export class SectorListViewComponent implements OnInit {
   @Input() tableData!: ITableData | undefined
-  @Input() data?: []
+  @Input() data = []
   @Input() isCreate?: boolean
-  @Output() actionsClick?: EventEmitter<any>
+  @Output() filterData?: EventEmitter<any>
   @Input() actions?: IAction[]
-  bodyHeight = document.body.clientHeight - 125
   displayedColumns: any = []
   dataSource!: any
   length!: number
@@ -34,7 +33,7 @@ export class SectorListViewComponent implements OnInit {
     private router: Router
   ) {
     this.dataSource = new MatTableDataSource<any>()
-    this.actionsClick = new EventEmitter()
+    this.filterData = new EventEmitter()
     this.dataSource.paginator = this.paginator
   }
 
@@ -66,17 +65,19 @@ export class SectorListViewComponent implements OnInit {
     this.dataSource.data = this.data
   }
 
-  applyFilter(event: any) {
-    console.log("event ", event)
+  applyFilter(event: string) {
+    if (event) {
+      this.dataSource.data = this.data.filter((d: any) => d.sector.toString().toLowerCase().includes(event.toLowerCase()))
+    } else {
+      this.dataSource.data = this.data
+    }
   }
 
   onCreateClick() {
     this.router.navigateByUrl('/app/home/sectors/new')
   }
 
-
-
-
-
-
+  onClickButton(row: any) {
+    this.router.navigateByUrl(`/app/home/sectors/${row.id}/sub-sectors`)
+  }
 }

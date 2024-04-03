@@ -77,6 +77,7 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
 import { SectorsComponent } from './routes/sectors/sectors.component'
 import { SectorListViewComponent } from './routes/sectors/sector-list-view/sector-list-view.component'
 import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
+import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -101,6 +102,7 @@ import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.compo
     GeneralReportsComponent,
     SectorsComponent,
     AddSectorComponent,
+    EditSectorComponent,
     EventsListComponent,
     EventListViewComponent,
     EventThumbnailComponent,
