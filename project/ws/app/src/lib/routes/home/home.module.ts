@@ -1,7 +1,7 @@
 import { CommsComponent } from './routes/comms/comms.component'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, ImageCropModule } from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -27,6 +27,7 @@ import {
   MAT_DIALOG_DATA,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatButtonToggleModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -43,6 +44,7 @@ import {
   UIORGTableModule,
   ScrollspyLeftMenuModule,
 } from '@sunbird-cb/collection'
+import { ImageCropModule } from './routes/image-crop/image-crop.module'
 import { AboutComponent } from './routes/about/about.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 import { DirectoryViewComponent } from './routes/directory/directroy.component'
@@ -78,6 +80,7 @@ import { SectorsComponent } from './routes/sectors/sectors.component'
 import { SectorListViewComponent } from './routes/sectors/sector-list-view/sector-list-view.component'
 import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
 import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
+import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -103,6 +106,7 @@ import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.co
     SectorsComponent,
     AddSectorComponent,
     EditSectorComponent,
+    AddThumbnailComponent,
     EventsListComponent,
     EventListViewComponent,
     EventThumbnailComponent,
@@ -138,6 +142,7 @@ import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.co
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSidenavModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
@@ -162,6 +167,7 @@ import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.co
     MatPaginatorModule,
     PipePublicURLModule,
     ScrollspyLeftMenuModule,
+    ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   entryComponents: [
@@ -171,6 +177,7 @@ import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.co
     RejectReasonDialogComponent,
     EventThumbnailComponent,
     ParticipantsComponent,
+    AddThumbnailComponent,
     SuccessComponent],
   providers: [
     // CKEditorService,
@@ -179,6 +186,7 @@ import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.co
     { provide: MAT_DIALOG_DATA, useValue: {} },
     MatDatepickerModule, MatNativeDateModule,
   ],
+  exports: [AddThumbnailComponent],
 })
 export class HomeModule {
 
