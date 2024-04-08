@@ -57,12 +57,12 @@ export class SectorListViewComponent implements OnInit {
     return ''
   }
 
-
   ngOnInit() {
     if (this.tableData) {
       this.displayedColumns = this.tableData.columns
     }
     this.dataSource.data = this.data
+    this.length = this.dataSource.data.length
   }
 
   applyFilter(event: string) {

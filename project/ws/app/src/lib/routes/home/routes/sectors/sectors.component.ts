@@ -26,7 +26,7 @@ export class SectorsComponent implements OnInit {
     this.tabledata = {
       columns: [
         { displayName: 'Sector', key: 'sector' },
-        { displayName: 'Subsector', key: 'subSector' },
+        { displayName: 'Sub-sectors', key: 'subSector' },
       ],
       needCheckBox: false,
       needHash: false,
@@ -52,6 +52,11 @@ export class SectorsComponent implements OnInit {
         id: 3,
         sector: "Sports",
         subSector: "Hockey, Cricket",
+      },
+      {
+        id: 3,
+        sector: "Green Energy",
+        subSector: "",
       }
     ]
 

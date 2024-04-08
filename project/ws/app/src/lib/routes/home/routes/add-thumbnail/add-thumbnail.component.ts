@@ -18,7 +18,6 @@ import { DomSanitizer } from '@angular/platform-browser'
 import _ from 'lodash'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { SectorsService } from '../sectors/sectors.service'
-import { error } from 'console'
 /* tslint:enable */
 @Component({
   selector: 'ws-auth-add-thumbnail',
@@ -121,25 +120,14 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
 
   filter(key: string | 'myimages' | 'all') {
     if (key) {
-      this.currentFilter = key
-      switch (key) {
-        case 'myimages':
-          this.fetchContent(false, this.userId)
-          break
-        case 'all':
-          this.fetchContent(false, null)
-          break
-
-        default:
-          this.fetchContent(false, this.userId)
-          break
-      }
+      this.fetchContent(false, null)
     }
   }
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
   }
   fetchContent(loadMoreFlag: boolean, createdBy: string | null) {
+    console.log("loadMoreFlag ", loadMoreFlag)
     const requestData = {
       request: {
         filters: {

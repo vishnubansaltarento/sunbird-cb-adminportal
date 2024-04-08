@@ -4,7 +4,7 @@
     <mat-card class="card-simple">
         <mat-card-header>
             <mat-icon>photo</mat-icon>
-            <mat-card-title>Select Image</mat-card-title>
+            <mat-card-title>Select Icons</mat-card-title>
         </mat-card-header>
     </mat-card>
     <mat-card class="mt-5">
@@ -16,12 +16,8 @@
                         <div class="flex flex-1 filter flex-wrap">
                             <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'myimages',
                               'ws-mat-accent-border font-medium':currentFilter !== 'myimages'}" mat-button
-                                (click)="filter('myimages')">
-                                My Images </a>
-                            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'all',
-                              'ws-mat-accent-border font-medium':currentFilter !== 'all'}" mat-button
                                 (click)="filter('all')">
-                                All Images </a>
+                                My Icons </a>
                         </div>
                     </div>
                 </mat-card>
@@ -51,7 +47,7 @@
                         <mat-card-title>No result found.<a href="javascript:void(0)" role="button" class="filter-option"
                                 [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'all',
                     'ws-mat-accent-border font-medium':currentFilter !== 'all'}" mat-button (click)="filter('all')">
-                                Click here </a> to search in All images
+                                Click here </a> to search in all icons.
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>

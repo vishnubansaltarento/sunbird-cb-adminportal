@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
-import { Router } from '@angular/router'
-import { ConfigurationsService } from '@sunbird-cb/utils'
+import { ActivatedRoute, Router } from '@angular/router'
 import _ from 'lodash'
 import { AddThumbnailComponent } from '../../add-thumbnail/add-thumbnail.component'
 import { ImageCropComponent } from '../../image-crop/image-crop.component'
 import { environment } from '../../../../../../../../../../src/environments/environment'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { SectorsService } from '../sectors.service'
 
 @Component({
   selector: 'ws-app-add-sector',
@@ -22,10 +23,12 @@ export class AddSectorComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private configSvc: ConfigurationsService,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar,
+    private sectorsService: SectorsService,
+    private activatedRoute: ActivatedRoute,
   ) {
-    this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
+    this.currentUser = _.get(this.activatedRoute, 'snapshot.parent.data.configService.userProfile.userId')
     this.addSectorForm = new FormGroup({
       sectorTitle: new FormControl('', [Validators.required, Validators.pattern(this.myreg)]),
       appIcon: new FormControl('', [Validators.required])
@@ -78,6 +81,7 @@ export class AddSectorComponent implements OnInit {
     if (!file) {
       return
     }
+    const formdata = new FormData()
     const fileName = file.name
 
     if (
@@ -90,11 +94,11 @@ export class AddSectorComponent implements OnInit {
         ) > -1
       )
     ) {
-
       return
     }
 
     if (file.size > (1 * 1024 * 1024)) {
+      this.snackbar.open('Size is greater than allowed.')
       return
     }
 
@@ -108,6 +112,47 @@ export class AddSectorComponent implements OnInit {
         isThumbnail: true,
         imageFileName: fileName,
       },
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (result: File) => {
+        if (result) {
+          formdata.append('content', result, fileName)
+          let randomNumber = ''
+          // tslint:disable-next-line: no-increment-decrement
+          for (let i = 0; i < 16; i++) {
+            randomNumber += Math.floor(Math.random() * 10)
+          }
+
+          const requestBody = {
+            request: {
+              content: {
+                code: randomNumber,
+                contentType: 'Asset',
+                createdBy: this.currentUser,
+                creator: this.currentUser,
+                mimeType: 'image/png',
+                mediaType: 'image',
+                name: fileName,
+                language: ['English'],
+                license: 'CC BY 4.0',
+                primaryCategory: 'Asset',
+              },
+            },
+          }
+          this.sectorsService.createImageContent(requestBody).subscribe((res: any) => {
+            this.sectorsService
+              .upload(formdata, {
+                contentId: res.result.identifier,
+                contentType: this.sectorsService.CONTENT_BASE_STATIC,
+              }).subscribe((data: any) => {
+                if (data.result) {
+                  this.addSectorForm.controls.appIcon.setValue(this.generateUrl(data.result.artifactUrl))
+                }
+              })
+          })
+        }
+      }
     })
   }
 }
