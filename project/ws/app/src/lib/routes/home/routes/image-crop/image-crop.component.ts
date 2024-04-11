@@ -48,7 +48,6 @@ export class ImageCropComponent implements OnInit {
       imageFileName: string
     },
   ) {
-    this.isRoundCrop = data.isRoundCrop
     if (data.imageFile) {
       this.imageFile = data.imageFile
     }

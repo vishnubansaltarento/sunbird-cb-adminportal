@@ -10,7 +10,7 @@ export class GeneralReportsService {
   GENERAL_REPORTS = '/apis/proxies/v8/storage/v1/spvReportInfo'
 
   constructor(private configSvc: ConfigurationsService,
-    private http: HttpClient) { }
+              private http: HttpClient) { }
 
   getContent() {
     return this.http.get<any>(`${this.configSvc.baseUrl}/feature/general-reports.json`)

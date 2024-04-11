@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
+import { environment } from '../../../../../../../../../src/environments/environment'
 @Injectable({
   providedIn: 'root',
 })
@@ -56,5 +57,13 @@ export class SectorsService {
       return filename + timeStamp
     }
     return filename.substring(0, dotIndex) + timeStamp + filename.substring(dotIndex)
+  }
+
+  getChangedArtifactUrl(url: string) {
+    if (url && url.length > 0) {
+      const tempData = url.split('content')
+      return `https://${environment.sitePath}/${environment.contentBucket}/content${tempData[tempData.length - 1]}`
+    }
+    return url
   }
 }

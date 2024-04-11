@@ -41,12 +41,13 @@
                     Select Icon
                   </label>
                   <div>Icons will be cropped to 24x24 pixels</div>
-                  <div class="image-thumb margin-top-m">
+                  <div class="image-thumb margin-top-m"
+                    [ngClass]="{'seleted-image': addSectorForm.controls.appIcon.value}">
                     <div class="camera">
                       <mat-icon class="cam-icon">photo_camera</mat-icon>
                     </div>
                     <div class="uploaded-img">
-                      <mat-icon class="">home</mat-icon>
+
                     </div>
                   </div>
                 </div>
@@ -96,7 +97,8 @@
                 </button>
               </div>
               <div class="">
-                <button mat-button class="create-btn btn-success" type="button" (click)="onSubSectorSubmit()">
+                <button mat-button class="create-btn btn-success" type="button" [disabled]="!myForm.valid"
+                  (click)="onSubSectorSubmit()">
                   <span i18n>Save</span>
                 </button>
               </div>

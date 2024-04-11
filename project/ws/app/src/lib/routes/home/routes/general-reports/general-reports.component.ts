@@ -83,7 +83,11 @@ export class GeneralReportsComponent implements OnInit {
         this.buckets = result.reports.buckets
         this.getTableData(this.datePipe.transform(new Date(), 'yyyy-MM-dd'))
       }
-    })
+    },
+      (error) => {
+        this.snackBar.open(error.statusText, 'X', { duration: 2000 })
+      }
+    )
     setTimeout(() => this.dataSource.paginator = this.paginator)
   }
 
@@ -114,7 +118,7 @@ export class GeneralReportsComponent implements OnInit {
     }, error => {
       this.displayLoader = false
       // tslint:disable-next-line: no-console
-      console.log(error)
+      this.snackBar.open(error.statusText, 'X', { duration: 2000 })
     })
   }
 

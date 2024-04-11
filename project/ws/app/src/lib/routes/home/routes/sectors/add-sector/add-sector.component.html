@@ -52,18 +52,20 @@
                     Select Icon
                   </label>
                   <div>Icons will be cropped to 24x24 pixels</div>
-                  <div class="image-thumb margin-top-m" (click)="openDialog()">
+                  <div class="image-thumb margin-top-m" (click)="openDialog()"
+                    [ngClass]="{'seleted-image': addSectorForm.controls.appIcon.value}">
                     <div class="camera">
                       <mat-icon class="cam-icon">photo_camera</mat-icon>
                     </div>
                     <div class="uploaded-img">
-                      <mat-icon class="">home</mat-icon>
+                      <img class="image max-width" *ngIf="addSectorForm.controls.appIcon.value" height="24" width="24"
+                        [src]="getUrl(addSectorForm.controls.appIcon.value)" />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="flex">
+            <div class=" flex">
               <div class="margin-right-l">
                 <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
                   (click)="goToList()">

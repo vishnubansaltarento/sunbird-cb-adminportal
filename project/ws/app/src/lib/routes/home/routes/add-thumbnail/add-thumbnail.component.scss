@@ -167,3 +167,10 @@
   top: 0px;
   cursor: pointer;
 }
+
+.extra-padding {
+  padding-bottom: 15px;
+}
+::ng-deep.upload-btn[disabled] {
+  opacity: 0.5;
+}

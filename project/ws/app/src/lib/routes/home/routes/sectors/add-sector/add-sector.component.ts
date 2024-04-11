@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { AddThumbnailComponent } from '../../add-thumbnail/add-thumbnail.component'
 import { ImageCropComponent } from '../../image-crop/image-crop.component'
 import { environment } from '../../../../../../../../../../src/environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { SectorsService } from '../sectors.service'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
   selector: 'ws-app-add-sector',
@@ -20,6 +21,7 @@ export class AddSectorComponent implements OnInit {
   addSectorForm: FormGroup
   disableCreateButton = false
   myreg = /^[a-zA-Z0-9.\-_$/:[\]' '!]+$/
+  aspectRatio = 1 / 2
 
   constructor(
     public dialog: MatDialog,
@@ -27,21 +29,21 @@ export class AddSectorComponent implements OnInit {
     private snackbar: MatSnackBar,
     private sectorsService: SectorsService,
     private activatedRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer,
   ) {
     this.currentUser = _.get(this.activatedRoute, 'snapshot.parent.data.configService.userProfile.userId')
     this.addSectorForm = new FormGroup({
       sectorTitle: new FormControl('', [Validators.required, Validators.pattern(this.myreg)]),
-      appIcon: new FormControl('', [Validators.required])
+      appIcon: new FormControl('', [Validators.required]),
     })
   }
 
   ngOnInit() {
 
-
   }
 
   goToList() {
-    this.router.navigateByUrl("/app/home/sectors")
+    this.router.navigateByUrl('/app/home/sectors')
   }
 
   onSubmit() {
@@ -70,7 +72,9 @@ export class AddSectorComponent implements OnInit {
     const dialogRef = this.dialog.open(AddThumbnailComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(data => {
       if (data && data.appURL) {
-        this.addSectorForm.controls.appIcon.setValue(this.generateUrl(data.appURL))
+        this.addSectorForm.patchValue({
+          appIcon: this.generateUrl(data.appURL),
+        })
       } else if (data && data.file) {
         this.uploadAppIcon(data.file)
       }
@@ -152,7 +156,14 @@ export class AddSectorComponent implements OnInit {
               })
           })
         }
-      }
+      },
     })
+  }
+
+  getUrl(url: string) {
+    if (this.sectorsService.getChangedArtifactUrl(url)) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(this.sectorsService.getChangedArtifactUrl(url))
+    }
+    return '/assets/instances/eagle/app_logos/default.png'
   }
 }

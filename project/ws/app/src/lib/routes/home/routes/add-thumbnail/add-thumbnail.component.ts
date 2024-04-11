@@ -1,17 +1,6 @@
 import { Component, OnInit, Input, Inject, Output, EventEmitter, OnDestroy } from '@angular/core'
-// import { LoaderService } from '@ws/author/src/lib/services/loader.service'
-// import {
-//   IAuthoringPagination,
-// } from '@ws/author/src/lib/interface/authored'
-// import { AccessControlService } from '@ws/author/src/lib/modules/shared/services/access-control.service'
-// import { MyContentService } from '../../../../my-content/services/my-content.service'
 import { Subscription } from 'rxjs'
 import { FormGroup, FormBuilder } from '@angular/forms'
-// import { EditorContentService } from '@ws/author/src/lib/routing/modules/editor/services/editor-content.service'
-// import { CollectionStoreService } from '../../../../editor/routing/modules/collection/services/store.service'
-// import { CollectionResolverService } from '../../../../editor/routing/modules/collection/services/resolver.service'
-// import { NsContent } from '@ws-widget/collection/src/lib/_services/widget-content.model'
-// import { NSContent } from '@ws/author/src/lib/interface/content'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { DomSanitizer } from '@angular/platform-browser'
 /* tslint:disable */
@@ -23,10 +12,8 @@ import { SectorsService } from '../sectors/sectors.service'
   selector: 'ws-auth-add-thumbnail',
   templateUrl: './add-thumbnail.component.html',
   styleUrls: ['./add-thumbnail.component.scss'],
-  //providers: [CollectionStoreService, CollectionResolverService, EditorContentService],
 })
 export class AddThumbnailComponent implements OnInit, OnDestroy {
-  // contentMeta!: NSContent.IContentMeta
   toggle: any = null
   currentParentId!: string
   startForm!: FormGroup
@@ -61,14 +48,10 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
   constructor(
     private sectotsService: SectorsService,
     public dialogRef: MatDialogRef<AddThumbnailComponent>,
-    // private myContSvc: MyContentService,
     private sanitizer: DomSanitizer,
-    //private accessService: AccessControlService,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    //private contentService: EditorContentService,
   ) {
-    //this.userId = this.accessService.userId
     this.isChecked = false
   }
 
@@ -80,7 +63,7 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
     this.startForm = this.formBuilder.group({
       thumbnail: [],
     })
-    this.filter('myimages')
+    this.filter('all')
     this.imageList = []
 
   }
@@ -127,7 +110,6 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
   }
   fetchContent(loadMoreFlag: boolean, createdBy: string | null) {
-    console.log("loadMoreFlag ", loadMoreFlag)
     const requestData = {
       request: {
         filters: {
@@ -138,49 +120,27 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
           status: ['Live', 'Review', 'Draft', 'Processing'],
         },
         query: this.queryFilter,
-        // pageNo: loadMoreFlag ? this.pagination.offset : 0,
         sort_by: { lastUpdatedOn: 'desc' },
-        // pageSize: this.pagination.limit
 
       },
     }
 
-    this.sectotsService.fetchImagesContent(requestData).subscribe((resp: any) => {
-      console.log("result, ", resp)
-    }, (error) => {
-      console.log(error)
-    })
-
-    // this.loadService.changeLoad.next(true)
-    // const observable =
-    //   this.myContSvc.fetchContent(requestData)
-    // this.loadService.changeLoad.next(true)
-    // observable.subscribe(
-    //   data => {
-    //     this.loadService.changeLoad.next(false)
-
-    //     this.imageList =
-    //       loadMoreFlag && !this.queryFilter
-    //         ? (this.imageList || []).concat(
-    //           data && data.result && data.result.content ? _.uniqBy(data.result.content, 'identifier') : [],
-    //         )
-    //         : data && data.result.content
-    //           ? _.uniqBy(data.result.content, 'identifier')
-    //           : []
-    //     this.totalContent = data && data.result.response ? data.result.response.totalHits : 0
-    //     // this.showLoadMore =
-    //     //   this.pagination.offset * this.pagination.limit + this.pagination.limit < this.totalContent
-    //     //     ? true`
-    //     //     : false
-    //     this.fetchError = false
-    //   },
-    //   () => {
-    //     this.fetchError = true
-    //     this.imageList = []
-    //     this.showLoadMore = false
-    //     this.loadService.changeLoad.next(false)
-    //   },
-    // )
+    this.sectotsService.fetchImagesContent(requestData).subscribe((data: any) => {
+      this.imageList =
+        loadMoreFlag && !this.queryFilter
+          ? (this.imageList || []).concat(
+            data && data.result && data.result.content ? _.uniqBy(data.result.content, 'identifier') : [],
+          )
+          : data && data.result.content
+            ? _.uniqBy(data.result.content, 'identifier')
+            : []
+      this.totalContent = data && data.result.response ? data.result.response.totalHits : 0
+      this.fetchError = false
+    },
+      error => {
+        // tslint:disable-next-line: no-console
+        console.log(error)
+      })
   }
   public bypass(uri: string) {
     // tslint:disable-next-line: triple-equals
@@ -198,10 +158,9 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
   }
 
   getUrl(url: string) {
-    console.log("url ", url)
-    // if (this.contentService.getChangedArtifactUrl(url)) {
-    //   return this.sanitizer.bypassSecurityTrustResourceUrl(this.contentService.getChangedArtifactUrl(url))
-    // }
+    if (this.sectotsService.getChangedArtifactUrl(url)) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(this.sectotsService.getChangedArtifactUrl(url))
+    }
     return '/assets/instances/eagle/app_logos/default.png'
   }
 

@@ -14,10 +14,10 @@
                 <mat-card class="recent-tabs">
                     <div class="flex flex-1 flex-column">
                         <div class="flex flex-1 filter flex-wrap">
-                            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'myimages',
-                              'ws-mat-accent-border font-medium':currentFilter !== 'myimages'}" mat-button
-                                (click)="filter('all')">
-                                My Icons </a>
+                            <a href="javascript:void(0)" role="button" class="filter-option" [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'all',
+                                                          'ws-mat-accent-border font-medium':currentFilter !== 'all'}"
+                                mat-button (click)="filter('all')">
+                                All Icons </a>
                         </div>
                     </div>
                 </mat-card>
@@ -59,26 +59,26 @@
     </mat-card>
     <!-- <mat-card> -->
     <!-- <ng-container> -->
-    <mat-card class="mt-5">
+    <div class="mt-5 extra-padding">
 
         <div mat-card-actions class="footer">
             <span class="itemleft">
-                <button mat-raised-button type="button" (click)="showHideButton()"
+                <!-- <button mat-raised-button type="button" (click)="showHideButton()"
                     class="text-white ws-mat-primary-background flex-auto-display">
                     <span class="text-white" i18n>Upload and use</span>
-                </button>
+                </button> -->
             </span>
             <span class="itemright">
                 <button mat-button class="mr-2" [mat-dialog-close]="true">
                     <span class="noocoments"> Cancel</span>
                 </button>
                 <button mat-raised-button type="button" (click)="uploadThumbnail()"
-                    class="text-white ws-mat-primary-background flex-auto-display" [disabled]="!isChecked">
+                    class="text-white ws-mat-primary-background upload-btn flex-auto-display" [disabled]="!isChecked">
                     <span class="text-white" i18n>Upload</span>
                 </button>
             </span>
         </div>
-    </mat-card>
+    </div>
 
     <!-- </ng-container> -->
     <!-- </mat-card> -->
@@ -86,10 +86,10 @@
 
 <div class="card" *ngIf="!showMainContent">
     <mat-card class="mt-5">
-        <mat-card-header>
+        <!-- <mat-card-header>
             <mat-icon mat-card-avatar>save_alt</mat-icon>
             <mat-card-title>Upload and use</mat-card-title>
-        </mat-card-header>
+        </mat-card-header> -->
     </mat-card>
     <mat-card class="mt-5">
         <mat-dialog-content>
@@ -117,7 +117,7 @@
                     <span class="noocoments"> Cancel</span>
                 </button>
                 <button mat-raised-button type="button" (click)="uploadSelectedThumbnail()"
-                    class="text-white ws-mat-primary-background flex-auto-display" [disabled]="!isChecked">
+                    class="text-white ws-mat-primary-background upload-btn flex-auto-display" [disabled]="!isChecked">
                     <span class="text-white" i18n>Upload</span>
                 </button>
             </span>

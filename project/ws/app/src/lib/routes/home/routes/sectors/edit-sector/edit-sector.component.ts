@@ -3,7 +3,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import _ from 'lodash'
+import * as _ from 'lodash'
+import { SectorsService } from '../sectors.service'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
   selector: 'ws-app-edit-sector',
@@ -16,7 +18,7 @@ export class EditSectorComponent implements OnInit {
   addSectorForm: FormGroup
   disableCreateButton = false
   myreg = /^[a-zA-Z0-9.\-_$/:[\]' '!]+$/
-  isDisabled: boolean = true
+  isDisabled = true
   myForm: FormGroup
   subSectors: any = []
 
@@ -24,15 +26,19 @@ export class EditSectorComponent implements OnInit {
     public dialog: MatDialog,
     private configSvc: ConfigurationsService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sectorsService: SectorsService,
+    private sanitizer: DomSanitizer,
   ) {
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.addSectorForm = new FormGroup({
       sectorTitle: new FormControl({ value: '', disabled: this.isDisabled }, [Validators.required, Validators.pattern(this.myreg)]),
+      appIcon: new FormControl('', [Validators.required]),
     })
     this.addSectorForm.controls['sectorTitle'].setValue('Sector 909')
+    this.addSectorForm.controls['appIcon'].setValue('')
     this.myForm = this.formBuilder.group({
-      textboxes: this.formBuilder.array([])
+      textboxes: this.formBuilder.array([], Validators.required),
     })
     this.addTextbox('Energy')
   }
@@ -43,7 +49,7 @@ export class EditSectorComponent implements OnInit {
 
   addTextbox(value: string = '') {
     this.textboxes.push(
-      this.formBuilder.control({ value: value, disabled: value.length }, [Validators.required])
+      this.formBuilder.control({ value, disabled: value.length }, [Validators.required])
     )
   }
 
@@ -56,7 +62,7 @@ export class EditSectorComponent implements OnInit {
   }
 
   goToList() {
-    this.router.navigateByUrl("/app/home/sectors")
+    this.router.navigateByUrl('/app/home/sectors')
   }
 
   onSubmit() {
@@ -66,6 +72,13 @@ export class EditSectorComponent implements OnInit {
   }
 
   onSubSectorSubmit() {
-    console.log("myForm  ", this.myForm)
+
+  }
+
+  getUrl(url: string) {
+    if (this.sectorsService.getChangedArtifactUrl(url)) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(this.sectorsService.getChangedArtifactUrl(url))
+    }
+    return '/assets/instances/eagle/app_logos/default.png'
   }
 }

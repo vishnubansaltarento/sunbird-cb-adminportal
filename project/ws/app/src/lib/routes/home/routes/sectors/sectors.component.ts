@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ConfigurationsService } from '@sunbird-cb/utils'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'ws-app-sectors',
@@ -40,24 +40,24 @@ export class SectorsComponent implements OnInit {
     this.data = [
       {
         id: 1,
-        sector: "Education",
-        subSector: "Montesory, Primary, Secondary, College, Master",
+        sector: 'Education',
+        subSector: 'Montesory, Primary, Secondary, College, Master',
       },
       {
         id: 2,
-        sector: "Finance",
-        subSector: "Audit, Budget",
+        sector: 'Finance',
+        subSector: 'Audit, Budget',
       },
       {
         id: 3,
-        sector: "Sports",
-        subSector: "Hockey, Cricket",
+        sector: 'Sports',
+        subSector: 'Hockey, Cricket',
       },
       {
         id: 3,
-        sector: "Green Energy",
-        subSector: "",
-      }
+        sector: 'Green Energy',
+        subSector: '',
+      },
     ]
 
   }
