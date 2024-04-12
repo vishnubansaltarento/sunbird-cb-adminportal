@@ -117,7 +117,8 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
           compatibilityLevel: { min: 1, max: 2 },
           contentType: ['Asset'],
           mediaType: ['image'],
-          status: ['Live', 'Review', 'Draft', 'Processing'],
+          status: ['Draft'],
+          resourceCategory: ['sector'],
         },
         query: this.queryFilter,
         sort_by: { lastUpdatedOn: 'desc' },
@@ -137,7 +138,7 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
       this.totalContent = data && data.result.response ? data.result.response.totalHits : 0
       this.fetchError = false
     },
-      error => {
+                                                                  error => {
         // tslint:disable-next-line: no-console
         console.log(error)
       })

@@ -7,7 +7,7 @@
         </mat-card-title>
       </div>
     </div>
-    <ng-container>
+    <ng-container *ngIf="!isLoading">
       <ws-sector-list-view [tableData]='tabledata' [data]='data' isCreate=true></ws-sector-list-view>
     </ng-container>
   </mat-card>

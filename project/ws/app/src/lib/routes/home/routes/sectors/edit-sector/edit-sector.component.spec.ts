@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditSectorComponent } from './edit-sector.component'
 
-
 describe('EditSectorComponent', () => {
   let component: EditSectorComponent
   let fixture: ComponentFixture<EditSectorComponent>

@@ -25,8 +25,8 @@
 
 .checkbox {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: -3px;
+  top: 12px;
   color: #4177f6 !important;
 }
 
@@ -173,4 +173,8 @@
 }
 ::ng-deep.upload-btn[disabled] {
   opacity: 0.5;
+}
+
+::ng-deep.mat-button-toggle-button {
+  width: 50px!important;
 }

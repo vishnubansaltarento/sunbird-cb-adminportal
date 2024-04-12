@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ConfigurationsService } from '@sunbird-cb/utils'
 import * as _ from 'lodash'
+import { SectorsService } from './sectors.service'
 
 @Component({
   selector: 'ws-app-sectors',
@@ -14,10 +15,12 @@ export class SectorsComponent implements OnInit {
   tabledata: any = []
   displayLoader = false
   data: any = []
+  isLoading = false
 
   constructor(
     public dialog: MatDialog,
     private configSvc: ConfigurationsService,
+    private sectorsService: SectorsService,
   ) {
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
   }
@@ -25,7 +28,7 @@ export class SectorsComponent implements OnInit {
   ngOnInit() {
     this.tabledata = {
       columns: [
-        { displayName: 'Sector', key: 'sector' },
+        { displayName: 'Sector', key: 'name' },
         { displayName: 'Sub-sectors', key: 'subSector' },
       ],
       needCheckBox: false,
@@ -36,29 +39,28 @@ export class SectorsComponent implements OnInit {
       actionColumnName: 'Actions',
       actions: [{ icon: '', label: 'Action', name: 'DownloadFile', type: 'Standard', disabled: false }],
     }
-
-    this.data = [
-      {
-        id: 1,
-        sector: 'Education',
-        subSector: 'Montesory, Primary, Secondary, College, Master',
-      },
-      {
-        id: 2,
-        sector: 'Finance',
-        subSector: 'Audit, Budget',
-      },
-      {
-        id: 3,
-        sector: 'Sports',
-        subSector: 'Hockey, Cricket',
-      },
-      {
-        id: 3,
-        sector: 'Green Energy',
-        subSector: '',
-      },
-    ]
-
+    this.isLoading = true
+    this.sectorsService.getAllSectors().subscribe((resp: any) => {
+      if (resp && resp.result && resp.result.sectors) {
+        resp.result.sectors.forEach((obj: any) => {
+          this.data.push({
+            identifier: obj.identifier,
+            name: obj.name,
+            children: obj.children,
+            subSector: obj.children.length ? this.getSubSectors(obj.children) : '',
+          })
+        })
+      }
+      this.isLoading = false
+    })
   }
+
+  getSubSectors(children: any) {
+    const namesArray: any = []
+    children.forEach((obj: any) => {
+      namesArray.push(obj.name)
+    })
+    return namesArray.join(', ')
+  }
+
 }
