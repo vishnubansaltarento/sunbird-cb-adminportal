@@ -57,55 +57,56 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-4 flex-column">
-      <div class="profile-container">
-        <div class="profile-box">
-          <div class="input-column px-2 ws-mat-accent-border mb-6 padding-top-m
-              padding-bottom-m padding-right-xl padding-left-l" id="datetime">
-            <label class="heading">Sub-sectors</label>
-            <div class="input-wrapper margin-top-s">
-              <form [formGroup]="myForm" class="create-subsectors-form">
-                <div formArrayName="textboxes">
-                  <div *ngFor="let control of textboxes.controls; let i = index">
-                    <div class="flex-parent-element margin-bottom-l">
-                      <div class="flex-child-element flex">
-                        <mat-form-field appearance="outline" class="sector-title">
-                          <input matInput [formControl]="control" placeholder="Enter text">
-                        </mat-form-field>
-                        <button mat-button [disabled]="control.disabled" class="remove-btn" type="button"
-                          (click)="removeTextbox(i)">
-                          <mat-icon>close</mat-icon>Remove
-                        </button>
-                      </div>
+  </form>
+
+  <div class="flex flex-4 flex-column">
+    <div class="profile-container">
+      <div class="profile-box">
+        <div class="input-column px-2 ws-mat-accent-border mb-6 padding-top-m
+                padding-bottom-m padding-right-xl padding-left-l" id="datetime">
+          <label class="heading">Sub-sectors</label>
+          <div class="input-wrapper margin-top-s">
+            <form [formGroup]="myForm" class="create-subsectors-form">
+              <div formArrayName="textboxes">
+                <div *ngFor="let control of textboxes.controls; let i = index">
+                  <div class="flex-parent-element margin-bottom-l">
+                    <div class="flex-child-element flex">
+                      <mat-form-field appearance="outline" class="sector-title">
+                        <input matInput [formControl]="control" placeholder="Enter text">
+                      </mat-form-field>
+                      <button mat-button [disabled]="control.disabled" class="remove-btn" type="button"
+                        (click)="removeTextbox(i)">
+                        <mat-icon>close</mat-icon>Remove
+                      </button>
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-            <div class="input-wrapper">
-              <div class="flex add-sub-sector">
-                <div class="cursor-pointer flex" (click)="addTextbox()">
-                  <mat-icon>add_circle</mat-icon>&nbsp; Add Sub-sector
-                </div>
+              </div>
+            </form>
+          </div>
+          <div class="input-wrapper">
+            <div class="flex add-sub-sector">
+              <div class="cursor-pointer flex" (click)="addTextbox()">
+                <mat-icon>add_circle</mat-icon>&nbsp; Add Sub-sector
               </div>
             </div>
-            <div class="flex margin-top-l">
-              <div class="margin-right-l">
-                <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
-                  (click)="goToList()">
-                  <span i18n>Cancel</span>
-                </button>
-              </div>
-              <div class="">
-                <button mat-button class="create-btn btn-success" type="button" [disabled]="!myForm.valid"
-                  (click)="onSubSectorSubmit()">
-                  <span i18n>Save</span>
-                </button>
-              </div>
+          </div>
+          <div class="flex margin-top-l">
+            <div class="margin-right-l">
+              <button mat-stroked-button color="accent" type="button" class="mat-accent-border flex-auto-display"
+                (click)="goToList()">
+                <span i18n>Cancel</span>
+              </button>
+            </div>
+            <div class="">
+              <button mat-button class="create-btn btn-success" type="button" [disabled]="!myForm.valid"
+                (click)="onSubSectorSubmit()">
+                <span i18n>Save</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>

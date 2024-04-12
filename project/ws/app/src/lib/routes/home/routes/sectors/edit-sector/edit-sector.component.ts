@@ -41,6 +41,7 @@ export class EditSectorComponent implements OnInit {
       textboxes: this.formBuilder.array([], Validators.required),
     })
     this.addTextbox('Energy')
+    this.addTextbox('Solar Power')
   }
 
   get textboxes() {
@@ -65,14 +66,11 @@ export class EditSectorComponent implements OnInit {
     this.router.navigateByUrl('/app/home/sectors')
   }
 
-  onSubmit() {
-  }
-
   addSubSector() {
   }
 
   onSubSectorSubmit() {
-
+    console.log("form ", this.myForm)
   }
 
   getUrl(url: string) {

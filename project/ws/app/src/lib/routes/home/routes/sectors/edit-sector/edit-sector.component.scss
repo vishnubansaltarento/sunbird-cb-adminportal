@@ -385,4 +385,16 @@ input.mat-input-element {
   background-color: #e7eff4;
 }
 
+.create-sector-form {
+  ::ng-deep.mat-form-field-outline {
+    background-color: #c3c3c3;
+    opacity: 0.6;
+  }
+  ::ng-deep.mat-form-field-outline-thick {
+    color: #c3c3c3 !important;
+  }
+
+
+}
+
 
