@@ -22,11 +22,12 @@ export class AddSectorComponent implements OnInit {
   disableCreateButton = false
   myreg = /^[a-zA-Z0-9.\-_$/:[\]' '!]+$/
   aspectRatio = 1 / 2
+  inProgress = false
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private snackbar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private sectorsService: SectorsService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
@@ -34,7 +35,7 @@ export class AddSectorComponent implements OnInit {
     this.currentUser = _.get(this.activatedRoute, 'snapshot.parent.data.configService.userProfile.userId')
     this.addSectorForm = new FormGroup({
       sectorTitle: new FormControl('', [Validators.required, Validators.pattern(this.myreg)]),
-      appIcon: new FormControl('', [Validators.required]),
+      imgUrl: new FormControl('', [Validators.required]),
     })
   }
 
@@ -47,7 +48,23 @@ export class AddSectorComponent implements OnInit {
   }
 
   onSubmit() {
-
+    let reqestBody = {
+      request: {
+        name: this.addSectorForm.controls['sectorTitle'].value,
+        imgUrl: this.addSectorForm.controls['imgUrl'].value
+      }
+    }
+    this.inProgress = true
+    this.sectorsService.createSector(reqestBody).subscribe((resp: any) => {
+      if (resp && resp.responseCode === 'OK') {
+        this.snackBar.open('Sector is successfuly created.')
+        this.router.navigate([`/app/home/sectors`])
+      }
+      this.inProgress = false
+    }, error => {
+      this.snackBar.open(error, 'X', { duration: 2000 })
+      this.inProgress = false
+    })
   }
 
   generateUrl(oldUrl: string) {
@@ -71,9 +88,9 @@ export class AddSectorComponent implements OnInit {
     const dialogConfig = new MatDialogConfig()
     const dialogRef = this.dialog.open(AddThumbnailComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(data => {
-      if (data && data.appURL) {
+      if (data && data.imgUrl) {
         this.addSectorForm.patchValue({
-          appIcon: this.generateUrl(data.appURL),
+          imgUrl: data.imgUrl,
         })
       } else if (data && data.file) {
         this.uploadAppIcon(data.file)
@@ -102,7 +119,7 @@ export class AddSectorComponent implements OnInit {
     }
 
     if (file.size > (1 * 1024 * 1024)) {
-      this.snackbar.open('Size is greater than allowed.')
+      this.snackBar.open('Size is greater than allowed.')
       return
     }
 

@@ -21,6 +21,7 @@ export class EditSectorComponent implements OnInit {
   isDisabled = true
   myForm: FormGroup
   subSectors: any = []
+  sectorDetails: any
 
   constructor(
     public dialog: MatDialog,
@@ -35,8 +36,8 @@ export class EditSectorComponent implements OnInit {
       sectorTitle: new FormControl({ value: '', disabled: this.isDisabled }, [Validators.required, Validators.pattern(this.myreg)]),
       appIcon: new FormControl('', [Validators.required]),
     })
-    this.addSectorForm.controls['sectorTitle'].setValue('Sector 909')
-    this.addSectorForm.controls['appIcon'].setValue('')
+    this.addSectorForm.controls['sectorTitle'].setValue(this.sectorDetails.name)
+    this.addSectorForm.controls['appIcon'].setValue(this.sectorDetails.imgUrl)
     this.myForm = this.formBuilder.group({
       textboxes: this.formBuilder.array([], Validators.required),
     })

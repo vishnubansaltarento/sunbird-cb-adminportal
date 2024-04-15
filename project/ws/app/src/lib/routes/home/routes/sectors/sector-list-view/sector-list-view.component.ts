@@ -5,6 +5,7 @@ import {
 import * as _ from 'lodash'
 import { IAction, ITableData } from '../../events/interfaces/interfaces'
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
+import { SectorsService } from '../sectors.service'
 
 @Component({
   selector: 'ws-sector-list-view',
@@ -30,7 +31,8 @@ export class SectorListViewComponent implements OnInit {
   }
 
   constructor(
-    private router: Router
+    private router: Router,
+    private sectorsService: SectorsService,
   ) {
     this.dataSource = new MatTableDataSource<any>()
     this.filterData = new EventEmitter()
@@ -63,6 +65,7 @@ export class SectorListViewComponent implements OnInit {
     }
     this.dataSource.data = this.data
     this.length = this.dataSource.data.length
+    setTimeout(() => this.dataSource.paginator = this.paginator)
   }
 
   applyFilter(event: string) {
@@ -78,6 +81,6 @@ export class SectorListViewComponent implements OnInit {
   }
 
   onClickButton(row: any) {
-    this.router.navigateByUrl(`/app/home/sectors/${row.id}/sub-sectors`)
+    this.router.navigateByUrl(`/app/home/sectors/${row.identifier}/sub-sectors`)
   }
 }

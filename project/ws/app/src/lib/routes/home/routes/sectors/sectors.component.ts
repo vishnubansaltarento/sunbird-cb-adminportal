@@ -13,7 +13,6 @@ export class SectorsComponent implements OnInit {
 
   currentUser!: string | null
   tabledata: any = []
-  displayLoader = false
   data: any = []
   isLoading = false
 
@@ -33,7 +32,7 @@ export class SectorsComponent implements OnInit {
       ],
       needCheckBox: false,
       needHash: false,
-      sortColumn: 'sector',
+      sortColumn: 'name',
       sortState: 'asc',
       needUserMenus: false,
       actionColumnName: 'Actions',

@@ -118,7 +118,7 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
           contentType: ['Asset'],
           mediaType: ['image'],
           status: ['Draft'],
-          resourceCategory: ['sector'],
+          resourceCategory: ['sector']
         },
         query: this.queryFilter,
         sort_by: { lastUpdatedOn: 'desc' },
@@ -138,7 +138,7 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
       this.totalContent = data && data.result.response ? data.result.response.totalHits : 0
       this.fetchError = false
     },
-                                                                  error => {
+      error => {
         // tslint:disable-next-line: no-console
         console.log(error)
       })
@@ -151,7 +151,7 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
     return '/assets/instances/eagle/app_logos/default.png'
   }
   public uploadThumbnail() {
-    this.dialogRef.close({ appURL: this.toggle ? this.toggle.artifactUrl : '' })
+    this.dialogRef.close({ imgUrl: this.toggle ? this.toggle.artifactUrl : '' })
   }
 
   public uploadSelectedThumbnail() {

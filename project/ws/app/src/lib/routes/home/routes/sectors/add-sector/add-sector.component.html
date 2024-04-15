@@ -53,13 +53,13 @@
                   </label>
                   <div>Icons will be cropped to 24x24 pixels</div>
                   <div class="image-thumb margin-top-m" (click)="openDialog()"
-                    [ngClass]="{'seleted-image': addSectorForm.controls.appIcon.value}">
+                    [ngClass]="{'seleted-image': addSectorForm.controls.imgUrl.value}">
                     <div class="camera">
                       <mat-icon class="cam-icon">photo_camera</mat-icon>
                     </div>
                     <div class="uploaded-img">
-                      <img class="image max-width" *ngIf="addSectorForm.controls.appIcon.value" height="24" width="24"
-                        [src]="getUrl(addSectorForm.controls.appIcon.value)" />
+                      <img class="image max-width" *ngIf="addSectorForm.controls.imgUrl.value" height="24" width="24"
+                        [src]="getUrl(addSectorForm.controls.imgUrl.value)" />
                     </div>
                   </div>
                 </div>
@@ -84,4 +84,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="inProgress" class="mt-5 pr-4 flex items-center justify-center">
+  <mat-spinner [diameter]="30"></mat-spinner>
 </div>

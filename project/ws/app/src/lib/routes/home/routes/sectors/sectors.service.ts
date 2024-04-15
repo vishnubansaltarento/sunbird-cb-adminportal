@@ -17,8 +17,20 @@ export class SectorsService {
     'channel.json',
   ]
 
-  constructor(
-    private http: HttpClient) { }
+  LIST_SECTORS = '/apis/proxies/v8/catalog/v1/sector'
+  CREATE_SECTOR = '/apis/proxies/v8/catalog/v1/sector/create'
+
+  constructor(private http: HttpClient) { }
+
+  getAllSectors(): Observable<any> {
+    return this.http.get<any>(`${this.LIST_SECTORS}`)
+  }
+
+  createSector(requestBody: any) {
+    return this.http.post(this.CREATE_SECTOR, requestBody).pipe(
+      map((data: any) => data)
+    )
+  }
 
   fetchImagesContent(searchData: any) {
     return this.http.post(this.SEARCH, searchData).pipe(
