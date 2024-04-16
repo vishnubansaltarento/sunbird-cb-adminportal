@@ -30,7 +30,11 @@
   font-size: 14px;
 }
 .create-btn[disabled] {
-  opacity: 0.6;
+  opacity: 0.8;
+}
+.sub-sector-name {
+  font-size: 14px;
+  font-family: "Lato";
 }
 
 mat-card.highlight {

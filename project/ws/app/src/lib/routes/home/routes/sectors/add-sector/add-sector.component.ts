@@ -22,7 +22,7 @@ export class AddSectorComponent implements OnInit {
   disableCreateButton = false
   myreg = /^[a-zA-Z0-9.\-_$/:[\]' '!]+$/
   aspectRatio = 1 / 2
-  inProgress = false
+  isLoading = false
 
   constructor(
     public dialog: MatDialog,
@@ -48,22 +48,22 @@ export class AddSectorComponent implements OnInit {
   }
 
   onSubmit() {
-    let reqestBody = {
+    const reqestBody = {
       request: {
         name: this.addSectorForm.controls['sectorTitle'].value,
-        imgUrl: this.addSectorForm.controls['imgUrl'].value
-      }
+        imgUrl: this.addSectorForm.controls['imgUrl'].value,
+      },
     }
-    this.inProgress = true
+    this.isLoading = true
     this.sectorsService.createSector(reqestBody).subscribe((resp: any) => {
       if (resp && resp.responseCode === 'OK') {
         this.snackBar.open('Sector is successfuly created.')
         this.router.navigate([`/app/home/sectors`])
       }
-      this.inProgress = false
-    }, error => {
+      this.isLoading = false
+    },                                                     error => {
       this.snackBar.open(error, 'X', { duration: 2000 })
-      this.inProgress = false
+      this.isLoading = false
     })
   }
 

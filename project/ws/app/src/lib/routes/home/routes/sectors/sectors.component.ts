@@ -46,6 +46,7 @@ export class SectorsComponent implements OnInit {
             identifier: obj.identifier,
             name: obj.name,
             children: obj.children,
+            code: obj.code,
             subSector: obj.children.length ? this.getSubSectors(obj.children) : '',
           })
         })

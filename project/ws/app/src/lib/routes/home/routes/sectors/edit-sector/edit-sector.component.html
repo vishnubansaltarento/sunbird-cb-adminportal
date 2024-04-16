@@ -42,7 +42,7 @@
                   </label>
                   <div>Icons will be cropped to 24x24 pixels</div>
                   <div class="image-thumb margin-top-m"
-                    [ngClass]="{'seleted-image': addSectorForm.controls.appIcon.value}">
+                    [ngClass]="{'seleted-image': addSectorForm.controls.imgUrl.value}">
                     <div class="camera">
                       <mat-icon class="cam-icon">photo_camera</mat-icon>
                     </div>
@@ -72,11 +72,11 @@
                   <div class="flex-parent-element margin-bottom-l">
                     <div class="flex-child-element flex">
                       <mat-form-field appearance="outline" class="sector-title">
-                        <input matInput [formControl]="control" placeholder="Enter text">
+                        <input matInput [formControl]="control" placeholder="Enter text" class="sub-sector-name">
                       </mat-form-field>
                       <button mat-button [disabled]="control.disabled" class="remove-btn" type="button"
                         (click)="removeTextbox(i)">
-                        <mat-icon>close</mat-icon>Remove
+                        <mat-icon>close</mat-icon> &nbsp;Remove
                       </button>
                     </div>
                   </div>
@@ -109,4 +109,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="loading" class="mt-5 pr-4 flex items-center justify-center">
+  <mat-spinner [diameter]="30"></mat-spinner>
 </div>

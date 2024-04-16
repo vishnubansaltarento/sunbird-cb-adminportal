@@ -19,6 +19,8 @@ export class SectorsService {
 
   LIST_SECTORS = '/apis/proxies/v8/catalog/v1/sector'
   CREATE_SECTOR = '/apis/proxies/v8/catalog/v1/sector/create'
+  READ_SECTOR = '/apis/proxies/v8/catalog/v1/sector/read'
+  CREATE_SUB_SECTORS = 'apis/proxies/v8/catalog/v1/subsector/create'
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +30,16 @@ export class SectorsService {
 
   createSector(requestBody: any) {
     return this.http.post(this.CREATE_SECTOR, requestBody).pipe(
+      map((data: any) => data)
+    )
+  }
+
+  readSector(id: any) {
+    return this.http.get<any>(`${this.READ_SECTOR}/${id}`)
+  }
+
+  createSubSectors(requestBody: any) {
+    return this.http.post(this.CREATE_SUB_SECTORS, requestBody).pipe(
       map((data: any) => data)
     )
   }

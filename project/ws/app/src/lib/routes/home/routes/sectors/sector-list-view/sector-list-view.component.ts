@@ -5,7 +5,6 @@ import {
 import * as _ from 'lodash'
 import { IAction, ITableData } from '../../events/interfaces/interfaces'
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
-import { SectorsService } from '../sectors.service'
 
 @Component({
   selector: 'ws-sector-list-view',
@@ -23,7 +22,7 @@ export class SectorListViewComponent implements OnInit {
   length!: number
   pageSize = 20
   pageSizeOptions = [20, 30, 40]
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {
       this.dataSource.sort = sort
@@ -32,7 +31,6 @@ export class SectorListViewComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private sectorsService: SectorsService,
   ) {
     this.dataSource = new MatTableDataSource<any>()
     this.filterData = new EventEmitter()
@@ -70,7 +68,7 @@ export class SectorListViewComponent implements OnInit {
 
   applyFilter(event: string) {
     if (event) {
-      this.dataSource.data = this.data.filter((d: any) => d.sector.toString().toLowerCase().includes(event.toLowerCase()))
+      this.dataSource.data = this.data.filter((d: any) => d.name.toString().toLowerCase().includes(event.toLowerCase()))
     } else {
       this.dataSource.data = this.data
     }
@@ -81,6 +79,6 @@ export class SectorListViewComponent implements OnInit {
   }
 
   onClickButton(row: any) {
-    this.router.navigateByUrl(`/app/home/sectors/${row.identifier}/sub-sectors`)
+    this.router.navigateByUrl(`/app/home/sectors/${row.code}/sub-sectors`)
   }
 }
