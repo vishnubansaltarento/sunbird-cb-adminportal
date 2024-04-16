@@ -69,8 +69,9 @@ export class AddThumbnailComponent implements OnInit {
 
   }
 
+  // upload icon
   onFileSelected(files: any) {
-    if (files.length === 0) {
+    if (files.length === sectorConstants.zero) {
       return
     }
 
@@ -88,25 +89,29 @@ export class AddThumbnailComponent implements OnInit {
       this.imgURL = reader.result
     }
   }
-
+  // toggle the button
   showHideButton() {
     this.showMainContent = this.showMainContent ? false : true
   }
 
+  // when user load icon
   onValChange(val: any | null = null) {
     this.isChecked = true
     this.thumbanilSelectval = val ? val.identifier : ''
     this.toggle = val
   }
 
+  // get all icons
   filter(key: string | 'myimages' | 'all') {
     if (key) {
       this.fetchContent(false, null)
     }
   }
+  // get default icon
   changeToDefaultImg($event: any) {
     $event.target.src = '/assets/instances/eagle/app_logos/default.png'
   }
+  // get the icon using API
   fetchContent(loadMoreFlag: boolean, createdBy: string | null) {
     const requestData = {
       request: {
@@ -144,6 +149,7 @@ export class AddThumbnailComponent implements OnInit {
         console.log(error)
       })
   }
+  // format the URL to dispaly sector image
   public bypass(uri: string) {
     // tslint:disable-next-line: triple-equals
     if (uri && uri.indexOf(environment.contentBucket) != -1) {
@@ -151,14 +157,15 @@ export class AddThumbnailComponent implements OnInit {
     }
     return '/assets/instances/eagle/app_logos/default.png'
   }
+  // upload new icon
   public uploadThumbnail() {
     this.dialogRef.close({ imgUrl: this.toggle ? this.toggle.artifactUrl : '' })
   }
-
+  // upload the selected the icon
   public uploadSelectedThumbnail() {
     this.dialogRef.close({ file: this.imagePath })
   }
-
+  // format the URL to dispaly sector image
   getUrl(url: string) {
     if (this.sectotsService.getChangedArtifactUrl(url)) {
       return this.sanitizer.bypassSecurityTrustResourceUrl(this.sectotsService.getChangedArtifactUrl(url))

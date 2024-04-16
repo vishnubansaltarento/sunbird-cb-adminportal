@@ -38,6 +38,7 @@ export class SectorListViewComponent implements OnInit {
     this.dataSource.paginator = this.paginator
   }
 
+  // find the action column data
   getFinalColumns() {
     if (this.tableData !== undefined) {
       const columns = _.map(this.tableData.columns, c => c.key)
@@ -67,6 +68,7 @@ export class SectorListViewComponent implements OnInit {
     setTimeout(() => this.dataSource.paginator = this.paginator)
   }
 
+  // Filter sectors based on the user search
   applyFilter(event: string) {
     if (event) {
       this.dataSource.data = this.data.filter((d: any) => d.name.toString().toLowerCase().includes(event.toLowerCase()))
@@ -75,10 +77,11 @@ export class SectorListViewComponent implements OnInit {
     }
   }
 
+  // Navigate to create sector
   onCreateClick() {
     this.router.navigateByUrl('/app/home/sectors/new')
   }
-
+  // Navigate to create sub sectors
   onClickButton(row: any) {
     this.router.navigateByUrl(`/app/home/sectors/${row.code}/sub-sectors`)
   }

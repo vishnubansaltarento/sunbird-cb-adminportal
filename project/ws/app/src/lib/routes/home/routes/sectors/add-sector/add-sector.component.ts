@@ -43,11 +43,12 @@ export class AddSectorComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  // Navigate to sectors page
   goToList() {
     this.router.navigateByUrl('/app/home/sectors')
   }
 
+  // create sectors
   onSubmit() {
     const reqestBody = {
       request: {
@@ -68,6 +69,7 @@ export class AddSectorComponent implements OnInit {
     })
   }
 
+  // format the URL to dispaly sector image
   generateUrl(oldUrl: string) {
     const chunk = oldUrl ? oldUrl.split('/') : []
     const newChunk = environment.contentBucket.split('/')
@@ -84,7 +86,7 @@ export class AddSectorComponent implements OnInit {
     const newUrl = newLink.join('/')
     return newUrl
   }
-
+  // Show modal to select the sector image
   openDialog() {
     const dialogConfig = new MatDialogConfig()
     const dialogRef = this.dialog.open(AddThumbnailComponent, dialogConfig)
@@ -99,6 +101,7 @@ export class AddSectorComponent implements OnInit {
     })
   }
 
+  // upload sector icon
   uploadAppIcon(file: File) {
     if (!file) {
       return
@@ -178,6 +181,7 @@ export class AddSectorComponent implements OnInit {
     })
   }
 
+  // format the URL to dispaly sector image
   getUrl(url: string) {
     if (this.sectorsService.getChangedArtifactUrl(url)) {
       return this.sanitizer.bypassSecurityTrustResourceUrl(this.sectorsService.getChangedArtifactUrl(url))

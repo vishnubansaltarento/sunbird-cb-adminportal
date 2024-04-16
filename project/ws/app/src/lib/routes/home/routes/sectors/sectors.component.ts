@@ -39,6 +39,7 @@ export class SectorsComponent implements OnInit {
       actions: [{ icon: '', label: 'Action', name: 'DownloadFile', type: 'Standard', disabled: false }],
     }
     this.isLoading = true
+    // Get all sectors
     this.sectorsService.getAllSectors().subscribe((resp: any) => {
       if (resp && resp.result && resp.result.sectors) {
         resp.result.sectors.forEach((obj: any) => {
@@ -55,6 +56,7 @@ export class SectorsComponent implements OnInit {
     })
   }
 
+  // Get all sub sectors
   getSubSectors(children: any) {
     const namesArray: any = []
     children.forEach((obj: any) => {

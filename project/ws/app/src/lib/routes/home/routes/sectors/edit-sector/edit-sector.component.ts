@@ -47,17 +47,18 @@ export class EditSectorComponent implements OnInit {
       textboxes: this.formBuilder.array([], Validators.required),
     })
   }
-
+  // Initialize the textbox
   get textboxes() {
     return this.myForm.get('textboxes') as FormArray
   }
-
+  // Dynamically add textbox for sub sectors
   addTextbox(value: string = '') {
     this.textboxes.push(
       this.formBuilder.control({ value, disabled: value.length }, [Validators.required])
     )
   }
 
+  // Remove sub sectors textbox
   removeTextbox(index: number) {
     this.textboxes.removeAt(index)
   }
@@ -83,14 +84,12 @@ export class EditSectorComponent implements OnInit {
       }
     })
   }
-
+  // Navigate to sectors page
   goToList() {
     this.router.navigateByUrl('/app/home/sectors')
   }
 
-  addSubSector() {
-  }
-
+  // Add sub sectors
   onSubSectorSubmit() {
     const requestBody = {
       request: {
@@ -115,6 +114,7 @@ export class EditSectorComponent implements OnInit {
 
   }
 
+  // format the URL to dispaly sector image
   getUrl(url: string) {
     if (this.sectorsService.getChangedArtifactUrl(url)) {
       return this.sanitizer.bypassSecurityTrustResourceUrl(this.sectorsService.getChangedArtifactUrl(url))
