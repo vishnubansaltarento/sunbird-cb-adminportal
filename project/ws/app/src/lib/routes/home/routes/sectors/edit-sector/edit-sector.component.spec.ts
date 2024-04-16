@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { GeneralReportsComponent } from './general-reports.component'
+import { EditSectorComponent } from './edit-sector.component'
 
-describe('GeneralReportsComponent', () => {
-  let component: GeneralReportsComponent
-  let fixture: ComponentFixture<GeneralReportsComponent>
+describe('EditSectorComponent', () => {
+  let component: EditSectorComponent
+  let fixture: ComponentFixture<EditSectorComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GeneralReportsComponent],
+      declarations: [EditSectorComponent],
     })
       .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneralReportsComponent)
+    fixture = TestBed.createComponent(EditSectorComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

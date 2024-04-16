@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { GeneralReportsComponent } from './general-reports.component'
+import { SectorListViewComponent } from './sector-list-view.component'
 
-describe('GeneralReportsComponent', () => {
-  let component: GeneralReportsComponent
-  let fixture: ComponentFixture<GeneralReportsComponent>
+describe('SectorListViewComponent', () => {
+  let component: SectorListViewComponent
+  let fixture: ComponentFixture<SectorListViewComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GeneralReportsComponent],
+      declarations: [SectorListViewComponent],
     })
       .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneralReportsComponent)
+    fixture = TestBed.createComponent(SectorListViewComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

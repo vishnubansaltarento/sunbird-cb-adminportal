@@ -1,7 +1,7 @@
 import { CommsComponent } from './routes/comms/comms.component'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule, ImageCropModule } from '@sunbird-cb/utils'
+import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
@@ -27,6 +27,7 @@ import {
   MAT_DIALOG_DATA,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatButtonToggleModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -43,6 +44,8 @@ import {
   UIORGTableModule,
   ScrollspyLeftMenuModule,
 } from '@sunbird-cb/collection'
+// TO-DO need to enable for image crop
+//import { ImageCropModule } from './routes/image-crop/image-crop.module'
 import { AboutComponent } from './routes/about/about.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 import { DirectoryViewComponent } from './routes/directory/directroy.component'
@@ -74,6 +77,11 @@ import { EditEventComponent } from './routes/events/edit-event/edit-event.compon
 import { PipePublicURLModule } from './pipes/pipe-public-URL/pipe-public-URL.module'
 import { AcbpReportsComponent } from './routes/acbp-reports/acbp-reports.component'
 import { GeneralReportsComponent } from './routes/general-reports/general-reports.component'
+import { SectorsComponent } from './routes/sectors/sectors.component'
+import { SectorListViewComponent } from './routes/sectors/sector-list-view/sector-list-view.component'
+import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
+import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
+import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -96,10 +104,15 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     CommsComponent,
     AcbpReportsComponent,
     GeneralReportsComponent,
+    SectorsComponent,
+    AddSectorComponent,
+    EditSectorComponent,
+    AddThumbnailComponent,
     EventsListComponent,
     EventListViewComponent,
     EventThumbnailComponent,
     CreateEventComponent,
+    SectorListViewComponent,
     EditEventComponent,
     ParticipantsComponent,
     SuccessComponent,
@@ -130,6 +143,7 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSidenavModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
@@ -145,7 +159,8 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     BtnPageBackModuleAdmin,
     WidgetResolverModule,
     UserAutocompleteModule,
-    ImageCropModule,
+    // TO-DO need to enable for image crop
+    //ImageCropModule,
     UIAdminTableModule,
     UIORGTableModule,
     MatTableModule,
@@ -154,6 +169,8 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     MatPaginatorModule,
     PipePublicURLModule,
     ScrollspyLeftMenuModule,
+    // TO-DO need to enable for image crop
+    //ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   entryComponents: [
@@ -163,6 +180,7 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     RejectReasonDialogComponent,
     EventThumbnailComponent,
     ParticipantsComponent,
+    AddThumbnailComponent,
     SuccessComponent],
   providers: [
     // CKEditorService,
@@ -171,6 +189,7 @@ import { GeneralReportsComponent } from './routes/general-reports/general-report
     { provide: MAT_DIALOG_DATA, useValue: {} },
     MatDatepickerModule, MatNativeDateModule,
   ],
+  exports: [AddThumbnailComponent],
 })
 export class HomeModule {
 
