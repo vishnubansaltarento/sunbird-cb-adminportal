@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper'
 import { ConfigurationsService } from '../../services/configurations.service'
 import { ValueService } from './value.service'
+import { sectorConstants } from '../sectors/sectors-constats.model'
 
 @Component({
   selector: 'ws-utils-image-crop',
@@ -34,6 +35,7 @@ export class ImageCropComponent implements OnInit {
   element: any
   isXSmall = false
   isThumbnail = true
+
 
   constructor(
     private dialogRef: MatDialogRef<ImageCropComponent>,
@@ -98,7 +100,7 @@ export class ImageCropComponent implements OnInit {
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'X', {
-      duration: 2000,
+      duration: sectorConstants.duration,
     })
   }
   continueToImageCrop() {

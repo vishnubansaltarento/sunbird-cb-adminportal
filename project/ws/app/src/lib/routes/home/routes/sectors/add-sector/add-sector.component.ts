@@ -9,6 +9,7 @@ import { environment } from '../../../../../../../../../../src/environments/envi
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { SectorsService } from '../sectors.service'
 import { DomSanitizer } from '@angular/platform-browser'
+import { sectorConstants } from '../sectors-constats.model'
 
 @Component({
   selector: 'ws-app-add-sector',
@@ -20,7 +21,7 @@ export class AddSectorComponent implements OnInit {
   currentUser!: string | null
   addSectorForm: FormGroup
   disableCreateButton = false
-  myreg = /^[a-zA-Z0-9.\-_$/:[\]' '!]+$/
+  myreg = sectorConstants.nameRegex
   aspectRatio = 1 / 2
   isLoading = false
 
@@ -61,8 +62,8 @@ export class AddSectorComponent implements OnInit {
         this.router.navigate([`/app/home/sectors`])
       }
       this.isLoading = false
-    },                                                     error => {
-      this.snackBar.open(error, 'X', { duration: 2000 })
+    }, error => {
+      this.snackBar.open(error, 'X', { duration: sectorConstants.duration })
       this.isLoading = false
     })
   }
@@ -118,7 +119,7 @@ export class AddSectorComponent implements OnInit {
       return
     }
 
-    if (file.size > (1 * 1024 * 1024)) {
+    if (file.size > (sectorConstants.fileCount * sectorConstants.fileSize * sectorConstants.fileSize)) {
       this.snackBar.open('Size is greater than allowed.')
       return
     }
@@ -128,8 +129,8 @@ export class AddSectorComponent implements OnInit {
       data: {
         isRoundCrop: false,
         imageFile: file,
-        width: 24,
-        height: 24,
+        width: sectorConstants.width,
+        height: sectorConstants.width,
         isThumbnail: true,
         imageFileName: fileName,
       },

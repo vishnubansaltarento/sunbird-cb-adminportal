@@ -5,6 +5,7 @@ import {
 import * as _ from 'lodash'
 import { IAction, ITableData } from '../../events/interfaces/interfaces'
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
+import { sectorConstants } from '../sectors-constats.model'
 
 @Component({
   selector: 'ws-sector-list-view',
@@ -20,8 +21,8 @@ export class SectorListViewComponent implements OnInit {
   displayedColumns: any = []
   dataSource!: any
   length!: number
-  pageSize = 20
-  pageSizeOptions = [20, 30, 40]
+  pageSize = sectorConstants.pageSize
+  pageSizeOptions = sectorConstants.pageOptions
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null
   @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     if (!this.dataSource.sort) {

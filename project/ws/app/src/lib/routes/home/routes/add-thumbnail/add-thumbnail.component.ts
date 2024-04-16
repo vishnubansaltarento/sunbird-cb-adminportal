@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, Output, EventEmitter, OnDestroy } from '@angular/core'
+import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
@@ -7,13 +7,14 @@ import { DomSanitizer } from '@angular/platform-browser'
 import _ from 'lodash'
 import { environment } from '../../../../../../../../../src/environments/environment'
 import { SectorsService } from '../sectors/sectors.service'
+import { sectorConstants } from '../sectors/sectors-constats.model'
 /* tslint:enable */
 @Component({
   selector: 'ws-auth-add-thumbnail',
   templateUrl: './add-thumbnail.component.html',
   styleUrls: ['./add-thumbnail.component.scss'],
 })
-export class AddThumbnailComponent implements OnInit, OnDestroy {
+export class AddThumbnailComponent implements OnInit {
   toggle: any = null
   currentParentId!: string
   startForm!: FormGroup
@@ -57,8 +58,8 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.pagination = {
-      offset: 0,
-      limit: 24,
+      offset: sectorConstants.offset,
+      limit: sectorConstants.limit,
     }
     this.startForm = this.formBuilder.group({
       thumbnail: [],
@@ -68,24 +69,21 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
-  }
-
   onFileSelected(files: any) {
     if (files.length === 0) {
       return
     }
 
     const mimeType = files[0].type
-    if (mimeType.match(/image\/*/) == null) {
+    if (mimeType.match(sectorConstants.fileTypeRegex) == null) {
       this.message = 'Only images are supported.'
       return
     }
     this.message = ''
     const reader = new FileReader()
-    this.imagePath = files[0]
+    this.imagePath = files.length ? files[0] : ''
     this.isChecked = true
-    reader.readAsDataURL(files[0])
+    reader.readAsDataURL(files.length ? files[0] : '')
     reader.onload = _event => {
       this.imgURL = reader.result
     }
@@ -114,11 +112,14 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
       request: {
         filters: {
           createdBy,
-          compatibilityLevel: { min: 1, max: 2 },
+          compatibilityLevel: {
+            min: sectorConstants.minCompatibilityLevel,
+            max: sectorConstants.maxCompatibilityLevel
+          },
           contentType: ['Asset'],
           mediaType: ['image'],
           status: ['Draft'],
-          resourceCategory: ['sector'],
+          resourceCategory: ['sector']
         },
         query: this.queryFilter,
         sort_by: { lastUpdatedOn: 'desc' },
@@ -135,10 +136,10 @@ export class AddThumbnailComponent implements OnInit, OnDestroy {
           : data && data.result.content
             ? _.uniqBy(data.result.content, 'identifier')
             : []
-      this.totalContent = data && data.result.response ? data.result.response.totalHits : 0
+      this.totalContent = data && data.result.response ? data.result.response.totalHits : sectorConstants.zero
       this.fetchError = false
     },
-                                                                  error => {
+      error => {
         // tslint:disable-next-line: no-console
         console.log(error)
       })

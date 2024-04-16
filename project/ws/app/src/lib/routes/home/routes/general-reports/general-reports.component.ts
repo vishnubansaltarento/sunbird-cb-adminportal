@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common'
 import { MomentDateAdapter } from '@angular/material-moment-adapter'
 import moment from 'moment'
 import { GeneralReportsService } from './general-reports.service'
+import { sectorConstants } from '../sectors/sectors-constats.model'
 
 export const MY_FORMATS = {
   parse: {
@@ -85,7 +86,7 @@ export class GeneralReportsComponent implements OnInit {
       }
     },
       (error) => {
-        this.snackBar.open(error.statusText, 'X', { duration: 2000 })
+        this.snackBar.open(error.statusText, 'X', { duration: sectorConstants.duration })
       }
     )
     setTimeout(() => this.dataSource.paginator = this.paginator)
@@ -118,7 +119,7 @@ export class GeneralReportsComponent implements OnInit {
     }, error => {
       this.displayLoader = false
       // tslint:disable-next-line: no-console
-      this.snackBar.open(error.statusText, 'X', { duration: 2000 })
+      this.snackBar.open(error.statusText, 'X', { duration: sectorConstants.duration })
     })
   }
 
@@ -126,7 +127,7 @@ export class GeneralReportsComponent implements OnInit {
     if (event.row.downloadUrl && event.row.downloadUrl !== '') {
       this.downloadReport(event.row)
     } else {
-      this.snackBar.open('Report is not available.', 'X', { duration: 2000 })
+      this.snackBar.open('Report is not available.', 'X', { duration: sectorConstants.duration })
     }
   }
 

@@ -24,7 +24,7 @@
             </ng-container>
 
 
-            <ng-container *ngIf="imageList && imageList.length > 0">
+            <ng-container *ngIf="imageList && imageList.length">
                 <div class="imageCard">
                     <mat-button-toggle-group class="category-card" #group="matButtonToggleGroup"
                         (change)="onValChange(group.value)" *ngFor="let image of imageList" [value]="toggle">
@@ -41,13 +41,10 @@
             </ng-container>
 
 
-            <ng-container *ngIf="!(imageList && imageList.length > 0)">
+            <ng-container *ngIf="!(imageList && imageList.length)">
                 <mat-card class="mat-card margin-bottom-l">
                     <mat-card-header>
-                        <mat-card-title>No result found.<a href="javascript:void(0)" role="button" class="filter-option"
-                                [ngClass]="{'ws-mat-accent-border-active' : currentFilter === 'all',
-                    'ws-mat-accent-border font-medium':currentFilter !== 'all'}" mat-button (click)="filter('all')">
-                                Click here </a> to search in all icons.
+                        <mat-card-title>No result found.
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
@@ -63,10 +60,6 @@
 
         <div mat-card-actions class="footer">
             <span class="itemleft">
-                <!-- <button mat-raised-button type="button" (click)="showHideButton()"
-                    class="text-white ws-mat-primary-background flex-auto-display">
-                    <span class="text-white" i18n>Upload and use</span>
-                </button> -->
             </span>
             <span class="itemright">
                 <button mat-button class="mr-2" [mat-dialog-close]="true">
@@ -79,27 +72,15 @@
             </span>
         </div>
     </div>
-
-    <!-- </ng-container> -->
-    <!-- </mat-card> -->
 </div>
 
 <div class="card" *ngIf="!showMainContent">
     <mat-card class="mt-5">
-        <!-- <mat-card-header>
-            <mat-icon mat-card-avatar>save_alt</mat-icon>
-            <mat-card-title>Upload and use</mat-card-title>
-        </mat-card-header> -->
     </mat-card>
     <mat-card class="mt-5">
         <mat-dialog-content>
-
             <span style="color:red;" *ngIf="message">{{message}}</span>
-            <!-- <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button> -->
-            <!-- <input hidden (change)="onFileSelected(file.files)" #fileInput type="file" id="file"> -->
             <input #file type="file" (change)="onFileSelected(file.files)" />
-
-
         </mat-dialog-content>
     </mat-card>
 

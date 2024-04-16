@@ -7,6 +7,7 @@ import * as _ from 'lodash'
 import { SectorsService } from '../sectors.service'
 import { DomSanitizer } from '@angular/platform-browser'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { sectorConstants } from '../sectors-constats.model'
 
 @Component({
   selector: 'ws-app-edit-sector',
@@ -18,7 +19,7 @@ export class EditSectorComponent implements OnInit {
   currentUser!: string | null
   addSectorForm: FormGroup
   disableCreateButton = false
-  myreg = /^[a-zA-Z0-9.\-_$/:[\]' '!]+$/
+  myreg = sectorConstants.nameRegex
   isDisabled = true
   myForm: FormGroup
   subSectors: any = []
@@ -76,8 +77,8 @@ export class EditSectorComponent implements OnInit {
               })
             }
           }
-        },                                                error => {
-          this.snackBar.open(error, 'X', { duration: 2000 })
+        }, error => {
+          this.snackBar.open(error, 'X', { duration: sectorConstants.duration })
         })
       }
     })
@@ -107,8 +108,8 @@ export class EditSectorComponent implements OnInit {
         this.router.navigate([`/app/home/sectors`])
       }
       this.loading = false
-    },                                                          error => {
-      this.snackBar.open(error, 'X', { duration: 2000 })
+    }, error => {
+      this.snackBar.open(error, 'X', { duration: sectorConstants.duration })
       this.loading = false
     })
 
