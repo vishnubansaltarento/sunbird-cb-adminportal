@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router'
 import * as _ from 'lodash'
 import { AddThumbnailComponent } from '../../add-thumbnail/add-thumbnail.component'
-import { ImageCropComponent } from '../../image-crop/image-crop.component'
+// import { ImageCropComponent } from '../../image-crop/image-crop.component'
 import { environment } from '../../../../../../../../../../src/environments/environment'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { SectorsService } from '../sectors.service'
@@ -63,7 +63,7 @@ export class AddSectorComponent implements OnInit {
         this.router.navigate([`/app/home/sectors`])
       }
       this.isLoading = false
-    }, error => {
+    },                                                     error => {
       this.snackBar.open(error, 'X', { duration: sectorConstants.duration })
       this.isLoading = false
     })
@@ -106,7 +106,7 @@ export class AddSectorComponent implements OnInit {
     if (!file) {
       return
     }
-    const formdata = new FormData()
+    // const formdata = new FormData()
     const fileName = file.name
 
     if (
@@ -127,58 +127,58 @@ export class AddSectorComponent implements OnInit {
       return
     }
 
-    const dialogRef = this.dialog.open(ImageCropComponent, {
-      width: '70%',
-      data: {
-        isRoundCrop: false,
-        imageFile: file,
-        width: sectorConstants.width,
-        height: sectorConstants.width,
-        isThumbnail: true,
-        imageFileName: fileName,
-      },
-    })
+    // const dialogRef = this.dialog.open(ImageCropComponent, {
+    //   width: '70%',
+    //   data: {
+    //     isRoundCrop: false,
+    //     imageFile: file,
+    //     width: sectorConstants.width,
+    //     height: sectorConstants.width,
+    //     isThumbnail: true,
+    //     imageFileName: fileName,
+    //   },
+    // })
 
-    dialogRef.afterClosed().subscribe({
-      next: (result: File) => {
-        if (result) {
-          formdata.append('content', result, fileName)
-          let randomNumber = ''
-          // tslint:disable-next-line: no-increment-decrement
-          for (let i = 0; i < 16; i++) {
-            randomNumber += Math.floor(Math.random() * 10)
-          }
+    // dialogRef.afterClosed().subscribe({
+    //   next: (result: File) => {
+    //     if (result) {
+    //       formdata.append('content', result, fileName)
+    //       let randomNumber = ''
+    //       // tslint:disable-next-line: no-increment-decrement
+    //       for (let i = 0; i < 16; i++) {
+    //         randomNumber += Math.floor(Math.random() * 10)
+    //       }
 
-          const requestBody = {
-            request: {
-              content: {
-                code: randomNumber,
-                contentType: 'Asset',
-                createdBy: this.currentUser,
-                creator: this.currentUser,
-                mimeType: 'image/png',
-                mediaType: 'image',
-                name: fileName,
-                language: ['English'],
-                license: 'CC BY 4.0',
-                primaryCategory: 'Asset',
-              },
-            },
-          }
-          this.sectorsService.createImageContent(requestBody).subscribe((res: any) => {
-            this.sectorsService
-              .upload(formdata, {
-                contentId: res.result.identifier,
-                contentType: this.sectorsService.CONTENT_BASE_STATIC,
-              }).subscribe((data: any) => {
-                if (data.result) {
-                  this.addSectorForm.controls.appIcon.setValue(this.generateUrl(data.result.artifactUrl))
-                }
-              })
-          })
-        }
-      },
-    })
+    //       const requestBody = {
+    //         request: {
+    //           content: {
+    //             code: randomNumber,
+    //             contentType: 'Asset',
+    //             createdBy: this.currentUser,
+    //             creator: this.currentUser,
+    //             mimeType: 'image/png',
+    //             mediaType: 'image',
+    //             name: fileName,
+    //             language: ['English'],
+    //             license: 'CC BY 4.0',
+    //             primaryCategory: 'Asset',
+    //           },
+    //         },
+    //       }
+    //       this.sectorsService.createImageContent(requestBody).subscribe((res: any) => {
+    //         this.sectorsService
+    //           .upload(formdata, {
+    //             contentId: res.result.identifier,
+    //             contentType: this.sectorsService.CONTENT_BASE_STATIC,
+    //           }).subscribe((data: any) => {
+    //             if (data.result) {
+    //               this.addSectorForm.controls.appIcon.setValue(this.generateUrl(data.result.artifactUrl))
+    //             }
+    //           })
+    //       })
+    //     }
+    //   },
+    // })
   }
 
   // format the URL to dispaly sector image
