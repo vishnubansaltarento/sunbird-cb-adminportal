@@ -53,6 +53,10 @@ export class SectorsComponent implements OnInit {
         })
       }
       this.isLoading = false
+    }, error => {
+      this.isLoading = false
+      // tslint:disable-next-line: no-console
+      console.log(error)
     })
   }
 
