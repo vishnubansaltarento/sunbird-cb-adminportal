@@ -63,11 +63,16 @@ export class AddSectorComponent implements OnInit {
         this.router.navigate([`/app/home/sectors`])
       }
       this.isLoading = false
-    }, error => {
-      this.snackBar.open(
-        (error && error.statusText) ? error.statusText : 'Something went wrong.', 'X',
-        { duration: sectorConstants.duration }
-      )
+    }, eResp => {
+      if (eResp && eResp.error && eResp.error.responseCode === 'BAD_REQUEST') {
+        this.snackBar.open(eResp.error.params.errmsg)
+      }
+      if (eResp && eResp.error && eResp.error.responseCode !== 'BAD_REQUEST') {
+        this.snackBar.open(
+          (eResp && eResp.statusText) ? eResp.statusText : 'Something went wrong.', 'X',
+          { duration: sectorConstants.duration }
+        )
+      }
       this.isLoading = false
     })
   }
