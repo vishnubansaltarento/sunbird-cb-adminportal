@@ -98,7 +98,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogConfirmComponent,
     LoginRootComponent,
     LoginRootDirective,
-    PublicHomeComponent
+    PublicHomeComponent,
   ],
   imports: [
     FormsModule,
