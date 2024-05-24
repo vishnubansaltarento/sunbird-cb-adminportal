@@ -494,6 +494,7 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
+          localStorage.setItem('login', 'true')
         } else {
           this.authSvc.force_logout()
         }
