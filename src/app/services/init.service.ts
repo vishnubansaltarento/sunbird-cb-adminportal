@@ -1,7 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
-import { MatIconRegistry } from '@angular/material'
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser'
 import { BtnSettingsService } from '@sunbird-cb/collection'
 import { v4 as uuid } from 'uuid'

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { CreateMDOService } from '../../../routes/home/services/create-mdo.services'
-import { MatSnackBar } from '@angular/material'
+import { MatSnackBar } from '@angular/material/snack-bar';
 // tslint:disable-next-line:import-spacing
 // import  *  as  contentQuality  from  './content-quality.json'
 export interface IDialogData {

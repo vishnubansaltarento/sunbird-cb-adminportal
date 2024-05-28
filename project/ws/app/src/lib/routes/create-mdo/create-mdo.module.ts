@@ -7,11 +7,9 @@ import { HomeModule } from '../home/home.module'
 import { RouterModule } from '@angular/router'
 import { UsersComponent } from './routes/users/users.component'
 import { UsersService } from './services/users.service'
-import {
-  MatSidenavModule,
-  MatIconModule,
-  MatProgressSpinnerModule,
-} from '@angular/material'
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card'
 import { RolesAccessComponent } from '../access/routes/roles-access/roles-access.component'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
