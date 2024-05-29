@@ -28,6 +28,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatButtonToggleModule,
+  MatRadioModule
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -82,6 +83,10 @@ import { SectorListViewComponent } from './routes/sectors/sector-list-view/secto
 import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
 import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
 import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.component'
+import { AllRequestComponent } from './routes/request/all-request/all-request.component'
+import { RequestCopyDetailsComponent } from './routes/request/request-copy-details/request-copy-details.component'
+import { CompetencyViewComponent } from './routes/request/competency-view/competency-view.component'
+import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/confirmation-popup.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -119,6 +124,10 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     AcsendingOrderPipe,
     PipeEmailPipe,
     RejectReasonDialogComponent,
+    AllRequestComponent,
+    RequestCopyDetailsComponent,
+    CompetencyViewComponent,
+    ConfirmationPopupComponent
   ],
   imports: [
     CommonModule,
@@ -169,6 +178,7 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     MatPaginatorModule,
     PipePublicURLModule,
     ScrollspyLeftMenuModule,
+    MatRadioModule,
     // TO-DO need to enable for image crop
     //ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
@@ -181,6 +191,8 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     EventThumbnailComponent,
     ParticipantsComponent,
     AddThumbnailComponent,
+    CompetencyViewComponent,
+    ConfirmationPopupComponent,
     SuccessComponent],
   providers: [
     // CKEditorService,
@@ -188,6 +200,7 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     InitResolver,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     MatDatepickerModule, MatNativeDateModule,
+    ConfirmationPopupComponent
   ],
   exports: [AddThumbnailComponent],
 })
