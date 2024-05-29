@@ -3,7 +3,12 @@ import { MatTableDataSource } from '@angular/material'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { RequestServiceService } from '../request-service.service'
-
+export enum statusValue {
+  Assigned= "Assigned",
+  Unassigned = "Unassigned",
+  Inprogress = "Inprogress",
+  invalid = "invalid"
+}
 @Component({
   selector: 'ws-app-all-request',
   templateUrl: './all-request.component.html',
@@ -51,6 +56,9 @@ export class AllRequestComponent implements OnInit {
       count: 125,
     },
   ]
+  statusKey = statusValue
+
+  
 
   constructor(
     private sanitizer: DomSanitizer,
