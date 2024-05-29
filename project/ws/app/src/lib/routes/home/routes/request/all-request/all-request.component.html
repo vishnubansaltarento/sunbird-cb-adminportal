@@ -1,4 +1,3 @@
-<!-- <div class="container-balanced fix-ww"> -->
     <div class="nav-container" autosize name="auth-tool-exp">
         <div class="nav-container">
          
@@ -8,10 +7,10 @@
                 <mat-card class="status-card" *ngFor="let card of statusCards">
                     <div class="card-content">
                       <div class="status-title">
-                      <span class="title-text"> {{ card.title }}</span> 
+                      <span class="title-text"> {{ card?.title }}</span> 
                         <mat-icon class="info-icon">info</mat-icon>
                       </div>
-                      <div class="status-value">{{ card.count }}</div>
+                      <div class="status-value">{{ card?.count }}</div>
                     </div>
                   </mat-card>
 
@@ -24,39 +23,39 @@
                 <table mat-table [dataSource]="dataSource">
                   <ng-container matColumnDef="RequestId">
                     <th mat-header-cell *matHeaderCellDef>Request ID </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element.demand_id}}</td>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.demand_id}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="title">
                     <th mat-header-cell *matHeaderCellDef>Title </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element.title}}</td>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.title}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="requestType">
                     <th mat-header-cell *matHeaderCellDef>Request Type </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element.requestType}}</td>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.requestType}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="requestStatus">
                     <th mat-header-cell *matHeaderCellDef>Request Status </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element.status}}</td>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.status}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="assignee">
                     <th mat-header-cell *matHeaderCellDef>Assignee </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element.assignedProvider}}</td>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.assignedProvider}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="requestedOn">
                     <th mat-header-cell *matHeaderCellDef>Requested On </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element.createdOn | date}}</td>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.createdOn | date}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="interests">
                     <th mat-header-cell *matHeaderCellDef>Interests</th>
                     <td mat-cell class="title-class" *matCellDef="let element">
                         <a class="action-btn-view"  (click)="showInterestPopup()"
-                        href="javascript:void(0)">{{element.interestCount}}</a>
+                        href="javascript:void(0)">{{element?.interestCount}}</a>
                     </td>
                   </ng-container>
       

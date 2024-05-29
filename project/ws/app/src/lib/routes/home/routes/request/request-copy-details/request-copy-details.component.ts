@@ -77,7 +77,7 @@ export class RequestCopyDetailsComponent implements OnInit {
     this.currentUser =  sessionStorage.getItem('idDetails') ? sessionStorage.getItem('idDetails') : ''
 
     this.requestForm = this.formBuilder.group({
-      TitleName: new FormControl('', [Validators.required, Validators.pattern(this.noSpecialChar), Validators.minLength(10)]),
+      titleName: new FormControl('', [Validators.required, Validators.pattern(this.noSpecialChar), Validators.minLength(10)]),
       Objective:  new FormControl('', [Validators.required, Validators.pattern(this.noSpecialChar)]),
       userType:  new FormControl('', [Validators.pattern(this.noSpecialChar)]),
       learningMode:  new FormControl(''),
@@ -126,7 +126,7 @@ export class RequestCopyDetailsComponent implements OnInit {
 
   setRequestData() {
     this.requestForm.setValue({
-      TitleName: this.requestObjData.title,
+      titleName: this.requestObjData.title,
       Objective: this.requestObjData.objective,
       userType: this.requestObjData.typeOfUser ? this.requestObjData.typeOfUser : '',
       learningMode: this.requestObjData.learningMode ? this.requestObjData.learningMode : '',
@@ -532,10 +532,9 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
     }
 
     const request: any = {
-      title: this.requestForm.value.TitleName,
+      title: this.requestForm.value.titleName,
       objective: this.requestForm.value.Objective,
       typeOfUser: this.requestForm.value.userType,
-      // learningMode: this.requestForm.value.learningMode.toLowerCase(),
       competencies: competencyDataList,
       referenceLink: this.requestForm.value.referenceLink,
       requestType: this.requestForm.value.requestType,
@@ -560,7 +559,7 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
         if (this.resData) {
           this.router.navigateByUrl('/app/home/all-request')
       }
-      },         1000)
+      },1000)
     }
   )
    }

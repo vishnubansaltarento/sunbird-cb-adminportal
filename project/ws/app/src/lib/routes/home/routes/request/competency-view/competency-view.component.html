@@ -1,7 +1,7 @@
 <mat-card class="competency-view-card" *ngIf="dData && dData.name">
     <mat-card-content class="flex flex-1 custom">
-      <span class="mat-h2 font-medium">{{dData.name}}</span>
-      <h3 class="mat-h3">{{dData.description}}</h3>
+      <span class="mat-h2 font-medium">{{dData?.name}}</span>
+      <h3 class="mat-h3">{{dData?.description}}</h3>
       <div class="flex">
         <h3 class="mat-h3">Competency type: &nbsp;</h3>
         <span class="mat-h3 font-medium">{{dData?.additionalProperties?.competencyType || dData?.competencyType}}</span>
@@ -36,7 +36,7 @@
     <mat-card-content class="flex flex-1 custom margin-remove">
       <div class="flex">
         <h3 class="mat-h3">Competency area: &nbsp;</h3>
-        <span class="mat-h3 font-medium">{{dData.competencyArea}}</span>
+        <span class="mat-h3 font-medium">{{dData?.competencyArea}}</span>
       </div>
       <div class="flex">
         <h3 class="mat-h3">Competency theme: &nbsp;</h3>

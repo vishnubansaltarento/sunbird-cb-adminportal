@@ -16,7 +16,6 @@ export class AllRequestComponent implements OnInit {
   reportSectionData: any
   public sideNavBarOpenedMain = true
   public screenSizeIsLtMedium = false
-  // private defaultSideNavBarOpenedSubscription: any
   lastUpdatedOn!: any
   pageNo = 0
   pageSize = 10
