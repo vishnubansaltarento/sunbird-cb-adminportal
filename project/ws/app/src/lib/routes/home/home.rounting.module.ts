@@ -382,7 +382,7 @@ const routes: Routes = [
           configService: ConfigResolveService,
         },
       },
-     
+
     ],
   },
 ]

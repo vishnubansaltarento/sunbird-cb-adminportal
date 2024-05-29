@@ -28,7 +28,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatButtonToggleModule,
-  MatRadioModule
+  MatRadioModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -46,7 +46,7 @@ import {
   ScrollspyLeftMenuModule,
 } from '@sunbird-cb/collection'
 // TO-DO need to enable for image crop
-//import { ImageCropModule } from './routes/image-crop/image-crop.module'
+// import { ImageCropModule } from './routes/image-crop/image-crop.module'
 import { AboutComponent } from './routes/about/about.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 import { DirectoryViewComponent } from './routes/directory/directroy.component'
@@ -127,7 +127,7 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
     AllRequestComponent,
     RequestCopyDetailsComponent,
     CompetencyViewComponent,
-    ConfirmationPopupComponent
+    ConfirmationPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -169,7 +169,7 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
     WidgetResolverModule,
     UserAutocompleteModule,
     // TO-DO need to enable for image crop
-    //ImageCropModule,
+    // ImageCropModule,
     UIAdminTableModule,
     UIORGTableModule,
     MatTableModule,
@@ -180,7 +180,7 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
     ScrollspyLeftMenuModule,
     MatRadioModule,
     // TO-DO need to enable for image crop
-    //ImageCropModule,
+    // ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   entryComponents: [
@@ -200,7 +200,7 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
     InitResolver,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     MatDatepickerModule, MatNativeDateModule,
-    ConfirmationPopupComponent
+    ConfirmationPopupComponent,
   ],
   exports: [AddThumbnailComponent],
 })

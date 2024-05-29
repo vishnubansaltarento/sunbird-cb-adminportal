@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { RequestServiceService } from '../request-service.service';
+import { Component, OnInit } from '@angular/core'
+import { MatTableDataSource } from '@angular/material'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { Router } from '@angular/router'
+import { RequestServiceService } from '../request-service.service'
 
 @Component({
   selector: 'ws-app-all-request',
   templateUrl: './all-request.component.html',
-  styleUrls: ['./all-request.component.scss']
+  styleUrls: ['./all-request.component.scss'],
 })
 export class AllRequestComponent implements OnInit {
 
@@ -18,41 +18,40 @@ export class AllRequestComponent implements OnInit {
   public screenSizeIsLtMedium = false
   // private defaultSideNavBarOpenedSubscription: any
   lastUpdatedOn!: any
-  pageNo = 0;
-  pageSize = 10;
-  requestListData: any[] = [];
+  pageNo = 0
+  pageSize = 10
+  requestListData: any[] = []
   requestCount: any
-  isUnassigned: boolean = false;
-  isAssigned: boolean = false;
-  inProgress: boolean = false;
-  invalid: boolean = false;
+  isUnassigned = false
+  isAssigned = false
+  inProgress = false
+  invalid = false
   dataSource: any
-  displayedColumns: string[] = ["RequestId", "title", "requestType", "requestStatus", "assignee", "requestedOn", "interests", "action"]
+  displayedColumns: string[] = ['RequestId', 'title', 'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
   dialogRef: any
-  queryParams: any;
+  queryParams: any
   statusCards = [
     {
-      title:"Unassigned",
-      count:234,
+      title: 'Unassigned',
+      count: 234,
     },
     {
-      title:"Assigned",
-      count:44,
+      title: 'Assigned',
+      count: 44,
     },
     {
-      title:"In-progress",
-      count:12,
+      title: 'In-progress',
+      count: 12,
     },
     {
-      title:"Fulfilled",
-      count:223,
+      title: 'Fulfilled',
+      count: 223,
     },
     {
-      title:"Invalid",
-      count:125,
-    }
+      title: 'Invalid',
+      count: 125,
+    },
   ]
-
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -74,13 +73,13 @@ export class AllRequestComponent implements OnInit {
       facets: [],
       pageNumber: this.pageNo,
       pageSize: this.pageSize,
-      orderBy: "createdOn",
-      orderDirection: "ASC"
+      orderBy: 'createdOn',
+      orderDirection: 'ASC',
     }
-    this.requestService.getRequestList(request).subscribe((data:any) => {
-      this.requestListData = data.data
+    this.requestService.getRequestList(request).subscribe((res: any) => {
+      this.requestListData = res.data
       if (this.requestListData) {
-        this.requestCount = data.totalCount
+        this.requestCount = res.totalCount
 
         this.requestListData.map((data: any) => {
           // if (data.createdOn) {
@@ -91,14 +90,11 @@ export class AllRequestComponent implements OnInit {
           }
           if (data.status === 'Unassigned') {
             this.isUnassigned = true
-          }
-          else if (data.status === 'Assigned') {
+          } else if (data.status === 'Assigned') {
             this.isAssigned = true
-          }
-          else if (data.status === 'Inprogress') {
+          } else if (data.status === 'Inprogress') {
             this.inProgress = true
-          }
-          else if (data.status === 'invalid') {
+          } else if (data.status === 'invalid') {
             this.invalid = true
           }
         })
@@ -106,11 +102,9 @@ export class AllRequestComponent implements OnInit {
       }
     })
 
-
-
   }
 
-  onClickMenu(item:any, action:string){
+  onClickMenu(item: any, action: string) {
   switch (action) {
     case 'viewContent':
 
@@ -142,7 +136,7 @@ export class AllRequestComponent implements OnInit {
 
   navigateToDetails(id: any) {
     this.queryParams = {
-      id: id,
+      id,
       name: 'view',
     }
     this.router.navigate(['/author/cbp/demand-details-form'], { queryParams: this.queryParams })

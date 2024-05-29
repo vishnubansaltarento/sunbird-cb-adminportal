@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, Inject, OnInit } from '@angular/core'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 
 @Component({
   selector: 'ws-app-competency-view',
   templateUrl: './competency-view.component.html',
-  styleUrls: ['./competency-view.component.scss']
+  styleUrls: ['./competency-view.component.scss'],
 })
 export class CompetencyViewComponent implements OnInit {
 

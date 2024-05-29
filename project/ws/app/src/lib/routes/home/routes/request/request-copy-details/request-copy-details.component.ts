@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import _ from 'lodash';
-import { RequestServiceService } from '../request-service.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { CompetencyViewComponent } from '../competency-view/competency-view.component';
-import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component';
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { RequestServiceService } from '../request-service.service'
+import { ActivatedRoute, Router } from '@angular/router'
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { CompetencyViewComponent } from '../competency-view/competency-view.component'
+import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component'
+/* tslint:disable */
+import _ from 'lodash'
+/* tslint:enable */
 
 @Component({
   selector: 'ws-app-request-copy-details',
   templateUrl: './request-copy-details.component.html',
-  styleUrls: ['./request-copy-details.component.scss']
+  styleUrls: ['./request-copy-details.component.scss'],
 })
 export class RequestCopyDetailsComponent implements OnInit {
 
@@ -56,8 +58,8 @@ export class RequestCopyDetailsComponent implements OnInit {
   demandId: any
   actionBtnName: any
   requestObjData: any
-  isHideData = false;
-  currentUser:any;
+  isHideData = false
+  currentUser: any
 
   competencyCtrl!: FormControl
   competencyArea!: FormControl
@@ -73,7 +75,7 @@ export class RequestCopyDetailsComponent implements OnInit {
   ) {
 
     this.currentUser =  sessionStorage.getItem('idDetails') ? sessionStorage.getItem('idDetails') : ''
-    
+
     this.requestForm = this.formBuilder.group({
       TitleName: new FormControl('', [Validators.required, Validators.pattern(this.noSpecialChar), Validators.minLength(10)]),
       Objective:  new FormControl('', [Validators.required, Validators.pattern(this.noSpecialChar)]),
@@ -96,14 +98,14 @@ export class RequestCopyDetailsComponent implements OnInit {
     this.getRequestTypeList()
     // this.fullProfile = _.get(this.activatedRouter.snapshot, 'data.configSvc')
     // this.userId = this.fullProfile.userProfile.userId
-    
+
     this.competencyArea = new FormControl('')
     this.competencyTheme = new FormControl('')
     this.competencySubtheme = new FormControl('')
 
     this.getFilterEntity()
 
-    this.activatedRouter.queryParams.subscribe((params:any) => {
+    this.activatedRouter.queryParams.subscribe((params: any) => {
       if (params['id']) {
         this.demandId = params.id
         this.actionBtnName = params.name
@@ -230,7 +232,7 @@ export class RequestCopyDetailsComponent implements OnInit {
         },
       },
     }
-    this.requestService.getRequestTypeList(requestObj).subscribe((data:any) => {
+    this.requestService.getRequestTypeList(requestObj).subscribe((data: any) => {
       this.requestTypeData = data
       this.filteredRequestType = [...this.requestTypeData]
       if (this.demandId) {
@@ -558,7 +560,7 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
         if (this.resData) {
           this.router.navigateByUrl('/app/home/all-request')
       }
-      }, 1000)
+      },         1000)
     }
   )
    }

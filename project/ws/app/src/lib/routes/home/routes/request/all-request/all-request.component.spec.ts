@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { AllRequestComponent } from './all-request.component';
+import { AllRequestComponent } from './all-request.component'
 
 describe('AllRequestComponent', () => {
-  let component: AllRequestComponent;
-  let fixture: ComponentFixture<AllRequestComponent>;
+  let component: AllRequestComponent
+  let fixture: ComponentFixture<AllRequestComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllRequestComponent ]
+      declarations: [AllRequestComponent],
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AllRequestComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(AllRequestComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
