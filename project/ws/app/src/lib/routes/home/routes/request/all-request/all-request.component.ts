@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core'
-import { MatTableDataSource } from '@angular/material'
+import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { RequestServiceService } from '../request-service.service'
+import { AssignListPopupComponent } from '../assign-list-popup/assign-list-popup.component'
+import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component'
 export enum statusValue {
-  Assigned= "Assigned",
-  Unassigned = "Unassigned",
-  Inprogress = "Inprogress",
-  invalid = "invalid"
+  Assigned= 'Assigned',
+  Unassigned = 'Unassigned',
+  Inprogress = 'Inprogress',
+  invalid = 'invalid',
 }
 @Component({
   selector: 'ws-app-all-request',
@@ -57,14 +59,14 @@ export class AllRequestComponent implements OnInit {
     },
   ]
   statusKey = statusValue
-
-  
+  invalidRes: any
 
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
-    private requestService: RequestServiceService) {}
-
+    private requestService: RequestServiceService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) {}
   ngOnInit() {
     this.getRequestList()
   }
@@ -122,13 +124,14 @@ export class AllRequestComponent implements OnInit {
       this.router.navigate(['/app/home/request-details'], { queryParams: this.queryParams })
       break
     case 'invalidContent':
-      //  this.showConformationModal(_event.row, _event.action)
+       this.showConformationPopUp(item, action)
       break
     case 'assignContent':
-      //  this.openAssignlistPopup()
+       this.openAssignlistPopup(item)
       break
     case 'reAssignContent':
       // this.showConformationModal(_event.row, _event.action)
+      this.openAssignlistPopup(item)
       break
     case 'copyContent':
         this.queryParams = {
@@ -153,6 +156,66 @@ export class AllRequestComponent implements OnInit {
     this.pageNo = event.pageIndex
     this.pageSize = event.pageSize
     this.getRequestList()
+    }
+
+    showConformationPopUp(_selectedRow: any, _type: any) {
+      this.dialogRef = this.dialog.open(ConfirmationPopupComponent, {
+        disableClose: true,
+        data: {
+          type: 'conformation',
+          icon: 'radio_on',
+          title: (_type === 'invalidContent') ? 'Are you sure you want to mark this as invalid.' :
+            (_type === 'publishContent') ? 'Are you sure you want to publish the plan?' : '',
+          subTitle: '',
+          primaryAction: 'Yes',
+          secondaryAction: 'No',
+        },
+        autoFocus: false,
+      })
+
+      this.dialogRef.afterClosed().subscribe((_res: any) => {
+        if (_res === 'confirmed') {
+          if (_type === 'invalidContent') {
+            this.invalidContent(_selectedRow)
+          }
+          //  else if (_type === 'publishContent') {
+          //   this.publishContentData(_selectedRow)
+          // }
+        }
+      })
+  }
+
+  invalidContent(row: any) {
+    const request = {
+     demand_id: row.demand_id,
+     newStatus: 'Invalid',
+    }
+    this.requestService.markAsInvalid(request).subscribe(res => {
+      this.invalidRes = res
+      this.getRequestList()
+      this.snackBar.open('Marked as Invalid')
+     }
+   )
+
+   }
+
+    openAssignlistPopup(item: any) {
+      this.dialogRef = this.dialog.open(AssignListPopupComponent, {
+        disableClose: true,
+        width: '90%',
+        height: '70vh',
+        data: item,
+        autoFocus: false,
+      })
+
+      this.dialogRef.afterClosed().subscribe((_res: any) => {
+        if (_res && _res.data === 'confirmed') {
+           this.getRequestList()
+           this.snackBar.open('Assigned submitted Successfully')
+        } else {
+          // this.snackBar.open('error')
+        }
+      })
     }
 
 }
