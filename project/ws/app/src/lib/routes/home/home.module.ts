@@ -87,6 +87,7 @@ import { AllRequestComponent } from './routes/request/all-request/all-request.co
 import { RequestCopyDetailsComponent } from './routes/request/request-copy-details/request-copy-details.component'
 import { CompetencyViewComponent } from './routes/request/competency-view/competency-view.component'
 import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/confirmation-popup.component'
+import { AssignListPopupComponent } from './routes/request/assign-list-popup/assign-list-popup.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -128,6 +129,7 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
     RequestCopyDetailsComponent,
     CompetencyViewComponent,
     ConfirmationPopupComponent,
+    AssignListPopupComponent
   ],
   imports: [
     CommonModule,
@@ -193,7 +195,8 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
     AddThumbnailComponent,
     CompetencyViewComponent,
     ConfirmationPopupComponent,
-    SuccessComponent],
+    SuccessComponent,
+    AssignListPopupComponent],
   providers: [
     // CKEditorService,
     // LoaderService,
