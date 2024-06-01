@@ -45,7 +45,7 @@ import {
   ScrollspyLeftMenuModule,
 } from '@sunbird-cb/collection'
 // TO-DO need to enable for image crop
-//import { ImageCropModule } from './routes/image-crop/image-crop.module'
+// import { ImageCropModule } from './routes/image-crop/image-crop.module'
 import { AboutComponent } from './routes/about/about.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 import { DirectoryViewComponent } from './routes/directory/directroy.component'
@@ -160,7 +160,7 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     WidgetResolverModule,
     UserAutocompleteModule,
     // TO-DO need to enable for image crop
-    //ImageCropModule,
+    // ImageCropModule,
     UIAdminTableModule,
     UIORGTableModule,
     MatTableModule,
@@ -170,7 +170,7 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     PipePublicURLModule,
     ScrollspyLeftMenuModule,
     // TO-DO need to enable for image crop
-    //ImageCropModule,
+    // ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   entryComponents: [
