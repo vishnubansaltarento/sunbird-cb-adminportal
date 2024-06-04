@@ -65,7 +65,7 @@ export class AllRequestComponent implements OnInit {
       facets: ["status"]
     }
     this.requestService.getRequestList(request).subscribe((res:any)=>{
-      if(res.facets.status){
+      if(res.facets && res.facets.status){
         this.statusCards = res.facets.status;
       }
      
