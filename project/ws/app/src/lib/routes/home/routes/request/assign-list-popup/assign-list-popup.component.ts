@@ -38,12 +38,6 @@ export class AssignListPopupComponent implements OnInit {
     this.assignText = 'Assign'
     this.submitAssign = 'Assign'
     this.getInterestOrgList()
-    // if (this.configService['confService'].userProfile || this.configService['confService'].userProfileV2) {
-    //   this.fullProfile = this.configService['confService'].userProfile ? 
-    //   this.configService['confService'].userProfile
-    //    : this.configService['confService'].userProfileV2
-    //   this.userId =  this.fullProfile.userId
-    // }
   }
 
   setFormData() {
@@ -105,7 +99,7 @@ export class AssignListPopupComponent implements OnInit {
         status: selectedProvider.status,
         createdOn: selectedProvider.createdOn ,
         updatedOn: selectedProvider.updatedOn,
-        assignedBy: this.currentUser,
+        // assignedBy: this.currentUser,
       }
       this.requestService.assignToOrg(request).subscribe((res:any) => {
         if (res) {
