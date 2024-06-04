@@ -12,5 +12,5 @@ export const sectorConstants = {
   maxCompatibilityLevel: 2,
   zero: 0,
   pageSize: 20,
-  pageOptions: [20, 30, 40]
+  pageOptions: [20, 30, 40],
 }

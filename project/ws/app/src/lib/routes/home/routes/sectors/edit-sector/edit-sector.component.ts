@@ -78,7 +78,7 @@ export class EditSectorComponent implements OnInit {
               })
             }
           }
-        }, error => {
+        },                                                error => {
           this.snackBar.open(error, 'X', { duration: sectorConstants.duration })
         })
       }
@@ -91,8 +91,8 @@ export class EditSectorComponent implements OnInit {
 
   // Add sub sectors
   onSubSectorSubmit() {
-    let children: any = [...this.sectorDetails.children]
-    let requestBody = {
+    const children: any = [...this.sectorDetails.children]
+    const requestBody = {
       request: {
         identifier: this.sectorDetails.identifier,
         subsectors: children,
@@ -108,7 +108,7 @@ export class EditSectorComponent implements OnInit {
         this.router.navigate([`/app/home/sectors`])
       }
       this.loading = false
-    }, eResp => {
+    },                                                          eResp => {
       if (eResp && eResp.error && eResp.error.responseCode === 'BAD_REQUEST') {
         this.snackBar.open(eResp.error.params.errmsg)
       }

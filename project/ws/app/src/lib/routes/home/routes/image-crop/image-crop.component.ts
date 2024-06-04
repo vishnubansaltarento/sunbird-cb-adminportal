@@ -36,7 +36,6 @@ export class ImageCropComponent implements OnInit {
   isXSmall = false
   isThumbnail = true
 
-
   constructor(
     private dialogRef: MatDialogRef<ImageCropComponent>,
     private configSvc: ConfigurationsService,
