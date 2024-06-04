@@ -36,28 +36,7 @@ export class AllRequestComponent implements OnInit {
   displayedColumns: string[] = ['RequestId', 'title', 'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
   dialogRef: any
   queryParams: any
-  statusCards = [
-    {
-      title: 'Unassigned',
-      count: 234,
-    },
-    {
-      title: 'Assigned',
-      count: 44,
-    },
-    {
-      title: 'In-progress',
-      count: 12,
-    },
-    {
-      title: 'Fulfilled',
-      count: 223,
-    },
-    {
-      title: 'Invalid',
-      count: 125,
-    },
-  ]
+  statusCards:any[]=[]
   statusKey = statusValue
   invalidRes: any
 
@@ -69,10 +48,29 @@ export class AllRequestComponent implements OnInit {
     private dialog: MatDialog) {}
   ngOnInit() {
     this.getRequestList()
+     this.getStatusCount()
   }
 
   sanitizeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html)
+  }
+
+  getStatusCount(){
+    const request = {
+      filterCriteriaMap: {
+      },
+      requestedFields: ["status"],
+      orderBy: "createdOn",
+      orderDirection: "ASC",
+      facets: ["status"]
+    }
+    this.requestService.getRequestList(request).subscribe((res:any)=>{
+      if(res.facets && res.facets.status){
+        this.statusCards = res.facets.status;
+      }
+     
+    })
+
   }
 
   getRequestList() {
@@ -111,6 +109,23 @@ export class AllRequestComponent implements OnInit {
       }
     })
 
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Unassigned':
+        return 'status-unassigned'
+      case 'Assigned':
+        return 'status-assigned'
+      case 'Invalid':
+        return 'status-invalid'
+      case 'Fulfill':
+        return 'status-fullfill'
+      case 'InProgress':
+        return 'status-inprogress'
+      default:
+        return ''
+    }
   }
 
   onClickMenu(item: any, action: string) {
