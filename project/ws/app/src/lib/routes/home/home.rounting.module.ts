@@ -32,6 +32,7 @@ import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.compo
 import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
 import { AllRequestComponent } from './routes/request/all-request/all-request.component'
 import { RequestCopyDetailsComponent } from './routes/request/request-copy-details/request-copy-details.component'
+import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
 
 const routes: Routes = [
   {
@@ -371,12 +372,25 @@ const routes: Routes = [
       },
       {
         path: 'request-details',
-        component:  RequestCopyDetailsComponent,
+        component: RequestCopyDetailsComponent,
         data: {
           pageId: 'home/request-details',
           module: 'Request-Details',
           pageType: 'feature',
           pageKey: 'Request-Details',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+        },
+      },
+      {
+        path: 'kcm-mapping',
+        component: KCMMappingComponent,
+        data: {
+          pageId: 'home/KCM-mapping',
+          module: 'KCM-mapping',
+          pageType: 'feature',
+          pageKey: 'kcm',
         },
         resolve: {
           configService: ConfigResolveService,

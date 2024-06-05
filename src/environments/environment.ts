@@ -14,6 +14,13 @@ export const environment: IEnvironment = {
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   spvPath: (window as { [key: string]: any })['env']['spvPath'] || '',
+  url: `https://portal.karmayogi.nic.in/`,
+  token: '',
+  frameworkName: 'organisation_fw',
+  channelId: 'in.ekstep',
+  authToken: 'Bearer xyz',
+  isApprovalRequired: true,
+  additionalProperties: [],
 }
 interface IEnvironment {
   contentBucket: any
@@ -27,6 +34,15 @@ interface IEnvironment {
   userBucket?: string
   departments?: string[]
   spvPath?: string
+  url: string,
+  token: string,
+  frameworkName: string,
+  channelId: string,
+  authToken: string,
+  isApprovalRequired: boolean,
+  additionalProperties: string[]
+  userID?: string
+  authorization?: string
 }
 
 /*
