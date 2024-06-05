@@ -14,6 +14,7 @@ export class KCMMappingComponent implements OnInit {
 
   ngOnInit() {
     this.environmentVal = environment
+    this.environmentVal.frameworkName = 'organisation_fw'
     this.taxonomyConfig = [
       // {
       //     "frameworkId" :"devmvp3",
