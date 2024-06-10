@@ -241,6 +241,11 @@ export class RequestCopyDetailsComponent implements OnInit {
           this.requestForm.disable()
           this.isHideData = true
         }
+        else if(this.actionBtnName === 'reassign'){
+          this.requestForm.disable();
+          // this.isHideData = true;
+          this.requestForm.controls['assignee'].enable()
+      }
       }
 
     })
@@ -507,6 +512,9 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
 }
 
   submit() {
+    if(this.demandId &&  this.actionBtnName === 'reassign'){
+      this.requestForm.enable()
+    }
     let providerList: any[] = []
     if (this.requestForm.value.providers) {
       providerList = this.requestForm.value.providers.map((item: any) => ({
@@ -547,6 +555,10 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
 
     if (this.requestForm.value.learningMode) {
       request.learningMode = this.requestForm.value.learningMode.toLowerCase()
+    }
+    if(this.demandId &&  this.actionBtnName === 'reassign'){
+      request.demand_id =  this.demandId
+
     }
     this.showDialogBox('progress')
     this.requestService.createDemand(request).subscribe(res => {
