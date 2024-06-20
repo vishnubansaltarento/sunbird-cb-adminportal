@@ -89,6 +89,7 @@ import { RequestCopyDetailsComponent } from './routes/request/request-copy-detai
 import { CompetencyViewComponent } from './routes/request/competency-view/competency-view.component'
 import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/confirmation-popup.component'
 import { AssignListPopupComponent } from './routes/request/assign-list-popup/assign-list-popup.component'
+import { SingleAssignPopupComponent } from './routes/request/single-assign-popup/single-assign-popup.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -130,7 +131,8 @@ import { AssignListPopupComponent } from './routes/request/assign-list-popup/ass
     RequestCopyDetailsComponent,
     CompetencyViewComponent,
     ConfirmationPopupComponent,
-    AssignListPopupComponent
+    AssignListPopupComponent,
+    SingleAssignPopupComponent
   ],
   imports: [
     CommonModule,
@@ -198,7 +200,8 @@ import { AssignListPopupComponent } from './routes/request/assign-list-popup/ass
     CompetencyViewComponent,
     ConfirmationPopupComponent,
     SuccessComponent,
-    AssignListPopupComponent],
+    AssignListPopupComponent,
+    SingleAssignPopupComponent],
   providers: [
     // CKEditorService,
     // LoaderService,

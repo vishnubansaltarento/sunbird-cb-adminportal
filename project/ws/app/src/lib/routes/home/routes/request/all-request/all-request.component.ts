@@ -5,6 +5,7 @@ import { Router } from '@angular/router'
 import { RequestServiceService } from '../request-service.service'
 import { AssignListPopupComponent } from '../assign-list-popup/assign-list-popup.component'
 import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component'
+import { SingleAssignPopupComponent } from '../single-assign-popup/single-assign-popup.component'
 export enum statusValue {
   Assigned= 'Assigned',
   Unassigned = 'Unassigned',
@@ -186,11 +187,12 @@ export class AllRequestComponent implements OnInit {
         this.openAssignlistPopup(item)
       }
       else {
-        this.queryParams = {
-          id: item.demand_id,
-          name: 'reassign',
-        }
-          this.router.navigate(['/app/home/request-details'], { queryParams: this.queryParams })
+        this.openSingleReassignPopup(item)
+        // this.queryParams = {
+        //   id: item.demand_id,
+        //   name: 'reassign',
+        // }
+        //   this.router.navigate(['/app/home/request-details'], { queryParams: this.queryParams })
       }
       break
     case 'copyContent':
@@ -202,6 +204,29 @@ export class AllRequestComponent implements OnInit {
       break
   }
 
+  }
+
+
+  openSingleReassignPopup(item:any){
+    this.dialogRef = this.dialog.open(SingleAssignPopupComponent, {
+      disableClose: false,
+      width: '90%',
+      height: '70vh',
+      data: item,
+      autoFocus: false,
+    })
+
+    this.dialogRef.afterClosed().subscribe((_res: any) => {
+      if (_res && _res.data === 'confirmed') {
+        setTimeout(()=>{
+          this.getRequestList()
+        },1000)
+        
+         this.snackBar.open('Re-assign submitted Successfully')
+      } else {
+        // this.snackBar.open('error')
+      }
+    })
   }
 
   navigateToDetails(id: any) {

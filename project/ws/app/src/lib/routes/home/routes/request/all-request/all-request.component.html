@@ -7,7 +7,7 @@
                 <mat-card class="status-card" *ngFor="let card of statusCards">
                     <div class="card-content">
                       <div class="status-title">
-                      <span class="title-text"> {{ card?.value=== statusKey.fullfill ? 'Fullfilled' : card?.value }}</span> 
+                      <span class="title-text"> {{ card?.value=== statusKey.fullfill ? 'Fulfilled' : card?.value }}</span> 
                         <mat-icon class="info-icon cursor-pointer" [matTooltip]="card?.message">info</mat-icon>
                       </div>
                       <div class="status-value">{{ card?.count ? card?.count : 0 }}</div>
