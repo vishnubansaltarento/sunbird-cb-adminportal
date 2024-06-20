@@ -9,7 +9,8 @@ export enum statusValue {
   Assigned= 'Assigned',
   Unassigned = 'Unassigned',
   Inprogress = 'InProgress',
-  invalid = 'invalid',
+  invalid = 'Invalid',
+  fullfill= 'Fulfill',
 }
 @Component({
   selector: 'ws-app-all-request',
@@ -33,7 +34,8 @@ export class AllRequestComponent implements OnInit {
   inProgress = false
   invalid = false
   dataSource: any
-  displayedColumns: string[] = ['RequestId', 'title', 'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
+  displayedColumns: string[] = ['RequestId', 'title','requestedBy', 
+  'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
   dialogRef: any
   queryParams: any
   statusCards:any[]=[]
@@ -67,8 +69,27 @@ export class AllRequestComponent implements OnInit {
     this.requestService.getRequestList(request).subscribe((res:any)=>{
       if(res.facets && res.facets.status){
         this.statusCards = res.facets.status;
-      }
-     
+        const toolTipText:any = {
+          "Assigned":'Total number of requests assigned',
+          "Invalid":'Total number of Invalid requests',
+          "Unassigned":'Total number of unassigned requests',
+          "InProgress":'Total number of In-progress requests',
+          "Fulfill":'Total number of requests fulfilled'
+        }
+        this.statusCards = this.statusCards.map(status=>({
+          ...status,
+          message:toolTipText[status.value] || ''
+        }))
+        const allStatusValues = ["Assigned", "Invalid", "Unassigned", "InProgress", "Fulfill"]; 
+        const existingValues = new Set(this.statusCards.map(status => status.value));
+        // Add missing status values with a count of 0
+        allStatusValues.forEach(status => {
+          if (!existingValues.has(status)) {
+            this.statusCards.push({ value: status, count: 0 });
+          }
+        });
+        
+          }
     })
 
   }
@@ -84,6 +105,7 @@ export class AllRequestComponent implements OnInit {
       orderDirection: 'ASC',
     }
     this.requestService.getRequestList(request).subscribe((res: any) => {
+      if(res.data){
       this.requestListData = res.data
       if (this.requestListData) {
         this.requestCount = res.totalCount
@@ -107,6 +129,7 @@ export class AllRequestComponent implements OnInit {
         })
         this.dataSource = new MatTableDataSource<any>(this.requestListData)
       }
+    }
     })
 
   }
@@ -127,6 +150,18 @@ export class AllRequestComponent implements OnInit {
         return ''
     }
   }
+
+
+  handleClick(element: any): void {
+    if (element.status && element.status.length > 0) {
+      if (element.status !== this.statusKey.Inprogress &&
+        element.status !== this.statusKey.invalid &&
+        element.status !== this.statusKey.fullfill) {
+        this.onClickMenu(element, 'assignContent')
+    }
+    }
+
+}
 
   onClickMenu(item: any, action: string) {
   switch (action) {
@@ -216,9 +251,12 @@ export class AllRequestComponent implements OnInit {
      newStatus: 'Invalid',
     }
     this.requestService.markAsInvalid(request).subscribe(res => {
-      this.invalidRes = res
-      this.getRequestList()
-      this.snackBar.open('Marked as Invalid')
+      if(res){
+        this.invalidRes = res
+        this.getRequestList()
+        this.snackBar.open('Marked as Invalid')
+      }
+      
      }
    )
 

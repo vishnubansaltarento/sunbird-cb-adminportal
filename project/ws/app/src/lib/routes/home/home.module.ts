@@ -29,6 +29,7 @@ import {
   MatNativeDateModule,
   MatButtonToggleModule,
   MatRadioModule,
+  MatTooltipModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -170,6 +171,7 @@ import { AssignListPopupComponent } from './routes/request/assign-list-popup/ass
     BtnPageBackModuleAdmin,
     WidgetResolverModule,
     UserAutocompleteModule,
+    MatTooltipModule,
     // TO-DO need to enable for image crop
     // ImageCropModule,
     UIAdminTableModule,
