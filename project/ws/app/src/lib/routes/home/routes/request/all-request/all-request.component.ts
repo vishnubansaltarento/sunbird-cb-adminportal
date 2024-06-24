@@ -5,11 +5,13 @@ import { Router } from '@angular/router'
 import { RequestServiceService } from '../request-service.service'
 import { AssignListPopupComponent } from '../assign-list-popup/assign-list-popup.component'
 import { ConfirmationPopupComponent } from '../confirmation-popup/confirmation-popup.component'
+import { SingleAssignPopupComponent } from '../single-assign-popup/single-assign-popup.component'
 export enum statusValue {
   Assigned= 'Assigned',
   Unassigned = 'Unassigned',
-  Inprogress = 'Inprogress',
-  invalid = 'invalid',
+  Inprogress = 'InProgress',
+  invalid = 'Invalid',
+  fullfill= 'Fulfill',
 }
 @Component({
   selector: 'ws-app-all-request',
@@ -33,7 +35,8 @@ export class AllRequestComponent implements OnInit {
   inProgress = false
   invalid = false
   dataSource: any
-  displayedColumns: string[] = ['RequestId', 'title', 'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
+  displayedColumns: string[] = ['RequestId', 'title','requestedBy', 
+  'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
   dialogRef: any
   queryParams: any
   statusCards:any[]=[]
@@ -67,8 +70,27 @@ export class AllRequestComponent implements OnInit {
     this.requestService.getRequestList(request).subscribe((res:any)=>{
       if(res.facets && res.facets.status){
         this.statusCards = res.facets.status;
-      }
-     
+        const toolTipText:any = {
+          "Assigned":'Total number of requests assigned',
+          "Invalid":'Total number of Invalid requests',
+          "Unassigned":'Total number of unassigned requests',
+          "InProgress":'Total number of In-progress requests',
+          "Fulfill":'Total number of requests fulfilled'
+        }
+        this.statusCards = this.statusCards.map(status=>({
+          ...status,
+          message:toolTipText[status.value] || ''
+        }))
+        const allStatusValues = ["Assigned", "Invalid", "Unassigned", "InProgress", "Fulfill"]; 
+        const existingValues = new Set(this.statusCards.map(status => status.value));
+        // Add missing status values with a count of 0
+        allStatusValues.forEach(status => {
+          if (!existingValues.has(status)) {
+            this.statusCards.push({ value: status, count: 0 });
+          }
+        });
+        
+          }
     })
 
   }
@@ -84,6 +106,7 @@ export class AllRequestComponent implements OnInit {
       orderDirection: 'ASC',
     }
     this.requestService.getRequestList(request).subscribe((res: any) => {
+      if(res.data){
       this.requestListData = res.data
       if (this.requestListData) {
         this.requestCount = res.totalCount
@@ -107,6 +130,7 @@ export class AllRequestComponent implements OnInit {
         })
         this.dataSource = new MatTableDataSource<any>(this.requestListData)
       }
+    }
     })
 
   }
@@ -128,6 +152,18 @@ export class AllRequestComponent implements OnInit {
     }
   }
 
+
+  handleClick(element: any): void {
+    if (element.status && element.status.length > 0) {
+      if (element.status !== this.statusKey.Inprogress &&
+        element.status !== this.statusKey.invalid &&
+        element.status !== this.statusKey.fullfill) {
+        this.onClickMenu(element, 'assignContent')
+    }
+    }
+
+}
+
   onClickMenu(item: any, action: string) {
   switch (action) {
     case 'viewContent':
@@ -146,7 +182,18 @@ export class AllRequestComponent implements OnInit {
       break
     case 'reAssignContent':
       // this.showConformationModal(_event.row, _event.action)
-      this.openAssignlistPopup(item)
+      // this.openAssignlistPopup(item)
+      if(item.requestType === 'Broadcast'){
+        this.openAssignlistPopup(item)
+      }
+      else {
+        this.openSingleReassignPopup(item)
+        // this.queryParams = {
+        //   id: item.demand_id,
+        //   name: 'reassign',
+        // }
+        //   this.router.navigate(['/app/home/request-details'], { queryParams: this.queryParams })
+      }
       break
     case 'copyContent':
         this.queryParams = {
@@ -157,6 +204,29 @@ export class AllRequestComponent implements OnInit {
       break
   }
 
+  }
+
+
+  openSingleReassignPopup(item:any){
+    this.dialogRef = this.dialog.open(SingleAssignPopupComponent, {
+      disableClose: false,
+      width: '90%',
+      height: '70vh',
+      data: item,
+      autoFocus: false,
+    })
+
+    this.dialogRef.afterClosed().subscribe((_res: any) => {
+      if (_res && _res.data === 'confirmed') {
+        setTimeout(()=>{
+          this.getRequestList()
+        },1000)
+        
+         this.snackBar.open('Re-assign submitted Successfully')
+      } else {
+        // this.snackBar.open('error')
+      }
+    })
   }
 
   navigateToDetails(id: any) {
@@ -206,9 +276,12 @@ export class AllRequestComponent implements OnInit {
      newStatus: 'Invalid',
     }
     this.requestService.markAsInvalid(request).subscribe(res => {
-      this.invalidRes = res
-      this.getRequestList()
-      this.snackBar.open('Marked as Invalid')
+      if(res){
+        this.invalidRes = res
+        this.getRequestList()
+        this.snackBar.open('Marked as Invalid')
+      }
+      
      }
    )
 

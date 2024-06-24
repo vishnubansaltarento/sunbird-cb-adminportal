@@ -7,10 +7,10 @@
                 <mat-card class="status-card" *ngFor="let card of statusCards">
                     <div class="card-content">
                       <div class="status-title">
-                      <span class="title-text"> {{ card?.value }}</span> 
-                        <mat-icon class="info-icon">info</mat-icon>
+                      <span class="title-text"> {{ card?.value=== statusKey.fullfill ? 'Fulfilled' : card?.value }}</span> 
+                        <mat-icon class="info-icon cursor-pointer" [matTooltip]="card?.message">info</mat-icon>
                       </div>
-                      <div class="status-value">{{ card?.count }}</div>
+                      <div class="status-value">{{ card?.count ? card?.count : 0 }}</div>
                     </div>
                   </mat-card>
 
@@ -22,53 +22,64 @@
               <div class="table-class">
                 <table mat-table [dataSource]="dataSource">
                   <ng-container matColumnDef="RequestId">
-                    <th mat-header-cell *matHeaderCellDef>Request ID </th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Request ID </th>
                     <td mat-cell class="title-class" *matCellDef="let element">{{element?.demand_id}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef>Title </th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Title </th>
                     <td mat-cell class="title-class" *matCellDef="let element">{{element?.title}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="requestedBy">
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Requested By </th>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.ownerOrgName}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="requestType">
-                    <th mat-header-cell *matHeaderCellDef>Request Type </th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Request Type </th>
                     <td mat-cell class="title-class" *matCellDef="let element">{{element?.requestType}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="requestStatus">
-                    <th mat-header-cell *matHeaderCellDef>Request Status </th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Request Status </th>
                     <td mat-cell class="title-class" *matCellDef="let element">
                       <span [ngClass]="getStatusClass(element?.status)">{{element?.status}}</span></td>
                   </ng-container>
       
                   <ng-container matColumnDef="assignee">
-                    <th mat-header-cell *matHeaderCellDef>Assignee </th>
-                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.assignedProvider}}</td>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Assignee </th>
+                    <td mat-cell class="title-class" *matCellDef="let element">{{element?.assignedProvider ? element?.assignedProvider : 'Not Assigned'}}</td>
                   </ng-container>
       
                   <ng-container matColumnDef="requestedOn">
-                    <th mat-header-cell *matHeaderCellDef>Requested On </th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Requested On </th>
                     <td mat-cell class="title-class" *matCellDef="let element">{{element?.createdOn | date}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="interests">
-                    <th mat-header-cell *matHeaderCellDef>Interests</th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Interests</th>
                     <td mat-cell class="title-class" *matCellDef="let element">
-                        <a class="action-btn-view"  (click)="showInterestPopup()"
-                        href="javascript:void(0)">{{element?.interestCount}}</a>
+                      <a class="action-btn-view"  *ngIf="element?.interestCount!== 0" 
+                      href="javascript:void(0)">
+                      <span (click)="handleClick(element)">
+                        {{element?.interestCount}}
+                      </span>
+                     </a>
+                      <a class="" *ngIf="element?.interestCount === 0" 
+                      href="javascript:void(0)">{{element?.requestType == 'Single' ? 'N/A' : element?.interestCount}}</a>
                     </td>
                   </ng-container>
       
                   <ng-container matColumnDef="details">
-                    <th mat-header-cell *matHeaderCellDef>Details</th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading">Details</th>
                     <td mat-cell *matCellDef="let element">
                       <mat-icon (click)="navigateToDetails(element?.demand_id)" class="cursor-pointer">visibility</mat-icon>
                     </td>
                   </ng-container>
       
                   <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <th mat-header-cell *matHeaderCellDef class="row-heading"></th>
                     <td mat-cell  *matCellDef="let element">
                     
                       <!-- <a class="action-btn-view" *ngIf="element.status === 'Unassigned'" (click)="showInterestPopup()"
@@ -90,7 +101,8 @@
                           <button mat-menu-item *ngIf="element.status!== statusKey.Assigned && element.interestCount >0 && element.status!== statusKey.Inprogress &&  element.status!== statusKey.invalid" (click)="onClickMenu(element,'assignContent')">
                             <span>Assign</span>
                           </button>
-                          <button *ngIf="element.status === statusKey.Assigned && element.status!== statusKey.Inprogress &&  element.status!== statusKey.invalid" mat-menu-item (click)="onClickMenu(element,'reAssignContent')">
+                          <button *ngIf="element?.status === statusKey.Assigned && element?.status!== statusKey.Inprogress && element?.status!== statusKey.invalid "
+                           mat-menu-item (click)="onClickMenu(element,'reAssignContent')">
                             <span> Re-Assign</span>
                           </button>
                           <button mat-menu-item (click)="onClickMenu(element,'copyContent')">
@@ -103,7 +115,7 @@
       
                   </ng-container>
       
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row-data"></tr>
                   <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
       
       
