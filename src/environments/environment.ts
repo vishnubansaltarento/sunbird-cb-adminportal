@@ -17,6 +17,7 @@ export const environment: IEnvironment = {
   channelId: (window as { [key: string]: any })['env']['channelId'] || '',
   connectionType: (window as { [key: string]: any })['env']['connectionType'] || '',
   KCMframeworkName: (window as { [key: string]: any })['env']['KCMframeworkName'] || '',
+  APIKEY: (window as { [key: string]: any })['env']['APIKEY'] || '',
 }
 interface IEnvironment {
   contentBucket: any
@@ -35,6 +36,7 @@ interface IEnvironment {
   additionalProperties?: string[]
   connectionType?: string,
   KCMframeworkName?: string
+  APIKEY?: string
 }
 
 /*
