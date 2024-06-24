@@ -14,13 +14,9 @@ export const environment: IEnvironment = {
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   spvPath: (window as { [key: string]: any })['env']['spvPath'] || '',
-  url: `https://portal.karmayogi.nic.in/`,
-  token: '',
-  frameworkName: 'organisation_fw',
-  channelId: 'in.ekstep',
-  authToken: 'Bearer xyz',
-  isApprovalRequired: true,
-  additionalProperties: [],
+  channelId: (window as { [key: string]: any })['env']['channelId'] || '',
+  connectionType: (window as { [key: string]: any })['env']['connectionType'] || '',
+  KCMframeworkName: (window as { [key: string]: any })['env']['KCMframeworkName'] || '',
 }
 interface IEnvironment {
   contentBucket: any
@@ -34,15 +30,11 @@ interface IEnvironment {
   userBucket?: string
   departments?: string[]
   spvPath?: string
-  url: string,
-  token: string,
-  frameworkName: string,
-  channelId: string,
-  authToken: string,
-  isApprovalRequired: boolean,
-  additionalProperties: string[]
-  userID?: string
-  authorization?: string
+  channelId?: string,
+  isApprovalRequired?: boolean,
+  additionalProperties?: string[]
+  connectionType?: string,
+  KCMframeworkName?: string
 }
 
 /*
