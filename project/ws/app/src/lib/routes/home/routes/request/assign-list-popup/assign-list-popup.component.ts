@@ -1,12 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource } from '@angular/material';
-import { RequestServiceService } from '../request-service.service';
+import { Component, Inject, OnInit } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource } from '@angular/material'
+import { RequestServiceService } from '../request-service.service'
 
 @Component({
   selector: 'ws-app-assign-list-popup',
   templateUrl: './assign-list-popup.component.html',
-  styleUrls: ['./assign-list-popup.component.scss']
+  styleUrls: ['./assign-list-popup.component.scss'],
 })
 export class AssignListPopupComponent implements OnInit {
 
@@ -20,16 +20,16 @@ export class AssignListPopupComponent implements OnInit {
   fullProfile: any
   userId: any
   assignText = ''
-  submitAssign = '';
-  currentUser:any;
+  submitAssign = ''
+  currentUser: any
 
   constructor(private fb: FormBuilder,
-               private requestService: RequestServiceService,
+              private requestService: RequestServiceService,
               @Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<AssignListPopupComponent>,
   ) {
     this.requestForm = this.fb.group({
-      assignee: new FormControl('',Validators.required),
+      assignee: new FormControl('', Validators.required),
     })
   }
 
@@ -64,7 +64,7 @@ export class AssignListPopupComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
     }
-    this.requestService.getOrgInterestList(request).subscribe((res:any) => {
+    this.requestService.getOrgInterestList(request).subscribe((res: any) => {
      if (res.data) {
       this.providerList = res.data
       this.providerCount = res.totalCount
@@ -101,12 +101,12 @@ export class AssignListPopupComponent implements OnInit {
         updatedOn: selectedProvider.updatedOn,
         // assignedBy: this.currentUser,
       }
-      this.requestService.assignToOrg(request).subscribe((res:any) => {
+      this.requestService.assignToOrg(request).subscribe((res: any) => {
         if (res) {
           this.dialogRef.close({ data: 'confirmed' })
         }
 
-      },(error:any) => {
+      },                                                 (error: any) => {
        this.dialogRef.close({ error })
 
       }

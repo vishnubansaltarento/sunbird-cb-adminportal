@@ -135,7 +135,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     ConfirmationPopupComponent,
     AssignListPopupComponent,
     KCMMappingComponent,
-    SingleAssignPopupComponent
+    SingleAssignPopupComponent,
   ],
   imports: [
     CommonModule,
