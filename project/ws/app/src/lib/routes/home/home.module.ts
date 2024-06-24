@@ -29,6 +29,7 @@ import {
   MatNativeDateModule,
   MatButtonToggleModule,
   MatRadioModule,
+  MatTooltipModule,
 } from '@angular/material'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
@@ -90,6 +91,7 @@ import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/
 import { AssignListPopupComponent } from './routes/request/assign-list-popup/assign-list-popup.component'
 import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
 import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
+import { SingleAssignPopupComponent } from './routes/request/single-assign-popup/single-assign-popup.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -133,6 +135,7 @@ import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
     ConfirmationPopupComponent,
     AssignListPopupComponent,
     KCMMappingComponent,
+    SingleAssignPopupComponent
   ],
   imports: [
     CommonModule,
@@ -173,6 +176,7 @@ import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
     BtnPageBackModuleAdmin,
     WidgetResolverModule,
     UserAutocompleteModule,
+    MatTooltipModule,
     // TO-DO need to enable for image crop
     // ImageCropModule,
     UIAdminTableModule,
@@ -200,7 +204,8 @@ import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
     CompetencyViewComponent,
     ConfirmationPopupComponent,
     SuccessComponent,
-    AssignListPopupComponent],
+    AssignListPopupComponent,
+    SingleAssignPopupComponent],
   providers: [
     // CKEditorService,
     // LoaderService,

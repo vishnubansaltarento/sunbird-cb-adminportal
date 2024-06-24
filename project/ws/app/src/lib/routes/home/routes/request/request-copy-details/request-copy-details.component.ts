@@ -59,7 +59,9 @@ export class RequestCopyDetailsComponent implements OnInit {
   actionBtnName: any
   requestObjData: any
   isHideData = false
-  currentUser: any
+  currentUser: any;
+  filteredAssigneeType:any[]=[];
+  isCompetencyHide:boolean = false;
 
   competencyCtrl!: FormControl
   competencyArea!: FormControl
@@ -90,6 +92,7 @@ export class RequestCopyDetailsComponent implements OnInit {
       queryThemeControl: new FormControl(''),
       querySubThemeControl: new FormControl(''),
       competencies_v5: [],
+      assigneeText: new FormControl('')
     })
 
    }
@@ -139,6 +142,7 @@ export class RequestCopyDetailsComponent implements OnInit {
       providerText: '',
       queryThemeControl: '',
       querySubThemeControl: '',
+      assigneeText: ''
     })
    const value = this.requestForm.controls.competencies_v5.value || []
    this.requestObjData.competencies.map((comp: any) => {
@@ -162,9 +166,9 @@ export class RequestCopyDetailsComponent implements OnInit {
   this.requestForm.controls['providers'].setValue(abc)
    }
 
-   if (this.requestTypeData) {
+   if (this.filteredAssigneeType) {
     if (this.requestObjData.assignedProvider) {
-      const assignData = this.requestTypeData.find(option =>
+      const assignData = this.filteredAssigneeType.find(option =>
         this.requestObjData.assignedProvider.providerName === option.orgName
        )
        if (assignData) {
@@ -172,24 +176,23 @@ export class RequestCopyDetailsComponent implements OnInit {
        }
     }
    }
+
   }
 
   navigateBack() {
     this.router.navigateByUrl('/app/home/all-request')
   }
 
-  searchValueData(e: any, searchValue: any) {
-    if (searchValue === 'themeText') {
-      this.requestForm.controls['themeText'].valueChanges.subscribe((newValue: any) => {
-        this.filterCompetencyThemes = this.filterValues(newValue, this.allCompetencyTheme)
-      })
-    } else if (searchValue === 'subthemeText') {
-      this.requestForm.controls['subthemeText'].valueChanges.subscribe((newValue: any) => {
-        this.filteredSubTheme = this.filterValues(newValue, this.allCompetencySubtheme)
-      })
-    } else if (searchValue === 'providerText' || e) {
+
+  searchValueData(searchValue: any) {
+    if (searchValue === 'providerText') {
       this.requestForm.controls['providerText'].valueChanges.subscribe((newValue: any) => {
         this.filteredRequestType = this.filterOrgValues(newValue, this.requestTypeData)
+      })
+    }
+    if (searchValue === 'assigneeText') {
+      this.requestForm.controls['assigneeText'].valueChanges.subscribe((newValue: any) => {
+        this.filteredAssigneeType = this.filterOrgValues(newValue, this.requestTypeData)
       })
     }
 
@@ -235,12 +238,21 @@ export class RequestCopyDetailsComponent implements OnInit {
     this.requestService.getRequestTypeList(requestObj).subscribe((data: any) => {
       this.requestTypeData = data
       this.filteredRequestType = [...this.requestTypeData]
+      this.filteredAssigneeType = [...this.requestTypeData]
       if (this.demandId) {
         this.getRequestDataById()
         if (this.actionBtnName === 'view') {
           this.requestForm.disable()
           this.isHideData = true
+          this.isCompetencyHide = true;
         }
+        else if(this.actionBtnName === 'reassign'){
+          this.requestForm.disable();
+          // this.isHideData = true;
+          this.isCompetencyHide = true;
+          this.requestForm.controls['assigneeText'].enable()
+          this.requestForm.controls['assignee'].enable()
+      }
       }
 
     })
@@ -481,6 +493,15 @@ view(item?: any) {
     }
   }
 
+  isOptionDisabled(option: any): boolean {
+    const control = this.requestForm.get('providers');
+    if (control) {
+      const selectedProviders = control.value;
+      return selectedProviders.length >= 5 && !selectedProviders.includes(option);
+    }
+    return false;
+  }
+
   showSaveButton() {
 
   }
@@ -491,7 +512,7 @@ view(item?: any) {
       data: {
         type: 'conformation',
         icon: 'radio_on',
-        title: 'Are you sure you want to Create a demand?',
+        title: this.actionBtnName === 'reassign'? 'Are you sure you want to Re-assign?':'Are you sure you want to Create a demand?',
         // subTitle: 'You wont be able to revert this',
         primaryAction: 'Confirm',
         secondaryAction: 'Cancel',
@@ -507,6 +528,9 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
 }
 
   submit() {
+    if(this.demandId &&  this.actionBtnName === 'reassign'){
+      this.requestForm.enable()
+    }
     let providerList: any[] = []
     if (this.requestForm.value.providers) {
       providerList = this.requestForm.value.providers.map((item: any) => ({
@@ -548,6 +572,10 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
     if (this.requestForm.value.learningMode) {
       request.learningMode = this.requestForm.value.learningMode.toLowerCase()
     }
+    if(this.demandId &&  this.actionBtnName === 'reassign'){
+      request.demand_id =  this.demandId
+
+    }
     this.showDialogBox('progress')
     this.requestService.createDemand(request).subscribe(res => {
       this.resData = res
@@ -558,6 +586,7 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
         this.dialogRefs.close()
         if (this.resData) {
           this.router.navigateByUrl('/app/home/all-request')
+          this.snackBar.open('Request submitted successfully ')
       }
       },1000)
     }
