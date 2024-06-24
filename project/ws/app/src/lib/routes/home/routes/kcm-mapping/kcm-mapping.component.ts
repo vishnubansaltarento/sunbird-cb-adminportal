@@ -24,7 +24,7 @@ export class KCMMappingComponent implements OnInit {
       this.activateRoute.data.subscribe(data => {
         this.kcmConfig = data.pageData.data
         this.taxonomyConfig = this.kcmConfig.frameworkConfig
-        console.log('kcmConfig', this.kcmConfig)
+        // console.log('kcmConfig', this.kcmConfig)
       })
   }
 
