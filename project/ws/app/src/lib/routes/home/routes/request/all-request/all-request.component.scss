@@ -112,6 +112,20 @@ table tr .row-heading {
   line-height: 16.8px;
   text-decoration: underline !important;
 }
+.no-cbp-data {
+  width: auto;
+  margin: 50px auto;
+  text-align: center;
+
+  img {
+    width: 320px;
+  }
+
+  .small-text {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
 
 .title-class {
   font-family: Lato;
@@ -398,4 +412,11 @@ mat-header-row {
   @include breakpoint-xs {
     flex-direction: column;
   }
+}
+
+::ng-deep .tooltip-sec {
+  background-color: 000000 !important;
+  font-size: 12px !important;
+  font-family: 500 !important;
+  color: white !important;
 }

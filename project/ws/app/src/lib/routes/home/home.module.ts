@@ -185,6 +185,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     PipePublicURLModule,
     ScrollspyLeftMenuModule,
     MatRadioModule,
+    MatTooltipModule,
     // TO-DO need to enable for image crop
     // ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
