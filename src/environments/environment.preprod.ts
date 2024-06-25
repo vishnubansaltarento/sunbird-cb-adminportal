@@ -13,5 +13,4 @@ export const environment = {
   channelId: (window as { [key: string]: any })['env']['channelId'] || '',
   connectionType: (window as { [key: string]: any })['env']['connectionType'] || '',
   KCMframeworkName: (window as { [key: string]: any })['env']['KCMframeworkName'] || '',
-  APIKEY: (window as { [key: string]: any })['env']['APIKEY'] || '',
 }
