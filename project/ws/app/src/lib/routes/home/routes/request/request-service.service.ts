@@ -13,8 +13,8 @@ const API_END_POINTS = {
   CREATE_DEMAND_REQUEST: '/apis/proxies/v8/demand/content/create',
   MARK_INVALID: '/apis/proxies/v8/demand/content/v1/update/status',
   GET_REQUEST_DATA_BYID: 'apis/proxies/v8/demand/content/read',
-  GET_INTEREST_ORG_LIST:'/apis/proxies/v8/interest/v1/search',
-  ASSIGN_TO_ORG:'/apis/proxies/v8/interest/v1/assign'
+  GET_INTEREST_ORG_LIST: '/apis/proxies/v8/interest/v1/search',
+  ASSIGN_TO_ORG: '/apis/proxies/v8/interest/v1/assign',
 }
 
 @Injectable({
@@ -48,11 +48,11 @@ export class RequestServiceService {
     return this.http.get<any>(`${API_END_POINTS.GET_REQUEST_DATA_BYID}/${demandId}`).pipe(map(res => _.get(res, 'result.result')))
   }
 
-  getOrgInterestList(request:any) {
-    return this.http.post<any>(`${API_END_POINTS.GET_INTEREST_ORG_LIST}`, request).pipe(map(res=>_.get(res, 'result.result')))
+  getOrgInterestList(request: any) {
+    return this.http.post<any>(`${API_END_POINTS.GET_INTEREST_ORG_LIST}`, request).pipe(map(res => _.get(res, 'result.result')))
   }
 
-  assignToOrg(request:any) {
+  assignToOrg(request: any) {
     return this.http.put<any>(`${API_END_POINTS.ASSIGN_TO_ORG}`, request)
   }
 }

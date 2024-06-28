@@ -132,7 +132,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     CompetencyViewComponent,
     ConfirmationPopupComponent,
     AssignListPopupComponent,
-    SingleAssignPopupComponent
+    SingleAssignPopupComponent,
   ],
   imports: [
     CommonModule,

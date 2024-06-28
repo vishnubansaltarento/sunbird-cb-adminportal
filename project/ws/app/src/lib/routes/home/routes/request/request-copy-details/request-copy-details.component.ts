@@ -60,9 +60,9 @@ export class RequestCopyDetailsComponent implements OnInit {
   actionBtnName: any
   requestObjData: any
   isHideData = false
-  currentUser: any;
-  filteredAssigneeType:any[]=[];
-  isCompetencyHide:boolean = false;
+  currentUser: any
+  filteredAssigneeType: any[] = []
+  isCompetencyHide = false
 
   competencyCtrl!: FormControl
   competencyArea!: FormControl
@@ -93,7 +93,7 @@ export class RequestCopyDetailsComponent implements OnInit {
       queryThemeControl: new FormControl(''),
       querySubThemeControl: new FormControl(''),
       competencies_v5: [],
-      assigneeText: new FormControl('')
+      assigneeText: new FormControl(''),
     })
 
    }
@@ -143,7 +143,7 @@ export class RequestCopyDetailsComponent implements OnInit {
       providerText: '',
       queryThemeControl: '',
       querySubThemeControl: '',
-      assigneeText: ''
+      assigneeText: '',
     })
    const value = this.requestForm.controls.competencies_v5.value || []
    this.requestObjData.competencies.map((comp: any) => {
@@ -183,7 +183,6 @@ export class RequestCopyDetailsComponent implements OnInit {
   navigateBack() {
     this.router.navigateByUrl('/app/home/all-request')
   }
-
 
   searchValueData(searchValue: any) {
     if (searchValue === 'providerText') {
@@ -253,12 +252,11 @@ export class RequestCopyDetailsComponent implements OnInit {
         if (this.actionBtnName === 'view') {
           this.requestForm.disable()
           this.isHideData = true
-          this.isCompetencyHide = true;
-        }
-        else if(this.actionBtnName === 'reassign'){
-          this.requestForm.disable();
+          this.isCompetencyHide = true
+        } else if (this.actionBtnName === 'reassign') {
+          this.requestForm.disable()
           // this.isHideData = true;
-          this.isCompetencyHide = true;
+          this.isCompetencyHide = true
           this.requestForm.controls['assigneeText'].enable()
           this.requestForm.controls['assignee'].enable()
       }
@@ -503,12 +501,12 @@ view(item?: any) {
   }
 
   isOptionDisabled(option: any): boolean {
-    const control = this.requestForm.get('providers');
+    const control = this.requestForm.get('providers')
     if (control) {
-      const selectedProviders = control.value;
-      return selectedProviders.length >= 5 && !selectedProviders.includes(option);
+      const selectedProviders = control.value
+      return selectedProviders.length >= 5 && !selectedProviders.includes(option)
     }
-    return false;
+    return false
   }
 
   showSaveButton() {
@@ -521,7 +519,7 @@ view(item?: any) {
       data: {
         type: 'conformation',
         icon: 'radio_on',
-        title: this.actionBtnName === 'reassign'? 'Are you sure you want to Re-assign?':'Are you sure you want to Create a demand?',
+        title: this.actionBtnName === 'reassign' ? 'Are you sure you want to Re-assign?' : 'Are you sure you want to Create a demand?',
         // subTitle: 'You wont be able to revert this',
         primaryAction: 'Confirm',
         secondaryAction: 'Cancel',
@@ -537,7 +535,7 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
 }
 
   submit() {
-    if(this.demandId &&  this.actionBtnName === 'reassign'){
+    if (this.demandId &&  this.actionBtnName === 'reassign') {
       this.requestForm.enable()
     }
     let providerList: any[] = []
@@ -581,7 +579,7 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
     if (this.requestForm.value.learningMode) {
       request.learningMode = this.requestForm.value.learningMode.toLowerCase()
     }
-    if(this.demandId &&  this.actionBtnName === 'reassign'){
+    if (this.demandId &&  this.actionBtnName === 'reassign') {
       request.demand_id =  this.demandId
 
     }
@@ -597,9 +595,9 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
           this.router.navigateByUrl('/app/home/all-request')
           this.snackBar.open('Request submitted successfully ')
       }
-      },1000)
+      },         1000)
     },
-    (error:any) => {
+                                                        (error: any) => {
       this.dialogRefs.close({ error })
       this.snackBar.open('Request Failed')
 

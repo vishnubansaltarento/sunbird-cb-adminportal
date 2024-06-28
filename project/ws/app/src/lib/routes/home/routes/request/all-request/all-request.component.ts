@@ -35,11 +35,11 @@ export class AllRequestComponent implements OnInit {
   inProgress = false
   invalid = false
   dataSource: any
-  displayedColumns: string[] = ['RequestId', 'title','requestedBy', 
+  displayedColumns: string[] = ['RequestId', 'title', 'requestedBy',
   'requestType', 'requestStatus', 'assignee', 'requestedOn', 'interests', 'action']
   dialogRef: any
   queryParams: any
-  statusCards:any[]=[]
+  statusCards: any[] = []
   statusKey = statusValue
   invalidRes: any
 
@@ -58,38 +58,38 @@ export class AllRequestComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(html)
   }
 
-  getStatusCount(){
+  getStatusCount() {
     const request = {
       filterCriteriaMap: {
       },
-      requestedFields: ["status"],
-      orderBy: "createdOn",
-      orderDirection: "ASC",
-      facets: ["status"]
+      requestedFields: ['status'],
+      orderBy: 'createdOn',
+      orderDirection: 'ASC',
+      facets: ['status'],
     }
-    this.requestService.getRequestList(request).subscribe((res:any)=>{
-      if(res.facets && res.facets.status){
-        this.statusCards = res.facets.status;
-        const toolTipText:any = {
-          "Assigned":'Total number of requests assigned',
-          "Invalid":'Total number of Invalid requests',
-          "Unassigned":'Total number of unassigned requests',
-          "InProgress":'Total number of In-progress requests',
-          "Fulfill":'Total number of requests fulfilled'
+    this.requestService.getRequestList(request).subscribe((res: any) => {
+      if (res.facets && res.facets.status) {
+        this.statusCards = res.facets.status
+        const toolTipText: any = {
+          Assigned: 'Total number of requests assigned',
+          Invalid: 'Total number of Invalid requests',
+          Unassigned: 'Total number of unassigned requests',
+          InProgress: 'Total number of In-progress requests',
+          Fulfill: 'Total number of requests fulfilled',
         }
-        this.statusCards = this.statusCards.map(status=>({
+        this.statusCards = this.statusCards.map(status => ({
           ...status,
-          message:toolTipText[status.value] || ''
+          message: toolTipText[status.value] || '',
         }))
-        const allStatusValues = ["Assigned", "Invalid", "Unassigned", "InProgress", "Fulfill"]; 
-        const existingValues = new Set(this.statusCards.map(status => status.value));
+        const allStatusValues = ['Assigned', 'Invalid', 'Unassigned', 'InProgress', 'Fulfill']
+        const existingValues = new Set(this.statusCards.map(status => status.value))
         // Add missing status values with a count of 0
         allStatusValues.forEach(status => {
           if (!existingValues.has(status)) {
-            this.statusCards.push({ value: status, count: 0 });
+            this.statusCards.push({ value: status, count: 0 })
           }
-        });
-        
+        })
+
           }
     })
 
@@ -106,7 +106,7 @@ export class AllRequestComponent implements OnInit {
       orderDirection: 'ASC',
     }
     this.requestService.getRequestList(request).subscribe((res: any) => {
-      if(res.data){
+      if (res.data) {
       this.requestListData = res.data
       if (this.requestListData) {
         this.requestCount = res.totalCount
@@ -152,7 +152,6 @@ export class AllRequestComponent implements OnInit {
     }
   }
 
-
   handleClick(element: any): void {
     if (element.status && element.status.length > 0) {
       if (element.status !== this.statusKey.Inprogress &&
@@ -183,10 +182,9 @@ export class AllRequestComponent implements OnInit {
     case 'reAssignContent':
       // this.showConformationModal(_event.row, _event.action)
       // this.openAssignlistPopup(item)
-      if(item.requestType === 'Broadcast'){
+      if (item.requestType === 'Broadcast') {
         this.openAssignlistPopup(item)
-      }
-      else {
+      } else {
         this.openSingleReassignPopup(item)
         // this.queryParams = {
         //   id: item.demand_id,
@@ -206,8 +204,7 @@ export class AllRequestComponent implements OnInit {
 
   }
 
-
-  openSingleReassignPopup(item:any){
+  openSingleReassignPopup(item: any) {
     this.dialogRef = this.dialog.open(SingleAssignPopupComponent, {
       disableClose: false,
       width: '90%',
@@ -218,10 +215,10 @@ export class AllRequestComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe((_res: any) => {
       if (_res && _res.data === 'confirmed') {
-        setTimeout(()=>{
+        setTimeout(() => {
           this.getRequestList()
-        },1000)
-        
+        },         1000)
+
          this.snackBar.open('Re-assign submitted Successfully')
       } else {
         // this.snackBar.open('error')
@@ -276,14 +273,14 @@ export class AllRequestComponent implements OnInit {
      newStatus: 'Invalid',
     }
     this.requestService.markAsInvalid(request).subscribe(res => {
-      if(res){
+      if (res) {
         this.invalidRes = res
-        setTimeout(()=>{
+        setTimeout(() => {
           this.getRequestList()
-        },1000)
+        },         1000)
         this.snackBar.open('Marked as Invalid')
       }
-      
+
      }
    )
 
@@ -300,9 +297,9 @@ export class AllRequestComponent implements OnInit {
 
       this.dialogRef.afterClosed().subscribe((_res: any) => {
         if (_res && _res.data === 'confirmed') {
-          setTimeout(()=>{
+          setTimeout(() => {
             this.getRequestList()
-          },1000)
+          },         1000)
            this.snackBar.open('Assigned submitted Successfully')
         } else {
           // this.snackBar.open('error')
