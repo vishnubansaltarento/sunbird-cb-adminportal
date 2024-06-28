@@ -87,7 +87,7 @@ export class RequestCopyDetailsComponent implements OnInit {
       compArea: new FormControl(''),
       referenceLink: new FormControl(''),
       requestType: new FormControl('', Validators.required),
-      assignee: new FormControl({}),
+      assignee: new FormControl(''),
       providers: new FormControl([[]]),
       providerText: new FormControl(''),
       queryThemeControl: new FormControl(''),
