@@ -573,8 +573,8 @@ this.dialogRefs.afterClosed().subscribe((_res: any) => {
       requestType: this.requestForm.value.requestType,
       preferredProvider: providerList,
       assignedProvider: assigneeProvider,
-      status: this.statusValue,
-      source: this.currentUser,
+      // status: this.statusValue,
+      // source: this.currentUser,
 
     }
 
