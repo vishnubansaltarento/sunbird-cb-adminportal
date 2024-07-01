@@ -87,7 +87,7 @@ export class RequestCopyDetailsComponent implements OnInit {
       compArea: new FormControl(''),
       referenceLink: new FormControl(''),
       requestType: new FormControl('', Validators.required),
-      assignee: new FormControl({}),
+      assignee: new FormControl(''),
       providers: new FormControl([[]]),
       providerText: new FormControl(''),
       queryThemeControl: new FormControl(''),
@@ -115,7 +115,7 @@ export class RequestCopyDetailsComponent implements OnInit {
         this.actionBtnName = params.name
       }
     })
-
+    this.valuechangeFuctions()
   }
 
   getRequestDataById() {
@@ -161,7 +161,7 @@ export class RequestCopyDetailsComponent implements OnInit {
    if (this.filteredRequestType) {
     const abc = this.filteredRequestType.filter(option =>
       this.requestObjData.preferredProvider.some((res: any) =>
-         res.providerName === option.orgName
+         res.providerId === option.id
     )
   )
   this.requestForm.controls['providers'].setValue(abc)
@@ -170,7 +170,7 @@ export class RequestCopyDetailsComponent implements OnInit {
    if (this.filteredAssigneeType) {
     if (this.requestObjData.assignedProvider) {
       const assignData = this.filteredAssigneeType.find(option =>
-        this.requestObjData.assignedProvider.providerName === option.orgName
+        this.requestObjData.assignedProvider.providerId === option.id
        )
        if (assignData) {
          this.requestForm.controls['assignee'].setValue(assignData)
@@ -184,17 +184,19 @@ export class RequestCopyDetailsComponent implements OnInit {
     this.router.navigateByUrl('/app/home/all-request')
   }
 
-  searchValueData(searchValue: any) {
-    if (searchValue === 'providerText') {
+
+  valuechangeFuctions() {
+    if (this.requestForm.controls['providerText']) {
       this.requestForm.controls['providerText'].valueChanges.pipe(
         debounceTime(100),
         distinctUntilChanged(),
         startWith(''),
       ).subscribe((newValue: any) => {
-        this.filteredRequestType = this.filterOrgValues(newValue, this.requestTypeData)
+        this.filteredRequestType = this.getHiddenOptions(newValue, this.requestTypeData)
       })
     }
-    if (searchValue === 'assigneeText') {
+
+    if (this.requestForm.controls['assigneeText']) {
       this.requestForm.controls['assigneeText'].valueChanges.pipe(
         debounceTime(100),
         distinctUntilChanged(),
@@ -206,6 +208,28 @@ export class RequestCopyDetailsComponent implements OnInit {
 
   }
 
+  // searchValueData(searchValue: any) {
+  //   if (searchValue === 'providerText') {
+  //     this.requestForm.controls['providerText'].valueChanges.pipe(
+  //       debounceTime(100),
+  //       distinctUntilChanged(),
+  //       startWith(''),
+  //     ).subscribe((newValue: any) => {
+  //       this.filteredRequestType = this.filterOrgValues(newValue, this.requestTypeData)
+  //     })
+  //   }
+  //   if (searchValue === 'assigneeText') {
+  //     this.requestForm.controls['assigneeText'].valueChanges.pipe(
+  //       debounceTime(100),
+  //       distinctUntilChanged(),
+  //       startWith(''),
+  //     ).subscribe((newValue: any) => {
+  //       this.filteredAssigneeType = this.filterOrgValues(newValue, this.requestTypeData)
+  //     })
+  //   }
+
+  // }
+
   filterValues(searchValue: string, array: any) {
     return array.filter((value: any) =>
       value.name.toLowerCase().includes(searchValue.toLowerCase()))
@@ -214,6 +238,19 @@ export class RequestCopyDetailsComponent implements OnInit {
   filterOrgValues(searchValue: string, array: any) {
     return array.filter((value: any) =>
       value.orgName.toLowerCase().includes(searchValue.toLowerCase()))
+  }
+
+  getHiddenOptions(searchValue: string, array: any) {
+    const hiddenOptions: any = []
+    array.forEach((element: any) => {
+      if (element.orgName.toLowerCase().includes(searchValue.toLowerCase())) {
+        element['hideOption'] = 'show'
+      } else {
+        element['hideOption'] = 'hide'
+      }
+      hiddenOptions.push(element)
+    })
+    return hiddenOptions
   }
 
   getFilterEntity() {
