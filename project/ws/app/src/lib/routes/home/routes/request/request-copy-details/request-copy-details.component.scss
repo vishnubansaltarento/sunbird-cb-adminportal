@@ -173,6 +173,10 @@
       }
     }
   }
+
+  .hideOptions {
+    display: none;
+  }
   ::ng-deep .tooltip-sec {
     background-color: 000000 !important;
     font-size: 12px !important;

@@ -275,9 +275,9 @@ export class AllRequestComponent implements OnInit {
     this.requestService.markAsInvalid(request).subscribe(res => {
       if (res) {
         this.invalidRes = res
-        setTimeout(()=>{
+        setTimeout(() => {
           this.getRequestList()
-        },1000)
+        },         1000)
         this.snackBar.open('Marked as Invalid')
       }
 
@@ -297,9 +297,9 @@ export class AllRequestComponent implements OnInit {
 
       this.dialogRef.afterClosed().subscribe((_res: any) => {
         if (_res && _res.data === 'confirmed') {
-          setTimeout(()=>{
+          setTimeout(() => {
             this.getRequestList()
-          },1000)
+          },         1000)
            this.snackBar.open('Assigned submitted Successfully')
         } else {
           // this.snackBar.open('error')
