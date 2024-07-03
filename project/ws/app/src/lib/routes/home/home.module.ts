@@ -1,5 +1,5 @@
 import { CommsComponent } from './routes/comms/comms.component'
-import { NgModule } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -89,6 +89,8 @@ import { RequestCopyDetailsComponent } from './routes/request/request-copy-detai
 import { CompetencyViewComponent } from './routes/request/competency-view/competency-view.component'
 import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/confirmation-popup.component'
 import { AssignListPopupComponent } from './routes/request/assign-list-popup/assign-list-popup.component'
+import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
+import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
 import { SingleAssignPopupComponent } from './routes/request/single-assign-popup/single-assign-popup.component'
 @NgModule({
   declarations: [
@@ -132,6 +134,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     CompetencyViewComponent,
     ConfirmationPopupComponent,
     AssignListPopupComponent,
+    KCMMappingComponent,
     SingleAssignPopupComponent,
   ],
   imports: [
@@ -189,6 +192,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     // TO-DO need to enable for image crop
     // ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
+    TaxonomyEditorModule,
   ],
   entryComponents: [
     UserPopupComponent,
@@ -212,7 +216,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     ConfirmationPopupComponent,
   ],
   exports: [AddThumbnailComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeModule {
-
 }
