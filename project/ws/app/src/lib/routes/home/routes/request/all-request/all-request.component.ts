@@ -163,6 +163,15 @@ export class AllRequestComponent implements OnInit {
 
 }
 
+getPointerEventsStyle(element:any){
+ return {
+  'pointer-events': (element.status !== this.statusKey.Inprogress && 
+    element.status !== this.statusKey.invalid && 
+    element.status !== this.statusKey.fullfill) ? 'auto' : 'none',
+    
+ }
+}
+
   onClickMenu(item: any, action: string) {
   switch (action) {
     case 'viewContent':
