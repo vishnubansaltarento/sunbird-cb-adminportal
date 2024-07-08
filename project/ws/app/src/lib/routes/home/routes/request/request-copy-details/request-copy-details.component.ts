@@ -159,12 +159,12 @@ export class RequestCopyDetailsComponent implements OnInit {
 
     this.selectRequestType(this.requestObjData.requestType)
    if (this.filteredRequestType) {
-    if(this.requestObjData.preferredProvider && this.requestObjData.preferredProvider.length){
+    if (this.requestObjData.preferredProvider && this.requestObjData.preferredProvider.length) {
     const prefferedData = this.filteredRequestType.filter(option =>
       this.requestObjData.preferredProvider.some((res: any) =>
          res.providerId === option.id
     ))
-    if(prefferedData && prefferedData.length){
+    if (prefferedData && prefferedData.length) {
       this.requestForm.controls['providers'].setValue(prefferedData)
     }
   }
@@ -186,7 +186,6 @@ export class RequestCopyDetailsComponent implements OnInit {
   navigateBack() {
     this.router.navigateByUrl('/app/home/all-request')
   }
-
 
   valuechangeFuctions() {
     if (this.requestForm.controls['providerText']) {

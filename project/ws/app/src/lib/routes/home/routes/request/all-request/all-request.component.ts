@@ -163,12 +163,12 @@ export class AllRequestComponent implements OnInit {
 
 }
 
-getPointerEventsStyle(element:any){
+getPointerEventsStyle(element: any) {
  return {
-  'pointer-events': (element.status !== this.statusKey.Inprogress && 
-    element.status !== this.statusKey.invalid && 
+  'pointer-events': (element.status !== this.statusKey.Inprogress &&
+    element.status !== this.statusKey.invalid &&
     element.status !== this.statusKey.fullfill) ? 'auto' : 'none',
-    
+
  }
 }
 
