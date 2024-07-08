@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from 'src/environments/environment'
 import { LoaderService } from '../../services/loader.service'
 import { ProfileV2UtillService } from '../../services/home-utill.service'
+import { PageEvent } from '@angular/material'
 @Component({
   selector: 'ws-app-users-view',
   templateUrl: './users-view.component.html',
@@ -27,23 +28,22 @@ export class UsersViewComponent implements OnInit {
   Math: any
   /* tslint:enable */
   currentFilter = 'active'
-  discussionList!: any
-  discussProfileData!: any
   portalProfile!: NSProfileDataV2.IProfile
-  // userDetails: any
-  // location!: string | null
   tabs: any
   tabsData: NSProfileDataV2.IProfileTab[]
   currentUser!: string | null
-  // connectionRequests!: any[]
   tabledata: any = []
   data: any = []
-  userWholeData: any = []
   usersData!: any
-  completeTableData: any
-  completeInactiveData: any
 
-  // fullUserData: any = []
+  activeUsersData!: any[]
+  inactiveUsersData!: any[]
+  currentOffset = 0
+  userDataTotalCount?: number | 0
+  limit = 20
+  pageIndex = 0
+  searchQuery = ''
+  rootOrgId: any
 
   constructor(
     public dialog: MatDialog,
@@ -58,6 +58,7 @@ export class UsersViewComponent implements OnInit {
     private profileUtilSvc: ProfileV2UtillService,
   ) {
     this.Math = Math
+    this.configSvc = this.route.parent && this.route.parent.snapshot.data.configService
     this.currentUser = this.configSvc.userProfile && this.configSvc.userProfile.userId
     this.tabsData = this.route.parent && this.route.parent.snapshot.data.pageData.data.tabs || []
     this.tabs = this.route.data.subscribe(data => {
@@ -68,6 +69,7 @@ export class UsersViewComponent implements OnInit {
     })
   }
   ngOnInit() {
+    this.rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
     this.tabledata = {
       actions: [],
       columns: [
@@ -82,159 +84,271 @@ export class UsersViewComponent implements OnInit {
       needUserMenus: true,
     }
     // this.getAllUsers()
-    this.getAllKongUsers()
-
+    this.filterData('')
   }
+
+  filter(filter: string) {
+    this.currentFilter = filter
+    this.pageIndex = 0
+    this.currentOffset = 0
+    this.limit = 20
+    this.searchQuery = ''
+    this.filterData(this.searchQuery)
+  }
+
+  get dataForTable() {
+    switch (this.currentFilter) {
+      case 'active':
+        return this.activeUsersData
+      case 'inactive':
+        return this.inactiveUsersData
+      default:
+        return []
+    }
+  }
+
+  filterData(query: string) {
+    let index = 0
+    if (this.currentFilter === 'active') {
+      index = 1
+      const data = { index, label: this.currentFilter }
+
+      this.raiseTabTelemetry(this.currentFilter, data)
+      this.activeUsers(query)
+    } else if (this.currentFilter === 'inactive') {
+      index = 2
+      const data = { index, label: this.currentFilter }
+
+      this.raiseTabTelemetry(this.currentFilter, data)
+      this.inActiveUsers(query)
+    }
+  }
+
+  activeUsers(query: string) {
+    this.loaderService.changeLoad.next(true)
+    const activeUsersData: any[] = []
+    const status = this.currentFilter === 'active' ? 1 : 0
+    this.currentOffset = this.limit * ((this.pageIndex + 1) - 1)
+    this.usersService.getAllKongUsersPaginated(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe((data: any) => {
+      this.userDataTotalCount = data.result.response.count
+      this.usersData = data.result.response
+      if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+        _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
+          // tslint:disable-next-line
+          const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
+          activeUsersData.push({
+            fullname: user ? `${user.firstName}` : null,
+            active: !user.isDeleted,
+            email: user.personalDetails && user.personalDetails.primaryEmail ?
+              this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+            roles: org.roles.toString().replace(',', ', '),
+            userId: user.userId,
+            role: org.roles || [],
+            blocked: user.blocked,
+          })
+        })
+      }
+      this.activeUsersData = activeUsersData
+      return this.activeUsersData
+    })
+  }
+
+  inActiveUsers(query: string) {
+    this.loaderService.changeLoad.next(true)
+    const inactiveUsersData: any[] = []
+    const status = this.currentFilter === 'active' ? 1 : 0
+    this.currentOffset = this.limit * ((this.pageIndex + 1) - 1)
+    this.usersService.getAllKongUsersPaginated(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe(
+      (data: any) => {
+        this.userDataTotalCount = data.result.response.count
+        this.usersData = data.result.response
+        if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+          _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
+            // tslint:disable-next-line
+            const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
+            inactiveUsersData.push({
+              fullname: user ? `${user.firstName}` : null,
+              active: !user.isDeleted,
+              email: user.personalDetails && user.personalDetails.primaryEmail ?
+                this.profileUtilSvc.emailTransform(user.personalDetails.primaryEmail) : this.profileUtilSvc.emailTransform(user.email),
+              roles: org.roles.toString().replace(',', ', '),
+              userId: user.userId,
+              role: org.roles || [],
+              blocked: user.blocked,
+            })
+          })
+        }
+        this.inactiveUsersData = inactiveUsersData
+        return this.inactiveUsersData
+      })
+  }
+
   onCreateClick() {
     this.router.navigate([`/app/users/create-user`])
   }
+
   menuActions($event: { action: string, row: any }) {
     this.loaderService.changeLoad.next(true)
     const loggedInUserId = _.get(this.route, 'snapshot.parent.data.configService.userProfile.userId')
-    const user = { userId: _.get($event.row, 'userId') }
-    _.set(user, 'deptId', _.get(this.usersData, 'id'))
-    _.set(user, 'isBlocked', _.get($event.row, 'blocked'))
-    _.set(user, 'isActive', _.get($event.row, 'active'))
-
+    const user = {
+      request: {
+        userId: _.get($event.row, 'userId'),
+        requestedBy: this.currentUser,
+      },
+    }
     switch ($event.action) {
       case 'showOnKarma':
-        window.open(`${environment.karmYogiPath}/app/person-profile/${user.userId}`)
+        window.open(`${environment.karmYogiPath}/app/person-profile/${user.request.userId}`)
         break
       case 'block':
         _.set(user, 'isBlocked', true)
-        _.set(user, 'isActive', false)
-        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
-        this.usersService.newBlockUserKong(loggedInUserId, user.userId).subscribe(response => {
-          if (_.toUpper(response.params.status) === 'SUCCESS') {
-            setTimeout(() => {
-              this.getAllKongUsers()
-              this.snackBar.open('Deactivated successfully!')
-            },         1500)
-
-          } else {
-            this.loaderService.changeLoad.next(false)
-            this.snackBar.open('Update unsuccess!')
+        _.set(user, 'isDeleted', false)
+        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
+        this.usersService.blockUser(user).subscribe(response => {
+          if (response) {
+            // this.getAllKongUsers()
+            this.filterData('')
+            this.snackBar.open(response.result.response)
           }
-        },                                                                        _err => this.snackBar.open('Error in inactive'))
+        })
         break
       case 'unblock':
         _.set(user, 'isBlocked', false)
-        _.set(user, 'isActive', true)
-        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
-        this.usersService.newUnBlockUserKong(loggedInUserId, user.userId).subscribe(response => {
-          if (_.toUpper(response.params.status) === 'SUCCESS') {
-            setTimeout(() => {
-              this.getAllKongUsers()
-              this.snackBar.open('Activated successfully!')
-            },         1500)
-
+        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
+        this.usersService.blockUser(user).subscribe(response => {
+          if (response) {
             // this.getAllKongUsers()
-            // // this.getAllUsers()
-            // this.snackBar.open(response.params.errmsg)
-          } else {
-            this.loaderService.changeLoad.next(false)
-            this.snackBar.open('Updat unsuccess!')
-          }
-        },                                                                          _err => this.snackBar.open('Error in active'))
-        break
-      case 'deactive':
-        _.set(user, 'isActive', false)
-        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
-        this.usersService.newUnBlockUserKong(loggedInUserId, user.userId).subscribe(response => {
-          if (response) {
-            // this.getAllUsers()
-            this.snackBar.open(response.params.errmsg)
-          }
-        },                                                                          _err => this.snackBar.open('Error in Active'))
-        break
-      case 'active':
-        _.set(user, 'isActive', true)
-        _.set(user, 'isBlocked', false)
-        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
-        this.usersService.deActiveUser(user).subscribe(response => {
-          if (response) {
-            // this.getAllUsers()
+            this.filterData('')
             this.snackBar.open('Updated successfully !')
           }
         })
         break
+      case 'deactive':
+        this.usersService.newBlockUserKong(loggedInUserId, user.request.userId).subscribe(response => {
+          if (_.toUpper(response.params.status) === 'SUCCESS') {
+            setTimeout(() => {
+              // this.getAllKongUsers()
+              this.filterData('')
+              this.snackBar.open('Deactivated successfully!')
+            },
+              // tslint:disable-next-line: align
+              1500)
+            // this.changeDetectorRefs.detectChanges()
+          } else {
+            this.loaderService.changeLoad.next(false)
+            this.snackBar.open('Update unsuccess!')
+          }
+        },
+          // tslint:disable-next-line:align
+          () => {
+            this.snackBar.open('Given User Data doesnt exist in our records. Please provide a valid one.')
+          })
+        break
+      case 'active':
+        const state = _.get(user, 'isBlocked')
+        if (state === true) {
+          _.set(user, 'isDeleted', false)
+          _.set(user, 'isBlocked', false)
+        } else {
+          _.set(user, 'isDeleted', false)
+        }
+        _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i))
+        this.usersService.newUnBlockUserKong(loggedInUserId, user.request.userId).subscribe((response: any) => {
+          if (_.toUpper(response.params.status) === 'SUCCESS') {
+            setTimeout(() => {
+              // this.getAllKongUsers()
+              this.filterData('')
+              this.snackBar.open('Activated successfully!')
+              // tslint:disable-next-line: align
+            }, 1500)
+          } else {
+            this.loaderService.changeLoad.next(false)
+            this.snackBar.open('Update unsuccess!')
+          }
+        })
+        break
     }
   }
-  // getAllUsers() {
-  //   this.usersService.getAllUsers().subscribe(data => {
-  //     this.data = data
-  //     this.filter(this.currentFilter)
-  //   })
+
+  // menuActions($event: { action: string, row: any }) {
+  //   this.loaderService.changeLoad.next(true)
+  //   const loggedInUserId = _.get(this.route, 'snapshot.parent.data.configService.userProfile.userId')
+  //   const user = { userId: _.get($event.row, 'userId') }
+  //   _.set(user, 'deptId', _.get(this.usersData, 'id'))
+  //   _.set(user, 'isBlocked', _.get($event.row, 'blocked'))
+  //   _.set(user, 'isActive', _.get($event.row, 'active'))
+
+  //   switch ($event.action) {
+  //     case 'showOnKarma':
+  //       window.open(`${environment.karmYogiPath}/app/person-profile/${user.userId}`)
+  //       break
+  //     case 'block':
+  //       _.set(user, 'isBlocked', true)
+  //       _.set(user, 'isActive', false)
+  //       _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
+  //       this.usersService.newBlockUserKong(loggedInUserId, user.userId).subscribe(response => {
+  //         if (_.toUpper(response.params.status) === 'SUCCESS') {
+  //           setTimeout(() => {
+  //             // this.getAllKongUsers()
+  //             this.filterData('')
+  //             this.snackBar.open('Deactivated successfully!')
+  //           }, 1500)
+
+  //         } else {
+  //           this.loaderService.changeLoad.next(false)
+  //           this.snackBar.open('Update unsuccess!')
+  //         }
+  //       }, _err => this.snackBar.open('Error in inactive'))
+  //       break
+  //     case 'unblock':
+  //       _.set(user, 'isBlocked', false)
+  //       _.set(user, 'isActive', true)
+  //       _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
+  //       this.usersService.newUnBlockUserKong(loggedInUserId, user.userId).subscribe(response => {
+  //         if (_.toUpper(response.params.status) === 'SUCCESS') {
+  //           setTimeout(() => {
+  //             // this.getAllKongUsers()
+  //             this.filterData('')
+  //             this.snackBar.open('Activated successfully!')
+  //           }, 1500)
+
+  //           // this.getAllKongUsers()
+  //           // // this.getAllUsers()
+  //           // this.snackBar.open(response.params.errmsg)
+  //         } else {
+  //           this.loaderService.changeLoad.next(false)
+  //           this.snackBar.open('Updat unsuccess!')
+  //         }
+  //       }, _err => this.snackBar.open('Error in active'))
+  //       break
+  //     case 'deactive':
+  //       _.set(user, 'isActive', false)
+  //       _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
+  //       this.usersService.newUnBlockUserKong(loggedInUserId, user.userId).subscribe(response => {
+  //         if (response) {
+  //           // this.getAllUsers()
+  //           this.snackBar.open(response.params.errmsg)
+  //         }
+  //       }, _err => this.snackBar.open('Error in Active'))
+  //       break
+  //     case 'active':
+  //       _.set(user, 'isActive', true)
+  //       _.set(user, 'isBlocked', false)
+  //       _.set(user, 'roles', _.map(_.get($event.row, 'role'), i => i.roleName))
+  //       this.usersService.deActiveUser(user).subscribe(response => {
+  //         if (response) {
+  //           // this.getAllUsers()
+  //           this.snackBar.open('Updated successfully !')
+  //         }
+  //       })
+  //       break
+  //   }
   // }
-  getAllKongUsers() {
-    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-    this.loaderService.changeLoad.next(true)
-    this.usersService.getAllKongUsers(rootOrgId).subscribe(data => {
-      if (data.result.response.content) {
-        this.userWholeData = data.result.response.content || []
-        this.filter(this.currentFilter ? this.currentFilter : 'active')
-      }
-    })
-  }
+
   raiseTabTelemetry(sub: string, data: WsEvents.ITelemetryTabData) {
     this.events.handleTabTelemetry(sub, data)
   }
-  filter(key: string) {
-    const usersData: any[] = []
-    let index = 0
-    let data: any
-    if (key) {
-      this.currentFilter = key
-      this.data = []
-      switch (key) {
-        case 'active':
-          index = 1
-          data = {
-            index,
-            label: key,
-          }
-          this.raiseTabTelemetry(key, data)
-          this.newKongUser(false)
-          break
-        case 'inactive':
-          index = 2
-          data = {
-            index,
-            label: key,
-          }
-          this.raiseTabTelemetry(key, data)
-          this.newKongUser(true)
-          break
-        case 'blocked':
-          this.data = usersData
-          break
-        default:
-          this.data = usersData
-          break
-      }
-    }
-  }
-  newKongUser(active: boolean) {
-    // const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-    const usersData: any[] = []
-    let roles: any[] = []
-    this.userWholeData.forEach((user: any) => {
-      user.organisations.forEach((org: { organisationId: string, roles: any }) => {
-        roles = org.roles
-      })
-      const email = this.profileUtilSvc.emailTransform(_.get(user, 'profileDetails.personalDetails.primaryEmail')) || ''
-      if (active === user.isDeleted) {
-        usersData.push({
-          fullname: user ? `${user.firstName}` : null,
-          // fullname: user ? `${user.firstName} ${user.lastName}` : null,
-          email: email || 'NA',
-          roles: roles.toString().replace(',', ', '),
-          userId: user.userId,
-        })
-      }
-    })
-    this.data = usersData
-  }
+
   getUserRole(user: any) {
     const userRole: any[] = []
     user.roleInfo.forEach((role: { roleName: any }) => {
@@ -244,15 +358,15 @@ export class UsersViewComponent implements OnInit {
   }
 
   onEnterkySearch(enterValue: any) {
-    const rootOrgId = _.get(this.route.snapshot.parent, 'data.configService.unMappedUser.rootOrg.rootOrgId')
-    // console.log(enterValue, rootOrgId)
+    this.searchQuery = enterValue
+    this.currentOffset = 0
+    this.pageIndex = 0
+    this.filterData(this.searchQuery)
+  }
 
-    this.usersService.searchUserByenter(enterValue, rootOrgId).subscribe(data => {
-      this.usersData = data.result.response.content
-      // this.filterData()
-      // console.log("search", data)
-    }
-    )
-
+  onPaginateChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex
+    this.limit = event.pageSize
+    this.filterData(this.searchQuery)
   }
 }
