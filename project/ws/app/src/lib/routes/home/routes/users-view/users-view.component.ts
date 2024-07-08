@@ -132,7 +132,7 @@ export class UsersViewComponent implements OnInit {
     this.usersService.getAllKongUsersPaginated(this.rootOrgId, status, this.limit, this.currentOffset, query).subscribe((data: any) => {
       this.userDataTotalCount = data.result.response.count
       this.usersData = data.result.response
-      if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+      if (this.usersData && this.usersData.content && this.usersData.content.length && this.usersData.content.length > 0) {
         _.filter(this.usersData.content, { isDeleted: false }).forEach((user: any) => {
           // tslint:disable-next-line
           const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
@@ -162,7 +162,7 @@ export class UsersViewComponent implements OnInit {
       (data: any) => {
         this.userDataTotalCount = data.result.response.count
         this.usersData = data.result.response
-        if (this.usersData && this.usersData.content && this.usersData.content.length > 0) {
+        if (this.usersData && this.usersData.content && this.usersData.content.length && this.usersData.content.length > 0) {
           _.filter(this.usersData.content, { isDeleted: true }).forEach((user: any) => {
             // tslint:disable-next-line
             const org = { roles: _.get(_.first(_.filter(user.organisations, { organisationId: _.get(this.configSvc, 'unMappedUser.rootOrg.id') })), 'roles') }
