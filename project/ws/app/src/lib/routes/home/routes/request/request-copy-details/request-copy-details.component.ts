@@ -187,7 +187,6 @@ export class RequestCopyDetailsComponent implements OnInit {
     this.router.navigateByUrl('/app/home/all-request')
   }
 
-
   valuechangeFuctions() {
     if (this.requestForm.controls['providerText']) {
       this.requestForm.controls['providerText'].valueChanges.pipe(

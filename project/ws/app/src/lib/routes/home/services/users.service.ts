@@ -36,6 +36,23 @@ export class UsersService {
   getAllUsers(): Observable<any> {
     return this.http.get<any>(`${API_END_POINTS.GET_ALL_USERS}`)
   }
+
+  getAllKongUsersPaginated(depId: string, userStatus: number, pageLimit: number = 20, offsetNum: number = 0, searchText?: string): Observable<any> {
+    let reqBody
+    reqBody = {
+      request: {
+        filters: {
+          rootOrgId: depId,
+          status: userStatus,
+        },
+        limit: pageLimit,
+        offset: offsetNum,
+        query: searchText,
+      },
+    }
+    return this.http.post<any>(`${API_END_POINTS.GET_ALL_KONG_USER}`, reqBody)
+  }
+
   getAllKongUsers(depId: string): Observable<any> {
     const reqBody = {
       request: {
