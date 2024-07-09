@@ -46,7 +46,6 @@ export class RootComponent implements OnInit, AfterViewInit {
   isInIframe = false
   appStartRaised = false
   isSetupPage = false
-  isPublic = false
   constructor(
     private router: Router,
     // public authSvc: AuthKeycloakService,
@@ -89,12 +88,6 @@ export class RootComponent implements OnInit, AfterViewInit {
           this.isNavBarRequired = false
         } else {
           this.isNavBarRequired = true
-        }
-
-        if (event.url.includes('public')) {
-          this.isPublic = true
-        } else {
-          this.isPublic = false
         }
         this.routeChangeInProgress = true
         this.changeDetector.detectChanges()
