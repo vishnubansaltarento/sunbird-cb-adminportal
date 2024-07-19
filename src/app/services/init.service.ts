@@ -13,7 +13,7 @@ import {
 } from '@sunbird-cb/resolver'
 import {
   // AuthKeycloakService,
-  AuthKeycloakService,
+  // AuthKeycloakService,
   // AuthKeycloakService,
   // AuthKeycloakService,
   ConfigurationsService,
@@ -58,7 +58,7 @@ export class InitService {
   constructor(
     private logger: LoggerService,
     private configSvc: ConfigurationsService,
-    private authSvc: AuthKeycloakService,
+    // private authSvc: AuthKeycloakService,
     private widgetResolverService: WidgetResolverService,
     private settingsSvc: BtnSettingsService,
     private userPreference: UserPreferenceService,
@@ -494,8 +494,11 @@ export class InitService {
             dealerCode: null,
             isManager: false,
           }
+          localStorage.setItem('login', 'true')
         } else {
-          this.authSvc.force_logout()
+          // this.authSvc.force_logout()
+          // await this.http.get('/apis/reset').toPromise()
+          window.location.href = `${this.defaultRedirectUrl}apis/reset`
         }
         const details = {
           group: [],
@@ -538,5 +541,14 @@ export class InitService {
       }
     })
     return returnValue
+  }
+
+  private get defaultRedirectUrl(): string {
+    try {
+      const baseUrl = document.baseURI
+      return baseUrl || location.origin
+    } catch (error) {
+      return location.origin
+    }
   }
 }

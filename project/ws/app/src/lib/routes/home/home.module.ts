@@ -1,31 +1,31 @@
 import { CommsComponent } from './routes/comms/comms.component'
-import { NgModule } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { PipeFilterModule, PipeHtmlTagRemovalModule, PipeOrderByModule, PipeRelativeTimeModule } from '@sunbird-cb/utils'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
 import { WidgetResolverModule } from '@sunbird-cb/resolver'
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatButtonModule } from '@angular/material/button'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatChipsModule } from '@angular/material/chips'
+import { MatNativeDateModule } from '@angular/material/core'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatListModule } from '@angular/material/list'
+import { MatMenuModule } from '@angular/material/menu'
+import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatSelectModule } from '@angular/material/select'
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatSortModule } from '@angular/material/sort'
+import { MatTableModule } from '@angular/material/table'
 import { MatCardModule } from '@angular/material/card'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { InitResolver } from './resolvers/init-resolve.service'
@@ -42,7 +42,7 @@ import {
   ScrollspyLeftMenuModule,
 } from '@sunbird-cb/collection'
 // TO-DO need to enable for image crop
-//import { ImageCropModule } from './routes/image-crop/image-crop.module'
+// import { ImageCropModule } from './routes/image-crop/image-crop.module'
 import { AboutComponent } from './routes/about/about.component'
 import { RolesAccessComponent } from './routes/roles-access/roles-access.component'
 import { DirectoryViewComponent } from './routes/directory/directroy.component'
@@ -79,6 +79,14 @@ import { SectorListViewComponent } from './routes/sectors/sector-list-view/secto
 import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
 import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
 import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.component'
+import { AllRequestComponent } from './routes/request/all-request/all-request.component'
+import { RequestCopyDetailsComponent } from './routes/request/request-copy-details/request-copy-details.component'
+import { CompetencyViewComponent } from './routes/request/competency-view/competency-view.component'
+import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/confirmation-popup.component'
+import { AssignListPopupComponent } from './routes/request/assign-list-popup/assign-list-popup.component'
+import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
+import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
+import { SingleAssignPopupComponent } from './routes/request/single-assign-popup/single-assign-popup.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -116,6 +124,13 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     AcsendingOrderPipe,
     PipeEmailPipe,
     RejectReasonDialogComponent,
+    AllRequestComponent,
+    RequestCopyDetailsComponent,
+    CompetencyViewComponent,
+    ConfirmationPopupComponent,
+    AssignListPopupComponent,
+    KCMMappingComponent,
+    SingleAssignPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -156,8 +171,9 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     BtnPageBackModuleAdmin,
     WidgetResolverModule,
     UserAutocompleteModule,
+    MatTooltipModule,
     // TO-DO need to enable for image crop
-    //ImageCropModule,
+    // ImageCropModule,
     UIAdminTableModule,
     UIORGTableModule,
     MatTableModule,
@@ -166,9 +182,12 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     MatPaginatorModule,
     PipePublicURLModule,
     ScrollspyLeftMenuModule,
+    MatRadioModule,
+    MatTooltipModule,
     // TO-DO need to enable for image crop
-    //ImageCropModule,
+    // ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
+    TaxonomyEditorModule,
   ],
   entryComponents: [
     UserPopupComponent,
@@ -178,16 +197,21 @@ import { AddThumbnailComponent } from './routes/add-thumbnail/add-thumbnail.comp
     EventThumbnailComponent,
     ParticipantsComponent,
     AddThumbnailComponent,
-    SuccessComponent],
+    CompetencyViewComponent,
+    ConfirmationPopupComponent,
+    SuccessComponent,
+    AssignListPopupComponent,
+    SingleAssignPopupComponent],
   providers: [
     // CKEditorService,
     // LoaderService,
     InitResolver,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     MatDatepickerModule, MatNativeDateModule,
+    ConfirmationPopupComponent,
   ],
   exports: [AddThumbnailComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeModule {
-
 }

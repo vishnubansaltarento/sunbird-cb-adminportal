@@ -119,12 +119,12 @@ export class AddThumbnailComponent implements OnInit {
           createdBy,
           compatibilityLevel: {
             min: sectorConstants.minCompatibilityLevel,
-            max: sectorConstants.maxCompatibilityLevel
+            max: sectorConstants.maxCompatibilityLevel,
           },
           contentType: ['Asset'],
           mediaType: ['image'],
           status: ['Draft'],
-          resourceCategory: ['sector']
+          resourceCategory: ['sector'],
         },
         query: this.queryFilter,
         sort_by: { lastUpdatedOn: 'desc' },
@@ -144,7 +144,7 @@ export class AddThumbnailComponent implements OnInit {
       this.totalContent = data && data.result.response ? data.result.response.totalHits : sectorConstants.zero
       this.fetchError = false
     },
-      error => {
+                                                                  error => {
         // tslint:disable-next-line: no-console
         console.log(error)
       })

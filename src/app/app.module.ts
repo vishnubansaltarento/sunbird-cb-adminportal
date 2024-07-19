@@ -59,6 +59,7 @@ import { TncPublicResolverService } from './services/tnc-public-resolver.service
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { environment } from '../environments/environment'
 import { PublicLogoutModule } from './routes/public/public-logout/public-logout.module'
+import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { environment } from '../environments/environment'
 
@@ -94,6 +95,7 @@ const getBaseHref = (platformLocation: PlatformLocation): string => {
     DialogConfirmComponent,
     LoginRootComponent,
     LoginRootDirective,
+    PublicHomeComponent,
   ],
   imports: [
     FormsModule,

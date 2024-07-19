@@ -17,6 +17,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "preserveSymlinks": true,
             "assets": [
               "src/favicon.png",
               "src/dashboard-assets/"
@@ -88,15 +89,9 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/shepherd.js/dist/js/shepherd.min.js",
-              "node_modules/@project-sunbird/telemetry-sdk/index.js"
-            ],
-            "aot": false,
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+              "node_modules/@project-sunbird/telemetry-sdk/index.js",
+              "node_modules/leader-line/leader-line.min.js"
+            ]
           },
           "configurations": {
             "production": {

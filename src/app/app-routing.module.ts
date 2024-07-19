@@ -20,6 +20,7 @@ import { PublicLogoutComponent } from './routes/public/public-logout/public-logo
 import { TncComponent } from './routes/tnc/tnc.component'
 import { TncAppResolverService } from './services/tnc-app-resolver.service'
 import { TncPublicResolverService } from './services/tnc-public-resolver.service'
+import { PublicHomeComponent } from './routes/public/public-home/public-home.component'
 // import { AppTocResolverService } from '@ws/app/src/lib/routes/app-toc/resolvers/app-toc-resolver.service'
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
@@ -276,6 +277,10 @@ const routes: Routes = [
   {
     path: 'public/logout',
     component: PublicLogoutComponent,
+  },
+  {
+    path: 'public/home',
+    component: PublicHomeComponent,
   },
   {
     path: 'public/mobile-app',

@@ -14,6 +14,8 @@ export const environment: IEnvironment = {
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   spvPath: (window as { [key: string]: any })['env']['spvPath'] || '',
+  connectionType: (window as { [key: string]: any })['env']['connectionType'] || '',
+  KCMframeworkName: (window as { [key: string]: any })['env']['KCMframeworkName'] || '',
 }
 interface IEnvironment {
   contentBucket: any
@@ -27,6 +29,8 @@ interface IEnvironment {
   userBucket?: string
   departments?: string[]
   spvPath?: string
+  connectionType?: string,
+  KCMframeworkName?: string
 }
 
 /*

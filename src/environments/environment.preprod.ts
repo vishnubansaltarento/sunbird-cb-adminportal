@@ -10,4 +10,6 @@ export const environment = {
   contentHost: (window as { [key: string]: any })['env']['contentHost'] || '',
   contentBucket: (window as { [key: string]: any })['env']['azureBucket'] || '',
   spvPath: (window as { [key: string]: any })['env']['spvPath'] || '',
+  connectionType: (window as { [key: string]: any })['env']['connectionType'] || '',
+  KCMframeworkName: (window as { [key: string]: any })['env']['KCMframeworkName'] || '',
 }

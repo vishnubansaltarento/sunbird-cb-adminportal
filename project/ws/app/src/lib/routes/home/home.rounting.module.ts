@@ -11,7 +11,7 @@ import { CreateMdoComponent } from './routes/create-mdo/create-mdo.component'
 import { CreateUserComponent } from './routes/create-user/create-user.component'
 import { DepartmentResolve } from './resolvers/department-resolve'
 import { RolesResolver } from './resolvers/roles-resolver.service'
-// import { PageResolve } from '@sunbird-cb/utils'
+import { PageResolve } from '@sunbird-cb/utils'
 import { ModerationViewComponent } from './routes/moderation/moderation.component'
 import { RolesUsersComponent } from './routes/roles-users/roles-users.component'
 import { ReportsComponent } from './routes/reports/reports.component'
@@ -30,6 +30,9 @@ import { AcbpReportsComponent } from './routes/acbp-reports/acbp-reports.compone
 import { SectorsComponent } from './routes/sectors/sectors.component'
 import { AddSectorComponent } from './routes/sectors/add-sector/add-sector.component'
 import { EditSectorComponent } from './routes/sectors/edit-sector/edit-sector.component'
+import { AllRequestComponent } from './routes/request/all-request/all-request.component'
+import { RequestCopyDetailsComponent } from './routes/request/request-copy-details/request-copy-details.component'
+import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
 
 const routes: Routes = [
   {
@@ -354,6 +357,47 @@ const routes: Routes = [
         redirectTo: 'directory',
         pathMatch: 'full',
       },
+      {
+        path: 'all-request',
+        component: AllRequestComponent,
+        data: {
+          pageId: 'home/all-request',
+          module: 'Request',
+          pageType: 'feature',
+          pageKey: 'Request',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+        },
+      },
+      {
+        path: 'request-details',
+        component: RequestCopyDetailsComponent,
+        data: {
+          pageId: 'home/request-details',
+          module: 'Request-Details',
+          pageType: 'feature',
+          pageKey: 'Request-Details',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+        },
+      },
+      {
+        path: 'kcm-mapping',
+        component: KCMMappingComponent,
+        data: {
+          pageId: 'home/KCM-mapping',
+          module: 'KCM-mapping',
+          pageType: 'feature',
+          pageKey: 'kcm',
+        },
+        resolve: {
+          configService: ConfigResolveService,
+          pageData: PageResolve,
+        },
+      },
+
     ],
   },
 ]

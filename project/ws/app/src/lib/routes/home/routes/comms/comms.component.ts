@@ -108,7 +108,9 @@ export class CommsComponent implements OnInit {
             bucketKey: bucket.key
           })
         }
-        this.displayLoader = false
+        setTimeout(() => {
+          this.displayLoader = false
+        }, 2000)
         this.dataSource = new MatTableDataSource(this.reportSectionData)
       })
     }, error => {
