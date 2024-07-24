@@ -62,6 +62,12 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         key: 'rolesandaccess',
         render: true,
         enabled: true,
+      },
+      {
+        name: 'Mentor Management',
+        key: 'mentormanage',
+        render: true,
+        enabled: true,
       }]
 
     const url = this.router.url.split('/')
@@ -112,6 +118,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentTab = id
     if (this.currentTab === 'users') {
       this.getAllActiveUsersByDepartmentId(this.id)
+    } else if (this.currentTab === 'mentormanage') {
+      this.getMentorManage()
     }
     const el = document.getElementById(id)
     if (el != null) {
@@ -246,5 +254,9 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         redirectionPath: window.location.href,
       }, state: { userData: event.row, updateButton: true },
     })
+  }
+
+  getMentorManage() {
+
   }
 }
