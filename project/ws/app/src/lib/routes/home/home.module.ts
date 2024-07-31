@@ -139,7 +139,7 @@ import { SurveyListComponent } from './routes/survey/survey-list/survey-list.com
     KCMMappingComponent,
     SingleAssignPopupComponent,
     SurveyComponent,
-    SurveyListComponent
+    SurveyListComponent,
   ],
   imports: [
     CommonModule,
