@@ -92,6 +92,8 @@ import { AssignListPopupComponent } from './routes/request/assign-list-popup/ass
 import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
 import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
 import { SingleAssignPopupComponent } from './routes/request/single-assign-popup/single-assign-popup.component'
+import { SurveyComponent } from './routes/survey/survey.component'
+import { SurveyListComponent } from './routes/survey/survey-list/survey-list.component'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -136,6 +138,8 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     AssignListPopupComponent,
     KCMMappingComponent,
     SingleAssignPopupComponent,
+    SurveyComponent,
+    SurveyListComponent
   ],
   imports: [
     CommonModule,
