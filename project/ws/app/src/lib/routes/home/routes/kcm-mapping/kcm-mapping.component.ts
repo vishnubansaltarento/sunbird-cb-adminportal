@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router'
 export class KCMMappingComponent implements OnInit {
   environmentVal: any
   taxonomyConfig: any
-  showTopSection = true
+  showTopSection = false
   kcmConfig: any
   constructor(
     private activateRoute: ActivatedRoute
@@ -25,6 +25,12 @@ export class KCMMappingComponent implements OnInit {
       this.taxonomyConfig = this.kcmConfig.frameworkConfig
       // console.log('kcmConfig', this.kcmConfig)
     })
+  }
+
+  callResizeEvent(_event: any) {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 100)
   }
 
 }
