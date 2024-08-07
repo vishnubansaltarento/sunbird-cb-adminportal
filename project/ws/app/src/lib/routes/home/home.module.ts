@@ -85,8 +85,10 @@ import { CompetencyViewComponent } from './routes/request/competency-view/compet
 import { ConfirmationPopupComponent } from './routes/request/confirmation-popup/confirmation-popup.component'
 import { AssignListPopupComponent } from './routes/request/assign-list-popup/assign-list-popup.component'
 import { KCMMappingComponent } from './routes/kcm-mapping/kcm-mapping.component'
-import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
+// import { TaxonomyEditorModule } from '@sunbird-cb/taxonomy-editor'
 import { SingleAssignPopupComponent } from './routes/request/single-assign-popup/single-assign-popup.component'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatRadioModule } from '@angular/material/radio'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -187,7 +189,7 @@ import { SingleAssignPopupComponent } from './routes/request/single-assign-popup
     // TO-DO need to enable for image crop
     // ImageCropModule,
     NgMultiSelectDropDownModule.forRoot(),
-    TaxonomyEditorModule,
+    // TaxonomyEditorModule,
   ],
   entryComponents: [
     UserPopupComponent,
